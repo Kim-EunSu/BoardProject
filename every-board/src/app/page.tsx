@@ -15,6 +15,7 @@ const Wrapper = styled.div`
 
 const Left = styled.div`
   width: 35%;
+  min-width: 530px;
   display: flex;
   flex-direction: column;
   padding: 5rem;
