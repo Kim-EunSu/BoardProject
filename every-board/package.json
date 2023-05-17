@@ -19,5 +19,8 @@
     "react-icons": "^4.8.0",
     "styled-components": "^6.0.0-rc.1",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "20.1.7"
   }
 }
