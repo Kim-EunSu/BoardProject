@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import { FcGoogle } from 'react-icons/fc'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -66,9 +68,14 @@ const Remember = styled.div`
   justify-content: space-between;
   cursor: pointer;
 `
-const Rem1 = styled.p`
+
+const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+  margin-right: 8px;
+`
+
+const Rem1 = styled.p<{ checked: boolean }>`
   margin: 0;
-  color: #344054;
+  color: ${(props) => (props.checked ? '#5429FF' : '344054')};
 `
 const Rem2 = styled.p`
   margin: 0;
@@ -122,7 +129,19 @@ export default function Login() {
     formState: { errors },
   } = useForm<FormValues>()
 
-  const onSubmit = (data: FormValues) => {}
+  const router = useRouter()
+
+  //로그인하면 넘어가는 data
+  const onSubmit = (data: FormValues) => {
+    console.log(data)
+  }
+
+  //checkbox
+  const [ischecked, setIsChecked] = useState<boolean>(false)
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked)
+  }
 
   return (
     <>
@@ -168,7 +187,10 @@ export default function Login() {
             </FormWrap>
             <FormWrap>
               <Remember>
-                <Rem1>Remember me</Rem1>
+                <Rem1 checked={ischecked}>
+                  <Checkbox checked={ischecked} onChange={onChange} />
+                  Remember me
+                </Rem1>
                 <Rem2>비밀번호 찾기</Rem2>
               </Remember>
             </FormWrap>
@@ -191,7 +213,10 @@ export default function Login() {
             </Button>
             <SubmitWrap>
               <Submit>계정이 없으신가요?</Submit>
-              <Submit style={{ color: '#fc0374', fontWeight: 'bold' }}>
+              <Submit
+                onClick={() => router.push('/signin')}
+                style={{ color: '#fc0374', fontWeight: 'bold' }}
+              >
                 회원가입
               </Submit>
             </SubmitWrap>

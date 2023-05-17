@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import Image from 'next/image'
 import { FcGoogle } from 'react-icons/fc'
+import { useRouter } from 'next/navigation'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -124,6 +125,8 @@ export default function Login() {
     formState: { errors },
   } = useForm<SigninValues>()
 
+  const router = useRouter()
+
   const password = getValues('password')
 
   const onSubmit = (data: SigninValues) => {
@@ -226,7 +229,10 @@ export default function Login() {
             </Button>
             <SubmitWrap>
               <Submit>이미 계정이 있으신가요?</Submit>
-              <Submit style={{ color: '#fc0374', fontWeight: 'bold' }}>
+              <Submit
+                onClick={() => router.push('/')}
+                style={{ color: '#fc0374', fontWeight: 'bold' }}
+              >
                 로그인
               </Submit>
             </SubmitWrap>
