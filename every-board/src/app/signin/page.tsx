@@ -1,11 +1,10 @@
-"use client";
+'use client'
 
-import styled from "styled-components";
-import { useForm } from "react-hook-form";
-import Image from "next/image";
-import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import styled from 'styled-components'
+import { useForm } from 'react-hook-form'
+import Image from 'next/image'
+import { FcGoogle } from 'react-icons/fc'
+import { useRouter } from 'next/navigation'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -13,7 +12,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
 
 const Left = styled.div`
   width: 35%;
@@ -21,32 +20,32 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   padding: 5rem;
-`;
+`
 
 const TitleWrap = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-`;
+`
 
 const Title = styled.h1`
   margin-left: 8px;
-`;
+`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 20px;
-`;
+  gap: 10px;
+`
 
 const FormWrap = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
 const Label = styled.label`
   color: #344054;
   font-size: 1rem;
   margin-bottom: 8px;
-`;
+`
 
 const Input = styled.input`
   border-radius: 8px;
@@ -54,33 +53,28 @@ const Input = styled.input`
   border-width: 1px;
   border-style: solid;
   border-color: #d0d5dd;
-`;
+`
 
 const ErrorText = styled.span`
   margin: 5px;
   font-size: 0.8rem;
   color: #fc0374;
-`;
+`
 
 const Remember = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   cursor: pointer;
-`;
-
-const Checkbox = styled.input.attrs({ type: "checkbox" })`
-  margin-right: 8px;
-`;
-
-const Rem1 = styled.p<{ checked: boolean }>`
+`
+const Rem1 = styled.p`
   margin: 0;
-  color: ${props => (props.checked ? "#5429FF" : "344054")};
-`;
+  color: #344054;
+`
 const Rem2 = styled.p`
   margin: 0;
   color: #fc0374;
-`;
+`
 
 const Button = styled.button`
   display: flex;
@@ -92,18 +86,18 @@ const Button = styled.button`
   cursor: pointer;
   background-color: white;
   border: 1px solid #d0d5dd;
-`;
+`
 
 const SubmitWrap = styled.div`
   text-align: center;
-`;
+`
 
 const Submit = styled.span`
   color: #344054;
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
-`;
+`
 
 const Icon = styled.div`
   svg {
@@ -111,15 +105,17 @@ const Icon = styled.div`
     margin-right: 8px;
     font-size: 1.5rem;
   }
-`;
+`
 
-const Right = styled.div``;
+const Right = styled.div``
 
-type FormValues = {
-  errors: string;
-  email: string;
-  password: string;
-};
+type SigninValues = {
+  errors: string
+  email: string
+  nickname: string
+  password: string
+  passwordconfirm: string
+}
 
 export default function Login() {
   const {
@@ -127,28 +123,22 @@ export default function Login() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<SigninValues>()
 
-  const router = useRouter();
+  const router = useRouter()
 
-  //로그인하면 넘어가는 data
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-  };
+  const password = getValues('password')
 
-  //checkbox
-  const [ischecked, setIsChecked] = useState<boolean>(false);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
-  };
+  const onSubmit = (data: SigninValues) => {
+    console.log(data)
+  }
 
   return (
     <>
       <Wrapper>
         <Left>
           <TitleWrap>
-            <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
+            <Image src={'/logo.svg'} width={50} height={50} alt="logo" />
             <Title>모두의 게시판</Title>
           </TitleWrap>
           <Form>
@@ -156,28 +146,48 @@ export default function Login() {
               <Label>Email</Label>
               <Input
                 placeholder="test@example.com"
-                {...register("email", {
-                  required: "이메일을 입력해주세요.",
+                {...register('email', {
+                  required: '이메일을 입력해주세요.',
                   pattern: {
                     value:
                       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-                    message: "이메일 형식에 맞지 않습니다.",
+                    message: '이메일 형식에 맞지 않습니다.',
                   },
                 })}
               />
-
               <ErrorText>{errors.email && errors.email.message}</ErrorText>
+            </FormWrap>
+            <FormWrap>
+              <Label>Email 인증번호 확인</Label>
+              <Input placeholder="ex) 6AAR32f" />
+            </FormWrap>
+            <FormWrap>
+              <Label>Nick Name</Label>
+              <Input
+                placeholder="이름"
+                {...register('nickname', {
+                  required: '이름은 필수사항입니다.',
+                  pattern: {
+                    value: /^[가-힣]+$/,
+                    message: '이름 형식에 맞지 않습니다.',
+                  },
+                  minLength: {
+                    value: 2,
+                    message: '2글짜 이상 쓰셔야 합니다.',
+                  },
+                })}
+              />
             </FormWrap>
             <FormWrap>
               <Label>Password</Label>
               <Input
                 type="password"
                 placeholder="●●●●●●●●"
-                {...register("password", {
-                  required: "비밀번호를 입력해주세요.",
+                {...register('password', {
+                  required: '비밀번호를 입력해주세요.',
                   minLength: {
                     value: 8,
-                    message: "최소 8자 이상의 비밀번호를 입력해주세요.",
+                    message: '최소 8자 이상의 비밀번호를 입력해주세요.',
                   },
                 })}
               />
@@ -186,24 +196,30 @@ export default function Login() {
               </ErrorText>
             </FormWrap>
             <FormWrap>
-              <Remember>
-                <Rem1 checked={ischecked}>
-                  <Checkbox checked={ischecked} onChange={onChange} />
-                  Remember me
-                </Rem1>
-                <Rem2>비밀번호 찾기</Rem2>
-              </Remember>
+              <Label>Password Check</Label>
+              <Input
+                type="password"
+                placeholder="비밀번호확인"
+                {...register('passwordconfirm', {
+                  required: '비밀번호가 일치하지 않습니다.',
+                  validate: (value) =>
+                    value === password || '비밀번호가 일치하지 않습니다.',
+                })}
+              />
+              <ErrorText>
+                {errors.passwordconfirm && errors.passwordconfirm.message}
+              </ErrorText>
             </FormWrap>
             <Button
               style={{
-                color: "white",
-                backgroundColor: "#5429FF",
-                border: "none",
-                fontWeight: "bold",
+                color: 'white',
+                backgroundColor: '#5429FF',
+                border: 'none',
+                fontWeight: 'bold',
               }}
               onClick={handleSubmit(onSubmit)}
             >
-              로그인
+              회원가입
             </Button>
             <Button>
               <Icon>
@@ -212,20 +228,20 @@ export default function Login() {
               Sign in with Google
             </Button>
             <SubmitWrap>
-              <Submit>계정이 없으신가요?</Submit>
+              <Submit>이미 계정이 있으신가요?</Submit>
               <Submit
-                onClick={() => router.push("/signin")}
-                style={{ color: "#fc0374", fontWeight: "bold" }}
+                onClick={() => router.push('/')}
+                style={{ color: '#fc0374', fontWeight: 'bold' }}
               >
-                회원가입
+                로그인
               </Submit>
             </SubmitWrap>
           </Form>
         </Left>
         <Right>
-          <Image src={"/frame.png"} width={400} height={500} alt="frame" />
+          <Image src={'/frame.png'} width={400} height={500} alt="frame" />
         </Right>
       </Wrapper>
     </>
-  );
+  )
 }
