@@ -6,6 +6,8 @@ import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -55,6 +57,8 @@ const Input = styled.input`
   border-style: solid;
   border-color: #d0d5dd;
 `;
+
+const PWButton = styled.div``;
 
 const ErrorText = styled.span`
   margin: 5px;
@@ -125,7 +129,6 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -138,6 +141,14 @@ export default function Login() {
 
   //checkbox
   const [ischecked, setIsChecked] = useState<boolean>(false);
+
+  //password
+  const [ShowPassword, setShowPassword] = useState<boolean>(false);
+
+  //passwrod의 toggle기능
+  const togglePassword = () => {
+    setShowPassword(!ShowPassword);
+  };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
@@ -165,13 +176,12 @@ export default function Login() {
                   },
                 })}
               />
-
               <ErrorText>{errors.email && errors.email.message}</ErrorText>
             </FormWrap>
             <FormWrap>
               <Label>Password</Label>
               <Input
-                type="password"
+                type={ShowPassword ? "text" : "password"}
                 placeholder="●●●●●●●●"
                 {...register("password", {
                   required: "비밀번호를 입력해주세요.",
@@ -181,6 +191,9 @@ export default function Login() {
                   },
                 })}
               />
+              <PWButton onClick={togglePassword}>
+                {ShowPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+              </PWButton>
               <ErrorText>
                 {errors.password && errors.password.message}
               </ErrorText>
