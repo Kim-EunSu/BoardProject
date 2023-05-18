@@ -27,7 +27,7 @@ const Header = (): JSX.Element => {
           width="250px"
           height="40px"
           color="var(--pink)" // Pass the CSS variable value as a string
-          backgroundColor="#ffffff"
+          backgroundcolor="#ffffff"
           fontSize="1.125rem"
           onClick={() => {
             router.push("/signin");
