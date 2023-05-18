@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
@@ -34,7 +35,7 @@ const Title = styled.h1`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 `;
 
 const FormWrap = styled.div`
@@ -67,9 +68,14 @@ const Remember = styled.div`
   justify-content: space-between;
   cursor: pointer;
 `;
-const Rem1 = styled.p`
+
+const Checkbox = styled.input.attrs({ type: "checkbox" })`
+  margin-right: 8px;
+`;
+
+const Rem1 = styled.p<{ checked: boolean }>`
   margin: 0;
-  color: #344054;
+  color: ${props => (props.checked ? "#5429FF" : "344054")};
 `;
 const Rem2 = styled.p`
   margin: 0;
@@ -109,12 +115,10 @@ const Icon = styled.div`
 
 const Right = styled.div``;
 
-type SigninValues = {
+type FormValues = {
   errors: string;
   email: string;
-  nickname: string;
   password: string;
-  passwordconfirm: string;
 };
 
 export default function Login() {
@@ -123,14 +127,20 @@ export default function Login() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<SigninValues>();
+  } = useForm<FormValues>();
 
   const router = useRouter();
 
-  const password = getValues("password");
-
-  const onSubmit = (data: SigninValues) => {
+  //로그인하면 넘어가는 data
+  const onSubmit = (data: FormValues) => {
     console.log(data);
+  };
+
+  //checkbox
+  const [ischecked, setIsChecked] = useState<boolean>(false);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked);
   };
 
   return (
@@ -155,28 +165,8 @@ export default function Login() {
                   },
                 })}
               />
+
               <ErrorText>{errors.email && errors.email.message}</ErrorText>
-            </FormWrap>
-            <FormWrap>
-              <Label>Email 인증번호 확인</Label>
-              <Input placeholder="ex) 6AAR32f" />
-            </FormWrap>
-            <FormWrap>
-              <Label>Nick Name</Label>
-              <Input
-                placeholder="이름"
-                {...register("nickname", {
-                  required: "이름은 필수사항입니다.",
-                  pattern: {
-                    value: /^[가-힣]+$/,
-                    message: "이름 형식에 맞지 않습니다.",
-                  },
-                  minLength: {
-                    value: 2,
-                    message: "2글자 이상 쓰셔야 합니다.",
-                  },
-                })}
-              />
             </FormWrap>
             <FormWrap>
               <Label>Password</Label>
@@ -196,19 +186,13 @@ export default function Login() {
               </ErrorText>
             </FormWrap>
             <FormWrap>
-              <Label>Password Check</Label>
-              <Input
-                type="password"
-                placeholder="비밀번호확인"
-                {...register("passwordconfirm", {
-                  required: "비밀번호가 일치하지 않습니다.",
-                  validate: value =>
-                    value === password || "비밀번호가 일치하지 않습니다.",
-                })}
-              />
-              <ErrorText>
-                {errors.passwordconfirm && errors.passwordconfirm.message}
-              </ErrorText>
+              <Remember>
+                <Rem1 checked={ischecked}>
+                  <Checkbox checked={ischecked} onChange={onChange} />
+                  Remember me
+                </Rem1>
+                <Rem2>비밀번호 찾기</Rem2>
+              </Remember>
             </FormWrap>
             <Button
               style={{
@@ -219,7 +203,7 @@ export default function Login() {
               }}
               onClick={handleSubmit(onSubmit)}
             >
-              회원가입
+              로그인
             </Button>
             <Button>
               <Icon>
@@ -228,12 +212,12 @@ export default function Login() {
               Sign in with Google
             </Button>
             <SubmitWrap>
-              <Submit>이미 계정이 있으신가요?</Submit>
+              <Submit>계정이 없으신가요?</Submit>
               <Submit
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/signin")}
                 style={{ color: "#fc0374", fontWeight: "bold" }}
               >
-                로그인
+                회원가입
               </Submit>
             </SubmitWrap>
           </Form>
