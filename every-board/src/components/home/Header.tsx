@@ -2,7 +2,6 @@
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 import Image from "next/image";
-import headerImg from "@/assets/headerImg.svg";
 import { useRouter } from "next/navigation";
 
 const Header = (): JSX.Element => {
@@ -36,7 +35,12 @@ const Header = (): JSX.Element => {
         />
       </TextArea>
       <ImageArea>
-        <Image src={headerImg} width={500} height={320} alt="headerImage" />
+        <Image
+          src={"/headerImg.svg"}
+          width={500}
+          height={320}
+          alt="headerImage"
+        />
       </ImageArea>
     </HeaderLayout>
   );

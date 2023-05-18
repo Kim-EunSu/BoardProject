@@ -3,7 +3,6 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import logo from "@/assets/logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -149,7 +148,7 @@ export default function Login() {
       <Wrapper>
         <Left>
           <TitleWrap>
-            <Image src={logo} width={50} height={50} alt="logo" />
+            <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
             <Title>모두의 게시판</Title>
           </TitleWrap>
           <Form>
