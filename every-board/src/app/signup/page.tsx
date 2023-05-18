@@ -112,6 +112,7 @@ const Right = styled.div``;
 type SigninValues = {
   errors: string;
   email: string;
+  emailconfirm: string;
   nickname: string;
   password: string;
   passwordconfirm: string;
@@ -160,23 +161,23 @@ export default function Login() {
             <FormWrap>
               <Label>Email 인증번호 확인</Label>
               <Input placeholder="ex) 6AAR32f" />
+              <ErrorText></ErrorText>
             </FormWrap>
             <FormWrap>
               <Label>Nick Name</Label>
               <Input
-                placeholder="이름"
+                placeholder="nickname"
                 {...register("nickname", {
-                  required: "이름은 필수사항입니다.",
+                  required: "닉네임은 필수사항입니다.",
                   pattern: {
-                    value: /^[가-힣]+$/,
-                    message: "이름 형식에 맞지 않습니다.",
-                  },
-                  minLength: {
-                    value: 2,
-                    message: "2글자 이상 쓰셔야 합니다.",
+                    value: /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{2,10}$/,
+                    message: "한글,영문,숫자 2~10자리형식 입니다.",
                   },
                 })}
               />
+              <ErrorText>
+                {errors.nickname && errors.nickname.message}
+              </ErrorText>
             </FormWrap>
             <FormWrap>
               <Label>Password</Label>
