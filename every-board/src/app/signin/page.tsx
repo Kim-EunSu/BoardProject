@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import styled from 'styled-components'
-import { useForm } from 'react-hook-form'
-import Image from 'next/image'
-import { FcGoogle } from 'react-icons/fc'
-import { useRouter } from 'next/navigation'
+import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import Image from "next/image";
+import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const Left = styled.div`
   width: 35%;
@@ -20,32 +20,32 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
   padding: 5rem;
-`
+`;
 
 const TitleWrap = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-`
+`;
 
 const Title = styled.h1`
   margin-left: 8px;
-`
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
-`
+`;
 
 const FormWrap = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 const Label = styled.label`
   color: #344054;
   font-size: 1rem;
   margin-bottom: 8px;
-`
+`;
 
 const Input = styled.input`
   border-radius: 8px;
@@ -53,28 +53,28 @@ const Input = styled.input`
   border-width: 1px;
   border-style: solid;
   border-color: #d0d5dd;
-`
+`;
 
 const ErrorText = styled.span`
   margin: 5px;
   font-size: 0.8rem;
   color: #fc0374;
-`
+`;
 
 const Remember = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   cursor: pointer;
-`
+`;
 const Rem1 = styled.p`
   margin: 0;
   color: #344054;
-`
+`;
 const Rem2 = styled.p`
   margin: 0;
   color: #fc0374;
-`
+`;
 
 const Button = styled.button`
   display: flex;
@@ -86,18 +86,18 @@ const Button = styled.button`
   cursor: pointer;
   background-color: white;
   border: 1px solid #d0d5dd;
-`
+`;
 
 const SubmitWrap = styled.div`
   text-align: center;
-`
+`;
 
 const Submit = styled.span`
   color: #344054;
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
-`
+`;
 
 const Icon = styled.div`
   svg {
@@ -105,17 +105,17 @@ const Icon = styled.div`
     margin-right: 8px;
     font-size: 1.5rem;
   }
-`
+`;
 
-const Right = styled.div``
+const Right = styled.div``;
 
 type SigninValues = {
-  errors: string
-  email: string
-  nickname: string
-  password: string
-  passwordconfirm: string
-}
+  errors: string;
+  email: string;
+  nickname: string;
+  password: string;
+  passwordconfirm: string;
+};
 
 export default function Login() {
   const {
@@ -123,22 +123,22 @@ export default function Login() {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<SigninValues>()
+  } = useForm<SigninValues>();
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const password = getValues('password')
+  const password = getValues("password");
 
   const onSubmit = (data: SigninValues) => {
-    console.log(data)
-  }
+    console.log(data);
+  };
 
   return (
     <>
       <Wrapper>
         <Left>
           <TitleWrap>
-            <Image src={'/logo.svg'} width={50} height={50} alt="logo" />
+            <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
             <Title>모두의 게시판</Title>
           </TitleWrap>
           <Form>
@@ -146,12 +146,12 @@ export default function Login() {
               <Label>Email</Label>
               <Input
                 placeholder="test@example.com"
-                {...register('email', {
-                  required: '이메일을 입력해주세요.',
+                {...register("email", {
+                  required: "이메일을 입력해주세요.",
                   pattern: {
                     value:
                       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-                    message: '이메일 형식에 맞지 않습니다.',
+                    message: "이메일 형식에 맞지 않습니다.",
                   },
                 })}
               />
@@ -165,15 +165,15 @@ export default function Login() {
               <Label>Nick Name</Label>
               <Input
                 placeholder="이름"
-                {...register('nickname', {
-                  required: '이름은 필수사항입니다.',
+                {...register("nickname", {
+                  required: "이름은 필수사항입니다.",
                   pattern: {
                     value: /^[가-힣]+$/,
-                    message: '이름 형식에 맞지 않습니다.',
+                    message: "이름 형식에 맞지 않습니다.",
                   },
                   minLength: {
                     value: 2,
-                    message: '2글짜 이상 쓰셔야 합니다.',
+                    message: "2글자 이상 쓰셔야 합니다.",
                   },
                 })}
               />
@@ -183,11 +183,11 @@ export default function Login() {
               <Input
                 type="password"
                 placeholder="●●●●●●●●"
-                {...register('password', {
-                  required: '비밀번호를 입력해주세요.',
+                {...register("password", {
+                  required: "비밀번호를 입력해주세요.",
                   minLength: {
                     value: 8,
-                    message: '최소 8자 이상의 비밀번호를 입력해주세요.',
+                    message: "최소 8자 이상의 비밀번호를 입력해주세요.",
                   },
                 })}
               />
@@ -200,10 +200,10 @@ export default function Login() {
               <Input
                 type="password"
                 placeholder="비밀번호확인"
-                {...register('passwordconfirm', {
-                  required: '비밀번호가 일치하지 않습니다.',
-                  validate: (value) =>
-                    value === password || '비밀번호가 일치하지 않습니다.',
+                {...register("passwordconfirm", {
+                  required: "비밀번호가 일치하지 않습니다.",
+                  validate: value =>
+                    value === password || "비밀번호가 일치하지 않습니다.",
                 })}
               />
               <ErrorText>
@@ -212,10 +212,10 @@ export default function Login() {
             </FormWrap>
             <Button
               style={{
-                color: 'white',
-                backgroundColor: '#5429FF',
-                border: 'none',
-                fontWeight: 'bold',
+                color: "white",
+                backgroundColor: "#5429FF",
+                border: "none",
+                fontWeight: "bold",
               }}
               onClick={handleSubmit(onSubmit)}
             >
@@ -230,8 +230,8 @@ export default function Login() {
             <SubmitWrap>
               <Submit>이미 계정이 있으신가요?</Submit>
               <Submit
-                onClick={() => router.push('/')}
-                style={{ color: '#fc0374', fontWeight: 'bold' }}
+                onClick={() => router.push("/")}
+                style={{ color: "#fc0374", fontWeight: "bold" }}
               >
                 로그인
               </Submit>
@@ -239,9 +239,9 @@ export default function Login() {
           </Form>
         </Left>
         <Right>
-          <Image src={'/frame.png'} width={400} height={500} alt="frame" />
+          <Image src={"/frame.png"} width={400} height={500} alt="frame" />
         </Right>
       </Wrapper>
     </>
-  )
+  );
 }
