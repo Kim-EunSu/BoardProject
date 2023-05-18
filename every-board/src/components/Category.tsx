@@ -64,7 +64,6 @@ const Nav = styled.nav`
   width: 350px;
   background-color: #ffffff;
   height: fit-content;
-  margin: 40px auto;
 
   @media (min-width: 768px) {
     width: 680px;
