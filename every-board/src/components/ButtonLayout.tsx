@@ -4,18 +4,22 @@ type Props = {
   text: string;
   width: string;
   height: string;
-  color: string;
-  background: string;
-  fontSize: string;
-  onClick: () => void;
+  color?: string;
+  background?: string;
+  fontSize?: string;
+  radius?: string;
+  padding?: string;
+  onClick?: () => void;
 };
 
 type StyleProps = {
-  width: string;
-  height: string;
-  color: string;
-  background: string; // Add backgroundColor property
-  fontSize: string;
+  width?: string;
+  height?: string;
+  color?: string;
+  background?: string; // Add backgroundColor property
+  fontSize?: string;
+  radius?: string;
+  padding?: string;
 };
 
 const ButtonLayout = (props: Props) => {
@@ -28,8 +32,10 @@ const Button = styled.button<StyleProps>`
   color: ${props => props.color};
   background-color: ${props => props.background};
   font-size: ${props => props.fontSize};
+  border-radius: ${props => props.radius};
+  padding: ${props => props.padding};
+
   font-weight: 600;
-  border-radius: 50px;
   border: none;
   outline: none;
   cursor: pointer;

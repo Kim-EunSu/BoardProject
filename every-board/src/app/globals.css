@@ -15,3 +15,7 @@
   margin: 0;
   font-style: pretendard;
 }
+
+body {
+  background: linear-gradient(180deg, #f3f3fb 0%, #fdfbfd 100%);
+}
