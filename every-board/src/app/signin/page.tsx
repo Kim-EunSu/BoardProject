@@ -215,7 +215,7 @@ export default function Login() {
             <SubmitWrap>
               <Submit>계정이 없으신가요?</Submit>
               <Submit
-                onClick={() => router.push("/signin")}
+                onClick={() => router.push("/signup")}
                 style={{ color: "#fc0374", fontWeight: "bold" }}
               >
                 회원가입
