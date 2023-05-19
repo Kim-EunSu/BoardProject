@@ -5,7 +5,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 const Wrapper = styled.div`
-  background-color: RGBA(239, 233, 255, 30%);
+  background-color: #efe9ff;
 `;
 
 export default function layout({ children }: { children: React.ReactNode }) {
