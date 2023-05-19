@@ -1,11 +1,13 @@
 "use client";
 
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import Image from "next/image";
-import logo from "@/assets/logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -41,7 +43,16 @@ const Form = styled.form`
 const FormWrap = styled.div`
   display: flex;
   flex-direction: column;
+
+  &:nth-child(4) {
+    position: relative;
+  }
+
+  &:nth-child(5) {
+    position: relative;
+  }
 `;
+
 const Label = styled.label`
   color: #344054;
   font-size: 1rem;
@@ -56,6 +67,20 @@ const Input = styled.input`
   border-color: #d0d5dd;
 `;
 
+const PWButton = styled.div`
+  svg:nth-child(1) {
+    position: absolute;
+    top: 38px;
+    right: 20px;
+  }
+
+  svg:nth-child(2) {
+    position: absolute;
+    top: 38px;
+    right: 20px;
+  }
+`;
+
 const ErrorText = styled.span`
   margin: 5px;
   font-size: 0.8rem;
@@ -68,10 +93,12 @@ const Remember = styled.div`
   justify-content: space-between;
   cursor: pointer;
 `;
+
 const Rem1 = styled.p`
   margin: 0;
   color: #344054;
 `;
+
 const Rem2 = styled.p`
   margin: 0;
   color: #fc0374;
@@ -113,6 +140,7 @@ const Right = styled.div``;
 type SigninValues = {
   errors: string;
   email: string;
+  emailconfirm: string;
   nickname: string;
   password: string;
   passwordconfirm: string;
@@ -128,6 +156,22 @@ export default function Login() {
 
   const router = useRouter();
 
+  //비밀번호
+  const [ShowPassword, setShowPassword] = useState<boolean>(false);
+
+  //비밀번호체크용
+  const [ShowPasswordCheck, setShowPasswordCheck] = useState<boolean>(false);
+
+  //비밀번호
+  const togglePassword = () => {
+    setShowPassword(!ShowPassword);
+  };
+
+  //비밀번호체크용
+  const togglePasswordCheck = () => {
+    setShowPasswordCheck(!ShowPasswordCheck);
+  };
+
   const password = getValues("password");
 
   const onSubmit = (data: SigninValues) => {
@@ -139,7 +183,7 @@ export default function Login() {
       <Wrapper>
         <Left>
           <TitleWrap>
-            <Image src={logo} width={50} height={50} alt="logo" />
+            <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
             <Title>모두의 게시판</Title>
           </TitleWrap>
           <Form>
@@ -161,28 +205,28 @@ export default function Login() {
             <FormWrap>
               <Label>Email 인증번호 확인</Label>
               <Input placeholder="ex) 6AAR32f" />
+              <ErrorText></ErrorText>
             </FormWrap>
             <FormWrap>
               <Label>Nick Name</Label>
               <Input
-                placeholder="이름"
+                placeholder="nickname"
                 {...register("nickname", {
-                  required: "이름은 필수사항입니다.",
+                  required: "닉네임은 필수사항입니다.",
                   pattern: {
-                    value: /^[가-힣]+$/,
-                    message: "이름 형식에 맞지 않습니다.",
-                  },
-                  minLength: {
-                    value: 2,
-                    message: "2글자 이상 쓰셔야 합니다.",
+                    value: /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{2,10}$/,
+                    message: "한글,영문,숫자 2~10자리형식 입니다.",
                   },
                 })}
               />
+              <ErrorText>
+                {errors.nickname && errors.nickname.message}
+              </ErrorText>
             </FormWrap>
             <FormWrap>
               <Label>Password</Label>
               <Input
-                type="password"
+                type={ShowPassword ? "text" : "password"}
                 placeholder="●●●●●●●●"
                 {...register("password", {
                   required: "비밀번호를 입력해주세요.",
@@ -192,6 +236,9 @@ export default function Login() {
                   },
                 })}
               />
+              <PWButton onClick={togglePassword}>
+                {ShowPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+              </PWButton>
               <ErrorText>
                 {errors.password && errors.password.message}
               </ErrorText>
@@ -199,7 +246,7 @@ export default function Login() {
             <FormWrap>
               <Label>Password Check</Label>
               <Input
-                type="password"
+                type={ShowPasswordCheck ? "text" : "password"}
                 placeholder="비밀번호확인"
                 {...register("passwordconfirm", {
                   required: "비밀번호가 일치하지 않습니다.",
@@ -207,6 +254,13 @@ export default function Login() {
                     value === password || "비밀번호가 일치하지 않습니다.",
                 })}
               />
+              <PWButton onClick={togglePasswordCheck}>
+                {ShowPasswordCheck ? (
+                  <AiOutlineEye />
+                ) : (
+                  <AiOutlineEyeInvisible />
+                )}
+              </PWButton>
               <ErrorText>
                 {errors.passwordconfirm && errors.passwordconfirm.message}
               </ErrorText>
@@ -231,7 +285,7 @@ export default function Login() {
             <SubmitWrap>
               <Submit>이미 계정이 있으신가요?</Submit>
               <Submit
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/signin")}
                 style={{ color: "#fc0374", fontWeight: "bold" }}
               >
                 로그인

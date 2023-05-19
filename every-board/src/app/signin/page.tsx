@@ -3,10 +3,11 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import logo from "@/assets/logo.svg";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -42,6 +43,7 @@ const Form = styled.form`
 const FormWrap = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 const Label = styled.label`
   color: #344054;
@@ -50,11 +52,18 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
+  position: relative;
   border-radius: 8px;
   padding: 10px 14px;
   border-width: 1px;
   border-style: solid;
   border-color: #d0d5dd;
+`;
+
+const PWButton = styled.div`
+  position: absolute;
+  top: 38px;
+  right: 20px;
 `;
 
 const ErrorText = styled.span`
@@ -126,7 +135,6 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -140,6 +148,14 @@ export default function Login() {
   //checkbox
   const [ischecked, setIsChecked] = useState<boolean>(false);
 
+  //password
+  const [ShowPassword, setShowPassword] = useState<boolean>(false);
+
+  //passwrod의 toggle기능
+  const togglePassword = () => {
+    setShowPassword(!ShowPassword);
+  };
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
@@ -149,7 +165,7 @@ export default function Login() {
       <Wrapper>
         <Left>
           <TitleWrap>
-            <Image src={logo} width={50} height={50} alt="logo" />
+            <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
             <Title>모두의 게시판</Title>
           </TitleWrap>
           <Form>
@@ -166,13 +182,12 @@ export default function Login() {
                   },
                 })}
               />
-
               <ErrorText>{errors.email && errors.email.message}</ErrorText>
             </FormWrap>
             <FormWrap>
               <Label>Password</Label>
               <Input
-                type="password"
+                type={ShowPassword ? "text" : "password"}
                 placeholder="●●●●●●●●"
                 {...register("password", {
                   required: "비밀번호를 입력해주세요.",
@@ -182,6 +197,9 @@ export default function Login() {
                   },
                 })}
               />
+              <PWButton onClick={togglePassword}>
+                {ShowPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+              </PWButton>
               <ErrorText>
                 {errors.password && errors.password.message}
               </ErrorText>
@@ -215,7 +233,7 @@ export default function Login() {
             <SubmitWrap>
               <Submit>계정이 없으신가요?</Submit>
               <Submit
-                onClick={() => router.push("/signin")}
+                onClick={() => router.push("/signup")}
                 style={{ color: "#fc0374", fontWeight: "bold" }}
               >
                 회원가입
