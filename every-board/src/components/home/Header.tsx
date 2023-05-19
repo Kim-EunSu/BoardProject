@@ -49,7 +49,7 @@ const Header = (): JSX.Element => {
 const HeaderLayout = styled.header`
   width: 100%;
   height: 320px;
-  background-color: var(--primary);
+  background-color: #5e66f6;
   border-radius: var(--border-radius-header);
   color: #ffffff;
   display: flex;

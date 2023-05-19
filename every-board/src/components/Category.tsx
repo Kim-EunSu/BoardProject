@@ -63,8 +63,8 @@ export default Category;
 const Nav = styled.nav`
   width: 350px;
   background-color: #ffffff;
+  border-radius: 8px;
   height: fit-content;
-  margin: 40px auto;
 
   @media (min-width: 768px) {
     width: 680px;

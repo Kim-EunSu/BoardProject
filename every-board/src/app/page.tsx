@@ -8,15 +8,23 @@ import styled from "styled-components";
 
 const Home = (): JSX.Element => {
   return (
-    <div>
+    <HomeWrapper>
       <Header />
       <Category />
+      <SearchBar />
       <Article>
         <HotTopic /> <HotTopic /> <HotTopic />
       </Article>
-    </div>
+    </HomeWrapper>
   );
 };
+
+const HomeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+`;
 
 const Article = styled.article`
   display: flex;
