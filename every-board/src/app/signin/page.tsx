@@ -43,6 +43,7 @@ const Form = styled.form`
 const FormWrap = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 const Label = styled.label`
   color: #344054;
@@ -51,6 +52,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
+  position: relative;
   border-radius: 8px;
   padding: 10px 14px;
   border-width: 1px;
@@ -58,7 +60,11 @@ const Input = styled.input`
   border-color: #d0d5dd;
 `;
 
-const PWButton = styled.div``;
+const PWButton = styled.div`
+  position: absolute;
+  top: 38px;
+  right: 20px;
+`;
 
 const ErrorText = styled.span`
   margin: 5px;
