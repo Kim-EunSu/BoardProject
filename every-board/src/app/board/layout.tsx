@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
 const Wrapper = styled.div`
+  padding: 0 3rem 2rem;
   background-color: #efe9ff;
 `;
 
