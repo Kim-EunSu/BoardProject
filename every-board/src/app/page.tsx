@@ -3,7 +3,8 @@ import Header from "@/components/home/Header";
 import Category from "@/components/Category";
 import HotTopic from "@/components/home/HotTopic";
 import SearchBar from "@/components/home/SearchBar";
-
+import PhotoLine from "@/components/home/PhotoLine";
+import Footer from "@/components/Footer";
 import styled from "styled-components";
 
 const Home = (): JSX.Element => {
@@ -15,6 +16,8 @@ const Home = (): JSX.Element => {
       <Article>
         <HotTopic /> <HotTopic /> <HotTopic />
       </Article>
+      <PhotoLine />
+      <Footer />
     </HomeWrapper>
   );
 };
