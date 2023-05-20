@@ -60,10 +60,9 @@ const Section2 = styled.div`
 
 const Post = styled.div`
   display: flex;
-  padding: 1.25rem 3rem 1.25rem 1rem;
-  border: 1px solid red;
   border-radius: 20px;
-  /* box-shadow: 2px 4px 8px; */
+  padding: 1.25rem 3rem 1.25rem 1rem;
+  box-shadow: 1px 1px 5px 1px #e2e2e2;
 `;
 
 const Icon = styled.div`

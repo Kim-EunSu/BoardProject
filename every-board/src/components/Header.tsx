@@ -7,7 +7,7 @@ const Head = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 3rem;
+  padding: 1.5rem 0;
 `;
 
 const Left = styled.div`
