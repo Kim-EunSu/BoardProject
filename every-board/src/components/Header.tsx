@@ -19,17 +19,22 @@ const Title = styled.h1`
   font-weight: bold;
 `;
 
-const Right = styled.div``;
-
-const Me = styled.div`
+const Right = styled.div`
   display: flex;
-  align-items: center;'
+  align-items: center;
   justify-content: center;
   width: 130px;
   height: 50px;
   border-radius: 25px;
   background-color: white;
+`;
 
+const Avatar = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background-color: #5429ff;
 `;
 
 export default function Header() {
@@ -40,7 +45,8 @@ export default function Header() {
         <Title>My EveryBoard</Title>
       </Left>
       <Right>
-        <Me>사용자</Me>
+        <Avatar></Avatar>
+        사용자
       </Right>
     </Head>
   );

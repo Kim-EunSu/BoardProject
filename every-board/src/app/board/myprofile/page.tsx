@@ -1,5 +1,13 @@
-import React from "react";
+"use client";
+
+import styled from "styled-components";
+
+const Wrapper = styled.div``;
 
 export default function page() {
-  return <div>myprofile내용입니다.</div>;
+  return (
+    <Wrapper>
+      <section>ddd</section>
+    </Wrapper>
+  );
 }
