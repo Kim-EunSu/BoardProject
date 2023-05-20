@@ -49,6 +49,7 @@ const Category = () => {
                 color="var(--primary)"
                 background="#EFE9FF50"
                 fontSize="0.75rem"
+                border="none"
               />
             </li>
           );
