@@ -80,9 +80,9 @@ const Nav = styled.nav`
     display: flex;
     flex-wrap: wrap;
     text-align: center;
+    justify-content: space-between;
     gap: 8px;
     list-style: none;
     padding: 12px;
-    margin: 0 auto;
   }
 `;
