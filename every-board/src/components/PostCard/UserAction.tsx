@@ -64,7 +64,7 @@ const UserActionContainer = styled.div`
   width: 320px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin: 0 auto;
   gap: 20px;
   font-size: 1rem;
@@ -75,7 +75,6 @@ const UserActionContainer = styled.div`
   @media (min-width: 768px) {
     width: 600px;
     justify-content: flex-start;
-    align-items: flex-start;
   }
   @media (min-width: 1080px) {
     width: 900px;
