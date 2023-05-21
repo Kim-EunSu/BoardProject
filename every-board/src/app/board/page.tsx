@@ -1,6 +1,5 @@
 "use client";
-// Dashboard 컴포넌트
-import Layout from "./layout";
+
 import PostCard from "@/components/PostCard";
 import Header from "@/components/Header";
 import { styled } from "styled-components";
