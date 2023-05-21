@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/Header";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -101,78 +102,81 @@ const Alarm = styled.p``;
 
 export default function page() {
   return (
-    <Wrapper>
-      <Section1>
-        <Left>
-          <Avatar></Avatar>
-          <Name>사용자</Name>
-        </Left>
-        <Right>
-          <Edit>회원정보 수정</Edit>
-        </Right>
-      </Section1>
-      <Section2>
-        <Post>
-          <Icon></Icon>
-          <SubWrapper>
-            <Subtitle>My Post</Subtitle>
-            <Amount>24</Amount>
-          </SubWrapper>
-        </Post>
-        <Post>
-          <Icon></Icon>
-          <SubWrapper>
-            <Subtitle>My Post</Subtitle>
-            <Amount>24</Amount>
-          </SubWrapper>
-        </Post>
-        <Post>
-          <Icon></Icon>
-          <SubWrapper>
-            <Subtitle>My Post</Subtitle>
-            <Amount>24</Amount>
-          </SubWrapper>
-        </Post>
-      </Section2>
-      <Section3>
-        <Alarm>8개알림</Alarm>
-        <Post>
-          <Icon></Icon>
-          <SubWrapper>
-            <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
-            <Amount>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </Amount>
-          </SubWrapper>
-        </Post>{" "}
-        <Post>
-          <Icon></Icon>
-          <SubWrapper>
-            <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
-            <Amount>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </Amount>
-          </SubWrapper>
-        </Post>
-        <Post>
-          <Icon></Icon>
-          <SubWrapper>
-            <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
-            <Amount>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </Amount>
-          </SubWrapper>
-        </Post>
-        <Post>
-          <Icon></Icon>
-          <SubWrapper>
-            <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
-            <Amount>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            </Amount>
-          </SubWrapper>
-        </Post>
-      </Section3>
-    </Wrapper>
+    <>
+      <Header title="Profile" />
+      <Wrapper>
+        <Section1>
+          <Left>
+            <Avatar></Avatar>
+            <Name>사용자</Name>
+          </Left>
+          <Right>
+            <Edit>회원정보 수정</Edit>
+          </Right>
+        </Section1>
+        <Section2>
+          <Post>
+            <Icon></Icon>
+            <SubWrapper>
+              <Subtitle>My Post</Subtitle>
+              <Amount>24</Amount>
+            </SubWrapper>
+          </Post>
+          <Post>
+            <Icon></Icon>
+            <SubWrapper>
+              <Subtitle>My Post</Subtitle>
+              <Amount>24</Amount>
+            </SubWrapper>
+          </Post>
+          <Post>
+            <Icon></Icon>
+            <SubWrapper>
+              <Subtitle>My Post</Subtitle>
+              <Amount>24</Amount>
+            </SubWrapper>
+          </Post>
+        </Section2>
+        <Section3>
+          <Alarm>8개알림</Alarm>
+          <Post>
+            <Icon></Icon>
+            <SubWrapper>
+              <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
+              <Amount>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              </Amount>
+            </SubWrapper>
+          </Post>{" "}
+          <Post>
+            <Icon></Icon>
+            <SubWrapper>
+              <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
+              <Amount>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              </Amount>
+            </SubWrapper>
+          </Post>
+          <Post>
+            <Icon></Icon>
+            <SubWrapper>
+              <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
+              <Amount>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              </Amount>
+            </SubWrapper>
+          </Post>
+          <Post>
+            <Icon></Icon>
+            <SubWrapper>
+              <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
+              <Amount>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              </Amount>
+            </SubWrapper>
+          </Post>
+        </Section3>
+      </Wrapper>
+    </>
   );
 }

@@ -9,12 +9,16 @@ const Wrapper = styled.div`
   background-color: #efe9ff;
 `;
 
-export default function layout({ children }: { children: React.ReactNode }) {
+type Props = {
+  title: string;
+  children: React.ReactNode;
+};
+
+export default function layout(props: Props) {
   return (
     <>
       <Wrapper>
-        <Header />
-        {children}
+        {props.children}
         <Footer />
       </Wrapper>
     </>

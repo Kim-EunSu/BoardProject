@@ -2,8 +2,9 @@
 
 import styled from "styled-components";
 import Image from "next/image";
+import Head from "next/head";
 
-const Head = styled.div`
+const Top = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,7 +17,7 @@ const Left = styled.div`
 `;
 
 const Title = styled.h1`
-  font-weight: bold;
+  color: red;
 `;
 
 const Right = styled.div`
@@ -37,17 +38,21 @@ const Avatar = styled.div`
   background-color: #5429ff;
 `;
 
-export default function Header() {
+interface HeaderProps {
+  title: string;
+}
+
+export default function Header({ title }: HeaderProps) {
   return (
-    <Head>
+    <Top>
       <Left>
         <Image src={"/logo.svg"} width={70} height={70} alt="logo" />
-        <Title>My EveryBoard</Title>
+        <Title>My {title}</Title>
       </Left>
       <Right>
         <Avatar></Avatar>
         사용자
       </Right>
-    </Head>
+    </Top>
   );
 }
