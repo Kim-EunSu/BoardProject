@@ -2,8 +2,10 @@
 
 import styled from "styled-components";
 import ButtonLayout from "./ButtonLayout";
+import { useRouter } from "next/navigation";
 
 const Category = () => {
+  const router = useRouter();
   const categories = [
     "자유게시판",
     "IT",
@@ -40,7 +42,12 @@ const Category = () => {
       <ul>
         {categories.map((el, index) => {
           return (
-            <li key={index}>
+            <li
+              key={index}
+              onClick={() => {
+                router.push("/board");
+              }}
+            >
               <ButtonLayout
                 text={`${el}`}
                 width="75px"
