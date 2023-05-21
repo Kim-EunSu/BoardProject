@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 type Props = {
-  text?: string;
+  text?: React.ReactNode;
   width?: string;
   height?: string;
   color?: string;
@@ -17,7 +17,7 @@ type StyleProps = {
   width?: string;
   height?: string;
   color?: string;
-  background?: string; // Add backgroundColor property
+  background?: string;
   fontSize?: string;
   radius?: string;
   padding?: string;
@@ -29,6 +29,10 @@ const ButtonLayout = (props: Props) => {
 };
 
 const Button = styled.button<StyleProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
   width: ${props => props.width};
   height: ${props => props.height};
   color: ${props => props.color};
