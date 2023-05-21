@@ -2,8 +2,10 @@
 
 import styled from "styled-components";
 import ButtonLayout from "./ButtonLayout";
+import { useRouter } from "next/navigation";
 
 const Category = () => {
+  const router = useRouter();
   const categories = [
     "자유게시판",
     "IT",
@@ -40,7 +42,12 @@ const Category = () => {
       <ul>
         {categories.map((el, index) => {
           return (
-            <li key={index}>
+            <li
+              key={index}
+              onClick={() => {
+                router.push("/board");
+              }}
+            >
               <ButtonLayout
                 text={`${el}`}
                 width="75px"
@@ -49,6 +56,7 @@ const Category = () => {
                 color="var(--primary)"
                 background="#EFE9FF50"
                 fontSize="0.75rem"
+                border="none"
               />
             </li>
           );
@@ -80,9 +88,9 @@ const Nav = styled.nav`
     display: flex;
     flex-wrap: wrap;
     text-align: center;
+    justify-content: space-between;
     gap: 8px;
     list-style: none;
     padding: 12px;
-    margin: 0 auto;
   }
 `;

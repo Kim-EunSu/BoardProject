@@ -1,8 +1,12 @@
-"use client";
-
+// Header 컴포넌트
 import styled from "styled-components";
 import Image from "next/image";
-import Head from "next/head";
+
+// Head부분은 잘몰라서 주석처리 해놨습니다.
+// import Head from "next/head";
+import { useRouter } from "next/navigation";
+
+// const Head = styled.header``;
 
 const Top = styled.div`
   display: flex;
@@ -39,15 +43,25 @@ const Avatar = styled.div`
 `;
 
 interface HeaderProps {
-  title: string;
+  title?: string;
 }
 
 export default function Header({ title }: HeaderProps) {
+  const router = useRouter();
   return (
     <Top>
       <Left>
-        <Image src={"/logo.svg"} width={70} height={70} alt="logo" />
-        <Title>My {title}</Title>
+        <Image
+          src={"/logo.svg"}
+          width={45}
+          height={45}
+          alt="logo"
+          onClick={() => {
+            router.push("/");
+          }}
+          style={{ cursor: "pointer" }}
+        />
+        <Title>{title}</Title>
       </Left>
       <Right>
         <Avatar></Avatar>

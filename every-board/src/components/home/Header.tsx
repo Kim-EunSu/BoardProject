@@ -29,6 +29,7 @@ const Header = (): JSX.Element => {
           background="#ffffff"
           fontSize="1.125rem"
           radius="50px"
+          border="none"
           onClick={() => {
             router.push("/signin");
           }}

@@ -14,6 +14,7 @@ const SearchBar = (): JSX.Element => {
         color="#ffffff"
         background="var(--primary)"
         radius="50px"
+        border="none"
       />
     </SearchBarLayout>
   );
