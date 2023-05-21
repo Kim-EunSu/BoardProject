@@ -1,9 +1,9 @@
-"use client";
-
+// Header 컴포넌트
 import styled from "styled-components";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-const Head = styled.div`
+const Head = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,12 +31,26 @@ const Me = styled.div`
   background-color: white;
 `;
 
-export default function Header() {
+interface HeaderProps {
+  title?: string;
+}
+
+export default function Header({ title }: HeaderProps) {
+  const router = useRouter();
   return (
     <Head>
       <Left>
-        <Image src={"/logo.svg"} width={70} height={70} alt="logo" />
-        <Title>My EveryBoard</Title>
+        <Image
+          src={"/logo.svg"}
+          width={45}
+          height={45}
+          alt="logo"
+          onClick={() => {
+            router.push("/");
+          }}
+          style={{ cursor: "pointer" }}
+        />
+        <Title>{title}</Title>
       </Left>
       <Right>
         <Me>사용자</Me>

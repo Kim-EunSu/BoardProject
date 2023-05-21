@@ -1,21 +1,19 @@
 "use client";
 
-import styled from "styled-components";
+// Layout 컴포넌트
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
-const Wrapper = styled.div`
-  background-color: RGBA(239, 233, 255, 30%);
-`;
+interface LayoutProps {
+  children: React.ReactNode;
+  headerText?: string;
+}
 
-export default function layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      <Wrapper>
-        <Header />
-        {children}
-        <Footer />
-      </Wrapper>
+      {children}
+      <Footer />
     </>
   );
 }
