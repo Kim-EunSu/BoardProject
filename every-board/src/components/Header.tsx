@@ -23,13 +23,12 @@ const Right = styled.div``;
 
 const Me = styled.div`
   display: flex;
-  align-items: center;'
+  align-items: center;
   justify-content: center;
   width: 130px;
   height: 50px;
   border-radius: 25px;
   background-color: white;
-
 `;
 
 export default function Header() {
