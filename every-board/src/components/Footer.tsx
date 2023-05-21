@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
 
-const Wrapper = styled.div`
+const Wrapper = styled.footer`
   width: 100%;
   display: flex;
   align-items: center;
@@ -56,46 +56,44 @@ const ContentWrapper = styled.div`
 export default function Footer() {
   const scrollToTop = () => window.scrollTo(0, 0);
   return (
-    <>
-      <Wrapper>
-        <Image
-          src={"/logo.svg"}
-          width={30}
-          height={30}
-          alt="footer로고"
-          onClick={scrollToTop}
-          style={{ cursor: "pointer" }}
-        />
-        <ContentWrapper>
-          <div>
-            <span onClick={scrollToTop}>모두의 게시판</span>
-            <Link
-              href="https://github.com/orgs/Every-Board/repositories"
-              className="every-board"
-            >
-              Github
-            </Link>
-          </div>
-          <div className="github">
-            <Link href="https://github.com/z1nun" className="link">
-              z1nun
-            </Link>
-            <Link href="https://github.com/Kim-EunSu" className="link">
-              Kim-EunSu
-            </Link>
-            <Link href="https://github.com/Kangharyeom" className="link">
-              Kangharyeom
-            </Link>
-            <Link href="https://github.com/eehres" className="link">
-              eehres
-            </Link>
-            <Link href="https://github.com/Choiyu330" className="link">
-              Yujin_Choi
-            </Link>
-            <span style={{ color: "#FC0374" }}>since, 2023.05</span>
-          </div>
-        </ContentWrapper>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Image
+        src={"/logo.svg"}
+        width={30}
+        height={30}
+        alt="footer로고"
+        onClick={scrollToTop}
+        style={{ cursor: "pointer" }}
+      />
+      <ContentWrapper>
+        <div>
+          <span onClick={scrollToTop}>모두의 게시판</span>
+          <Link
+            href="https://github.com/orgs/Every-Board/repositories"
+            className="every-board"
+          >
+            Github
+          </Link>
+        </div>
+        <div className="github">
+          <Link href="https://github.com/z1nun" className="link">
+            z1nun
+          </Link>
+          <Link href="https://github.com/Kim-EunSu" className="link">
+            Kim-EunSu
+          </Link>
+          <Link href="https://github.com/Kangharyeom" className="link">
+            Kangharyeom
+          </Link>
+          <Link href="https://github.com/eehres" className="link">
+            eehres
+          </Link>
+          <Link href="https://github.com/Choiyu330" className="link">
+            Yujin_Choi
+          </Link>
+          <span style={{ color: "#FC0374" }}>since, 2023.05</span>
+        </div>
+      </ContentWrapper>
+    </Wrapper>
   );
 }
