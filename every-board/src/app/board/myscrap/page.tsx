@@ -7,4 +7,5 @@ export default function page() {
       <div>스크랩페이지</div>
     </>
   );
+
 }
