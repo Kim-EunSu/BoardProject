@@ -4,6 +4,7 @@
 import Footer from "../../components/Footer";
 import styled from "styled-components";
 
+
 interface LayoutProps {
   children: React.ReactNode;
   headerText?: string;
