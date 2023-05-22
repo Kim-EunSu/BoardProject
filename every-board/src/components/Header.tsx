@@ -21,7 +21,7 @@ const Left = styled.div`
 `;
 
 const Title = styled.h1`
-  color: red;
+  font-weight: bold;
 `;
 
 const Right = styled.div`
@@ -61,7 +61,7 @@ export default function Header({ title }: HeaderProps) {
           }}
           style={{ cursor: "pointer" }}
         />
-        <Title>{title}</Title>
+        <Title>My {title}</Title>
       </Left>
       <Right>
         <Avatar></Avatar>
