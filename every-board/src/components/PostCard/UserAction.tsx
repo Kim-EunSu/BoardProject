@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Comment from "./Comment";
 import Reply from "./Reply";
 import { useState } from "react";
@@ -13,7 +12,7 @@ const UserAction = ({
   comment?: boolean;
   reply?: boolean;
 }) => {
-  const [isLikeClick, setLike] = useState<Boolean>(false);
+  const [isLikeClick, setLike] = useState<boolean>(false);
   const [isCommentClick, setComment] = useState<boolean>(false);
   return (
     <UserActionContainer className={comment ? "comment" : ""}>
