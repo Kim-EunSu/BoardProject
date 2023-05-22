@@ -1,4 +1,4 @@
-// .eslintrc.json
+// .eslintrc
 {
   "parser": "@typescript-eslint/parser",
   "plugins": [
@@ -10,12 +10,13 @@
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "plugin:react/recommended",
+    "plugin:@next/next/recommended"
   ],
   "rules": {
     // 'React' must be in scope when using JSX 에러 해결 (Next.js)
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "off",
     // ts파일에서 tsx구문 허용 (Next.js)
     "react/jsx-filename-extension": [
       1,

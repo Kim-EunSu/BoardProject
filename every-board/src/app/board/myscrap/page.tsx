@@ -1,3 +1,4 @@
+"use client";
 import Header from "@/components/Header";
 
 export default function page() {
@@ -7,5 +8,4 @@ export default function page() {
       <div>스크랩페이지</div>
     </>
   );
-
 }
