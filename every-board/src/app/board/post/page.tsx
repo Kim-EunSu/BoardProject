@@ -2,6 +2,8 @@
 
 import styled from "styled-components";
 import Header from "@/components/Header";
+import { useState } from "react";
+
 const Wrapper = styled.div``;
 
 const Avatar = styled.div`
@@ -63,6 +65,8 @@ const FileInput = styled.input`
 `;
 
 export default function page() {
+  //파일 추가
+  const [imgfile, setImgFile] = useState<string>("");
   return (
     <>
       <Header title="PostWriting" />
@@ -86,7 +90,10 @@ export default function page() {
           </FormWrap>
           <FormWrap>
             <Label>파일 추가</Label>
-            <FileInput placeholder="You can put files from your computer here" />
+            <FileInput
+              accept="image/*"
+              placeholder="You can put files from your computer here"
+            />
           </FormWrap>
         </FormWrapper>
       </Wrapper>
