@@ -3,6 +3,7 @@
 import styled from "styled-components";
 import Header from "@/components/Header";
 import { useState } from "react";
+import { useDropzone } from "react-dropzone";
 
 const Wrapper = styled.div``;
 
