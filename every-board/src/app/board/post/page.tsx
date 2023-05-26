@@ -2,8 +2,10 @@
 
 import styled from "styled-components";
 import Header from "@/components/Header";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { createPortal } from "react-dom";
+import Category from "@/components/Category";
 
 const Wrapper = styled.div``;
 
@@ -34,12 +36,37 @@ const FormWrap = styled.div`
   display: flex;
   margin-bottom: 25px;
   flex-direction: column;
+
+  &:first-child {
+    position: relative;
+  }
 `;
 
 const Label = styled.label`
   font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 10px;
+`;
+
+const Catagory = styled.button<{ isActive: boolean }>`
+  position: absolute;
+  top: 40px;
+  right: 15px;
+  max-width: 150px;
+  font-weight: bold;
+  padding: 0.3rem 2rem;
+  color: #5429ff;
+  border-radius: 4px;
+  background: transparent;
+  border: 2px solid #5429ff;
+  color: ${({ isActive }) => (isActive ? "#5429ff" : "#ffff")};
+  background: ${({ isActive }) => (isActive ? "transparent" : "#5429ff")};
+`;
+
+const CategoryWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 `;
 
 const inputCommonStyle = {
@@ -60,14 +87,42 @@ const Textarea = styled.textarea`
   min-height: 8rem;
 `;
 
-const FileInput = styled.input`
-  ${inputCommonStyle}
-  border: 1px dotted #5429FF;
+const FilleWrapper = styled.div`
+  display: flex;
+  margin-bottom: 25px;
+  flex-direction: column;
 `;
 
+const FileInput = styled.input`
+  display: block !important;
+  ${inputCommonStyle}
+  border: 1px dotted #5429ff;
+`;
+
+const FileBtn = styled.button``;
+
+const ImageBox = styled.div``;
+
 export default function page() {
-  //파일 추가
-  const [imgfile, setImgFile] = useState<string>("");
+  //카테고리modal 클릭 유무를 저장할 state
+  const [showModal, setShowModal] = useState(false);
+
+  //카테고리 값 저장
+  const [category, setCategory] = useState("");
+
+  //input창에 값을 넣어야하는데 실패함
+  // const handleCategory = (value: string) => {
+  //   setCategory(value);
+  // };
+
+  const handleModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (e.target === e.currentTarget) {
+      const isActive = !showModal;
+      setShowModal(!showModal);
+    }
+  };
+
   return (
     <>
       <Header title="PostWriting" />
@@ -79,7 +134,14 @@ export default function page() {
         <FormWrapper>
           <FormWrap>
             <Label>카테코리</Label>
-            <Input placeholder="카테고리를 선택하세요." />
+            <Input
+              placeholder="카테고리를 선택하세요."
+              defaultValue={category}
+            />
+            <Catagory isActive={!showModal} onClick={handleModal}>
+              카테고리
+            </Catagory>
+            <CategoryWrap>{showModal && <Category></Category>}</CategoryWrap>
           </FormWrap>
           <FormWrap>
             <Label>제목</Label>
@@ -88,13 +150,6 @@ export default function page() {
           <FormWrap>
             <Label>내용</Label>
             <Textarea placeholder="내용을 입력하세요." />
-          </FormWrap>
-          <FormWrap>
-            <Label>파일 추가</Label>
-            <FileInput
-              accept="image/*"
-              placeholder="You can put files from your computer here"
-            />
           </FormWrap>
         </FormWrapper>
       </Wrapper>
