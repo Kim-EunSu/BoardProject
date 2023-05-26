@@ -10,17 +10,17 @@ interface LayoutProps {
 }
 
 const Wrapper = styled.div`
-padding: 0 5rem;
-`
+  padding: 0 5rem;
+`;
 
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-    <Wrapper>
-   {children}
-      <Footer />
-    </Wrapper>
-   
+      <Wrapper>
+        {children}
+        <Footer />
+        <div id="portal" />
+      </Wrapper>
     </>
   );
 }
