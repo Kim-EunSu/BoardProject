@@ -19,7 +19,6 @@ export default function Layout({ children }: LayoutProps) {
       <Wrapper>
         {children}
         <Footer />
-        <div id="portal" />
       </Wrapper>
     </>
   );
