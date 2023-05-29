@@ -6,7 +6,6 @@ import SearchBar from "@/components/home/SearchBar";
 import PhotoLine from "@/components/home/PhotoLine";
 import Footer from "@/components/Footer";
 import styled from "styled-components";
-import { useState } from "react";
 
 const Home = (): JSX.Element => {
   return (
