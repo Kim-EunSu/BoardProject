@@ -2,9 +2,8 @@
 
 import styled from "styled-components";
 import Header from "@/components/Header";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
-import { createPortal } from "react-dom";
 import Category from "@/components/Category";
 
 const Wrapper = styled.div``;
@@ -97,11 +96,27 @@ const FileInput = styled.input`
   display: block !important;
   ${inputCommonStyle}
   border: 1px dotted #5429ff;
+  padding: 1rem 3rem;
+
+  &::placeholder {
+    color: #5429ff;
+    text-align: center;
+  }
 `;
 
 const FileBtn = styled.button``;
 
 const ImageBox = styled.div``;
+
+interface FileType {
+  lastModified: number;
+  lastModifiedDate: Date;
+  name: string;
+  path: string;
+  size: number;
+  type: string;
+  webkitRelativePath: string;
+}
 
 export default function page() {
   //카테고리modal 클릭 유무를 저장할 state
@@ -109,6 +124,8 @@ export default function page() {
 
   //카테고리 값 저장
   const [category, setCategory] = useState("");
+
+  const categoryInput = useRef<HTMLInputElement>(null);
 
   //input창에 값을 넣어야하는데 실패함
   // const handleCategory = (value: string) => {
@@ -118,10 +135,21 @@ export default function page() {
   const handleModal = (e: React.MouseEvent) => {
     e.preventDefault();
     if (e.target === e.currentTarget) {
-      const isActive = !showModal;
       setShowModal(!showModal);
     }
   };
+
+  //업로드하려는 파일 정보
+  const [file, setFile] = useState<FileType[]>([]);
+
+  const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
+    useDropzone();
+
+  const fileObjects = acceptedFiles.map((file: File) => {
+    const formData = new FormData();
+    formData.append("assets", file, file.name);
+    console.log(file);
+  });
 
   return (
     <>
@@ -135,6 +163,7 @@ export default function page() {
           <FormWrap>
             <Label>카테코리</Label>
             <Input
+              ref={categoryInput}
               placeholder="카테고리를 선택하세요."
               defaultValue={category}
             />
@@ -150,6 +179,13 @@ export default function page() {
           <FormWrap>
             <Label>내용</Label>
             <Textarea placeholder="내용을 입력하세요." />
+          </FormWrap>
+          <FormWrap>
+            <Label>파일 추가</Label>
+            <FilleWrapper {...getRootProps()}>
+              <FileInput {...getInputProps()} />
+              {/* <p>Drag 'n' drop some files here, or click to select files</p> */}
+            </FilleWrapper>
           </FormWrap>
         </FormWrapper>
       </Wrapper>
