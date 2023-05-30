@@ -2,8 +2,7 @@
 
 import styled from "styled-components";
 import Header from "@/components/Header";
-import { useState, useCallback, useRef } from "react";
-import { useDropzone } from "react-dropzone";
+import { useState, useRef } from "react";
 import Category from "@/components/Category";
 
 const Wrapper = styled.div``;
@@ -47,7 +46,11 @@ const Label = styled.label`
   margin-bottom: 10px;
 `;
 
-const Catagory = styled.button<{ isActive: boolean }>`
+interface BtnProps {
+  isactive?: boolean;
+}
+
+const Catagory = styled.button<BtnProps>`
   position: absolute;
   top: 40px;
   right: 15px;
@@ -58,8 +61,8 @@ const Catagory = styled.button<{ isActive: boolean }>`
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
-  color: ${({ isActive }) => (isActive ? "#5429ff" : "#ffff")};
-  background: ${({ isActive }) => (isActive ? "transparent" : "#5429ff")};
+  color: ${({ isactive }) => (isactive ? "#5429ff" : "#ffff")};
+  background: ${({ isactive }) => (isactive ? "transparent" : "#5429ff")};
 `;
 
 const CategoryWrap = styled.div`
@@ -104,52 +107,89 @@ const FileInput = styled.input`
   }
 `;
 
-const FileBtn = styled.button``;
+const FileBtnWrapper = styled.div`
+  position: relative;
+`;
 
-const ImageBox = styled.div``;
+const FileBtn = styled.button`
+  top: 18px;
+  position: absolute;
+  right: 20px;
+  font-size: 1rem;
+  color: #fc0374;
+  border: transparent;
+  background: transparent;
+  text-decoration: underline;
 
-interface FileType {
-  lastModified: number;
-  lastModifiedDate: Date;
-  name: string;
-  path: string;
-  size: number;
-  type: string;
-  webkitRelativePath: string;
-}
+  &:first-child {
+    margin-right: 80px;
+  }
+`;
 
 export default function page() {
   //카테고리modal 클릭 유무를 저장할 state
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
-  //카테고리 값 저장
-  const [category, setCategory] = useState("");
+  //카테고리 modal의 on/off
+  const toggleModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setShowModal(!showModal);
+  };
 
   const categoryInput = useRef<HTMLInputElement>(null);
 
-  //input창에 값을 넣어야하는데 실패함
-  // const handleCategory = (value: string) => {
-  //   setCategory(value);
-  // };
+  //사용자가 불러온 파일의 정보를 넣는값
+  const [file, setFile] = useState<File | undefined>();
 
-  const handleModal = (e: React.MouseEvent) => {
+  //사용자가 불러온 파일의 URL
+  const [previewURL, setPreviewURL] = useState("");
+
+  //preview는 img태그가 들어갈 곳
+  const [preview, setPreview] = useState("");
+
+  //input클릭버튼을 발생시키기위해 생성
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (e.target === e.currentTarget) {
-      setShowModal(!showModal);
+    //input을 통해 파일 업로드시(length의길이가 1일때) 업로드를 취소할 경우 에러가 발생하므로 이와같이 해결
+    if (file?.length === 0) {
+      return;
+    }
+    //EventTarget오류 유형에 files속성이 없다고 오류가 뜨기 때문에 if부분 필수
+    if (e.target.files != null) {
+      const file = e.target.files[0];
+      let reader = new FileReader();
+
+      reader.onloadend = e => {
+        const target = e.target as FileReader;
+        const result = target.result;
+        setPreviewURL(result as string);
+
+        if (result) {
+          setPreview(result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+      setFile(file);
     }
   };
 
-  //업로드하려는 파일 정보
-  const [file, setFile] = useState<FileType[]>([]);
+  const handleFileButton = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (fileRef.current) {
+      fileRef.current.click();
+    }
+  };
 
-  const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
-    useDropzone();
-
-  const fileObjects = acceptedFiles.map((file: File) => {
-    const formData = new FormData();
-    formData.append("assets", file, file.name);
-    console.log(file);
-  });
+  const handleFileDelete = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (fileRef.current) {
+      fileRef.current.value = "";
+    }
+    setPreview("");
+    setPreviewURL("");
+  };
 
   return (
     <>
@@ -162,14 +202,8 @@ export default function page() {
         <FormWrapper>
           <FormWrap>
             <Label>카테코리</Label>
-            <Input
-              ref={categoryInput}
-              placeholder="카테고리를 선택하세요."
-              defaultValue={category}
-            />
-            <Catagory isActive={!showModal} onClick={handleModal}>
-              카테고리
-            </Catagory>
+            <Input ref={categoryInput} placeholder="카테고리를 선택하세요." />
+            <Catagory onClick={toggleModal}>카테고리</Catagory>
             <CategoryWrap>{showModal && <Category></Category>}</CategoryWrap>
           </FormWrap>
           <FormWrap>
@@ -182,9 +216,18 @@ export default function page() {
           </FormWrap>
           <FormWrap>
             <Label>파일 추가</Label>
-            <FilleWrapper {...getRootProps()}>
-              <FileInput {...getInputProps()} />
-              {/* <p>Drag 'n' drop some files here, or click to select files</p> */}
+            <FilleWrapper>
+              {preview && (
+                <FileBtnWrapper>
+                  <FileBtn onClick={handleFileButton}>수정하기</FileBtn>
+                  <FileBtn onClick={handleFileDelete}>삭제하기</FileBtn>
+                </FileBtnWrapper>
+              )}
+              <FileInput
+                type="file"
+                ref={fileRef}
+                onChange={handleFileOnChange}
+              />
             </FilleWrapper>
           </FormWrap>
         </FormWrapper>
