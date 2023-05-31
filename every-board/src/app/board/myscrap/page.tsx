@@ -1,7 +1,11 @@
-import React from 'react'
+"use client";
+import Header from "@/components/Header";
 
 export default function page() {
   return (
-    <div>page</div>
-  )
+    <>
+      <Header title="Scrap" />
+      <div>스크랩페이지</div>
+    </>
+  );
 }
