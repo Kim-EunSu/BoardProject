@@ -5,7 +5,11 @@ import Header from "@/components/Header";
 import { useState, useRef } from "react";
 import Category from "@/components/Category";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  padding: 1rem 3rem;
+  border-radius: 18px;
+  background-color: white;
+`;
 
 const Avatar = styled.div`
   width: 5rem;
@@ -76,7 +80,7 @@ const inputCommonStyle = {
   padding: "10px 14px",
   borderWidth: "1px",
   borderStyle: "solid",
-  borderColor: "#d0d5dd",
+  borderColor: "#E9EFF4",
 };
 
 const Input = styled.input`
@@ -98,7 +102,7 @@ const FilleWrapper = styled.div`
 const FileInput = styled.input`
   display: block !important;
   ${inputCommonStyle}
-  border: 1px dotted #5429ff;
+  border: 1px dashed #5429ff;
   padding: 1rem 3rem;
 
   &::placeholder {

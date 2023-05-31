@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 
 import styled from "styled-components";
 import Image from "next/image";
@@ -9,7 +10,6 @@ const Wrapper = styled.footer`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
   gap: 3px;
 `;
 
