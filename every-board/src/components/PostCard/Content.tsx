@@ -1,7 +1,11 @@
 import { styled } from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 
-const Content = ({ detail }: { detail?: boolean }) => {
+interface Props {
+  detail?: boolean;
+  onClick?: () => void;
+}
+const Content = (props: Props) => {
   return (
     <ContentWrap>
       <ButtonLayout
@@ -16,7 +20,7 @@ const Content = ({ detail }: { detail?: boolean }) => {
       />
       <div>
         <h4>Lorem ipsum dolor sit amet </h4>
-        <span className={detail ? "detail" : ""}>
+        <span className={props.detail ? "detail" : ""}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing

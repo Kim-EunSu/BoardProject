@@ -4,18 +4,27 @@ import UserInfo from "./PostCard/UserInfo";
 import Content from "./PostCard/Content";
 import UserAction from "./PostCard/UserAction";
 import CommentInput from "./PostCard/CommentInput";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-const PostCard = ({
-  detail,
-  onClick,
-}: {
+interface Props {
   detail?: boolean;
   onClick?: () => void;
-}) => {
+}
+const PostCard = (props: Props) => {
+  const Navigation = (): void => {
+    const router = useRouter();
+    router.push("/board/detail");
+  };
   return (
     <Article>
       <UserInfo />
-      <Content detail={detail} />
+      <Link
+        href="board/detail"
+        style={{ textDecoration: "none", color: "#000000" }}
+      >
+        <Content detail={props.detail} />
+      </Link>
       <UserAction comment={false} />
       <CommentInput />
     </Article>
