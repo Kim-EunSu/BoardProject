@@ -1,27 +1,69 @@
-// Header 컴포넌트
 import styled from "styled-components";
 import Image from "next/image";
-
-// Head부분은 잘몰라서 주석처리 해놨습니다.
-// import Head from "next/head";
 import { useRouter } from "next/navigation";
 
-// const Head = styled.header``;
+interface HeaderProps {
+  title?: string;
+}
+
+const Header = ({ title }: HeaderProps) => {
+  const router = useRouter();
+  return (
+    <Top>
+      <Left>
+        <Image
+          src={"/logo.svg"}
+          width={45}
+          height={45}
+          alt="logo"
+          onClick={() => {
+            router.push("/");
+          }}
+          style={{ cursor: "pointer" }}
+        />
+        <Title>{title}</Title>
+      </Left>
+      <Right>
+        <Avatar></Avatar>
+        사용자
+      </Right>
+    </Top>
+  );
+};
 
 const Top = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 0;
+  margin: 0 auto;
+  padding-top: 2.5rem;
+  width: 350px;
+
+  @media (min-width: 768px) {
+    width: 680px;
+  }
+  @media (min-width: 1080px) {
+    width: 980px;
+  }
+  @media (min-width: 1440px) {
+    width: 1200px;
+  }
 `;
 
 const Left = styled.div`
   display: flex;
   align-items: center;
+  gap: 4px;
 `;
 
 const Title = styled.h1`
   font-weight: bold;
+  font-size: 1.75rem;
+
+  @media (min-width: 1080px) {
+    font-size: 2.25rem;
+  }
 `;
 
 const Right = styled.div`
@@ -42,31 +84,4 @@ const Avatar = styled.div`
   background-color: #5429ff;
 `;
 
-interface HeaderProps {
-  title?: string;
-}
-
-export default function Header({ title }: HeaderProps) {
-  const router = useRouter();
-  return (
-    <Top>
-      <Left>
-        <Image
-          src={"/logo.svg"}
-          width={45}
-          height={45}
-          alt="logo"
-          onClick={() => {
-            router.push("/");
-          }}
-          style={{ cursor: "pointer" }}
-        />
-        <Title>My {title}</Title>
-      </Left>
-      <Right>
-        <Avatar></Avatar>
-        사용자
-      </Right>
-    </Top>
-  );
-}
+export default Header;
