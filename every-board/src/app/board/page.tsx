@@ -2,7 +2,7 @@
 
 import PostCard from "@/components/PostCard";
 import Header from "@/components/Header";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const Dashboard = () => {
   return (

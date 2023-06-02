@@ -3,7 +3,7 @@ import Reply from "./Reply";
 import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 const UserAction = ({
   comment,
