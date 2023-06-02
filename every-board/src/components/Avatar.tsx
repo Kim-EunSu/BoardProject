@@ -1,27 +1,43 @@
 import Image from "next/image";
+import Link from "next/link";
 import { styled } from "styled-components";
-
-type AvatarSize = "small" | "large";
 
 type Props = {
   image?: string | null;
-  size?: AvatarSize;
 };
 
 //size를 따로 명시하지 않으면 기본적으로 large사이즈
-export default function Avatar({ image, size = "large" }: Props) {
+export default function Avatar({ image }: Props) {
   return (
-    <>
-      <Image src={"/profile.svg"} alt="user profile" />
-    </>
+    <AvatarWrap>
+      <Image
+        src={"/frame.png"}
+        alt="프로필 사진"
+        width={40}
+        height={40}
+        style={{ borderRadius: "50px" }}
+      />
+      <span>일이삼사오육칠팔구십</span>
+    </AvatarWrap>
   );
 }
 
-function ContainerSize(size: AvatarSize): string {
-  switch (size) {
-    case "small":
-      return "width:2.5rem height:2.5rem";
-    case "large":
-      return "width:4rem height:4rem";
-  }
-}
+const AvatarWrap = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 150px;
+  padding: 8px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: white;
+  gap: 6px;
+
+  white-space: normal;
+  //PostCard 콘텐츠 5줄만 보이기
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
