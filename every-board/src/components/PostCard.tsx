@@ -5,11 +5,17 @@ import Content from "./PostCard/Content";
 import UserAction from "./PostCard/UserAction";
 import CommentInput from "./PostCard/CommentInput";
 
-const PostCard = () => {
+const PostCard = ({
+  detail,
+  onClick,
+}: {
+  detail?: boolean;
+  onClick?: () => void;
+}) => {
   return (
     <Article>
       <UserInfo />
-      <Content />
+      <Content detail={detail} />
       <UserAction comment={false} />
       <CommentInput />
     </Article>
