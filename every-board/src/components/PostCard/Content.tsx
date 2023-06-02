@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 
-const Content = () => {
+const Content = ({ detail }: { detail?: boolean }) => {
   return (
     <ContentWrap>
       <ButtonLayout
@@ -16,7 +16,25 @@ const Content = () => {
       />
       <div>
         <h4>Lorem ipsum dolor sit amet </h4>
-        <span>
+        <span className={detail ? "detail" : ""}>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
+          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+          aliqua. Ut enim ad minim veniam, Lorem ipsum dolor sit amet,
+          consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, Lorem ipsum
+          dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
+          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+          aliqua. Ut enim ad minim veniam, Lorem ipsum dolor sit amet,
+          consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, Lorem ipsum
+          dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -44,6 +62,18 @@ const ContentWrap = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+  }
+
+  span {
+    white-space: normal;
+    //PostCard 콘텐츠 5줄만 보이기
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .detail {
+    display: flex;
   }
 
   @media (min-width: 768px) {
