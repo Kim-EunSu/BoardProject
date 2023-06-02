@@ -3,7 +3,9 @@
 import styled from "styled-components";
 import Header from "@/components/Header";
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Category from "@/components/Category";
+import axios from "axios";
 
 const Wrapper = styled.div`
   padding: 1rem 3rem;
@@ -50,23 +52,18 @@ const Label = styled.label`
   margin-bottom: 10px;
 `;
 
-interface BtnProps {
-  isactive?: boolean;
-}
-
-const Catagory = styled.button<BtnProps>`
+const Catagory = styled.button<{ isActive: boolean }>`
   position: absolute;
   top: 40px;
   right: 15px;
   max-width: 150px;
   font-weight: bold;
   padding: 0.3rem 2rem;
-  color: #5429ff;
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
-  color: ${({ isactive }) => (isactive ? "#5429ff" : "#ffff")};
-  background: ${({ isactive }) => (isactive ? "transparent" : "#5429ff")};
+  color: ${({ isActive }) => (isActive ? "#ffff" : "#5429ff")};
+  background: ${({ isActive }) => (isActive ? "#5429ff" : "transparent")};
 `;
 
 const CategoryWrap = styled.div`
@@ -130,14 +127,90 @@ const FileBtn = styled.button`
   }
 `;
 
+const InputBtnWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 100px;
+  &:first-child {
+    margin-right: 20px;
+  }
+`;
+
+const InputBtn = styled.button<{ isSelected: Boolean }>`
+  max-width: 150px;
+  font-weight: bold;
+  padding: 0.3rem 2rem;
+  border-radius: 4px;
+  background: transparent;
+  border: 2px solid #5429ff;
+  color: ${props => (props.isSelected ? "#ffff" : "#5429ff")};
+  background: ${props => (props.isSelected ? "#5429ff" : "transparent")};
+
+  &:first-child {
+    margin-right: 20px;
+  }
+`;
+
 export default function page() {
+  //category버튼
+  const [isActive, setIsActive] = useState(false);
+
+  //취소하기&작성하기 버튼
+  const [inputBtn, setInputBtn] = useState<string>("");
+
+  const handleInputButton = (buttonName: string) => {
+    setInputBtn(buttonName);
+  };
+
+  const router = useRouter();
+
+  //전체의 input관리
+  const [inputs, setInputs] = useState({
+    category: "",
+    title: "",
+    content: "",
+    filename: "",
+  });
+
+  //비구조할당을 통해 값 추출
+  const { category, title, content, filename } = inputs;
+
   //카테고리modal 클릭 유무를 저장할 state
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  const onChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs, // 기존 input객체 복사
+      [name]: value,
+    });
+  };
+
+  const saveBoard = async () => {
+    await axios.post(`//localhost:3001/board/post`, inputs).then(res => {
+      alert("등록됨");
+      router.push("/");
+    });
+  };
+
+  const backBoard = () => {
+    router.push("/");
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(inputs);
+  };
 
   //카테고리 modal의 on/off
   const toggleModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setShowModal(!showModal);
+    setIsActive(!isActive);
   };
 
   const categoryInput = useRef<HTMLInputElement>(null);
@@ -203,20 +276,38 @@ export default function page() {
           <Avatar></Avatar>
           <Name>사용자</Name>
         </Box1>
-        <FormWrapper>
+        <FormWrapper onSubmit={handleSubmit}>
           <FormWrap>
             <Label>카테코리</Label>
-            <Input ref={categoryInput} placeholder="카테고리를 선택하세요." />
-            <Catagory onClick={toggleModal}>카테고리</Catagory>
+            <Input
+              name="category"
+              value={category}
+              onChange={onChange}
+              ref={categoryInput}
+              placeholder="카테고리를 선택하세요."
+            />
+            <Catagory isActive={isActive} onClick={toggleModal}>
+              카테고리
+            </Catagory>
             <CategoryWrap>{showModal && <Category></Category>}</CategoryWrap>
           </FormWrap>
           <FormWrap>
             <Label>제목</Label>
-            <Input placeholder="제목을 입력하세요." />
+            <Input
+              name="title"
+              value={title}
+              onChange={onChange}
+              placeholder="제목을 입력하세요."
+            />
           </FormWrap>
           <FormWrap>
             <Label>내용</Label>
-            <Textarea placeholder="내용을 입력하세요." />
+            <Textarea
+              name="content"
+              value={content}
+              onChange={onChange}
+              placeholder="내용을 입력하세요."
+            />
           </FormWrap>
           <FormWrap>
             <Label>파일 추가</Label>
@@ -228,12 +319,34 @@ export default function page() {
                 </FileBtnWrapper>
               )}
               <FileInput
+                name="filename"
                 type="file"
                 ref={fileRef}
                 onChange={handleFileOnChange}
               />
             </FilleWrapper>
           </FormWrap>
+          <InputBtnWrap>
+            <InputBtn
+              isSelected={inputBtn === "취소"}
+              onClick={() => {
+                handleInputButton("취소");
+                backBoard();
+              }}
+            >
+              취소하기
+            </InputBtn>
+
+            <InputBtn
+              isSelected={inputBtn === "작성"}
+              onClick={() => {
+                handleInputButton("작성");
+                saveBoard();
+              }}
+            >
+              작성하기
+            </InputBtn>
+          </InputBtnWrap>
         </FormWrapper>
       </Wrapper>
     </>
