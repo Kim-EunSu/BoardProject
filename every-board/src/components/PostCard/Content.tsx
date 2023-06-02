@@ -52,6 +52,7 @@ const Content = (props: Props) => {
 
 const ContentWrap = styled.div`
   width: 320px;
+  min-height: 100%;
   height: fit-content;
   padding: 20px 10px;
   margin: 0 auto;
@@ -62,6 +63,7 @@ const ContentWrap = styled.div`
   background: #ffffff;
   border: 2px solid #e9eff4;
   border-radius: 5.77775px;
+
   div {
     display: flex;
     flex-direction: column;
@@ -89,7 +91,6 @@ const ContentWrap = styled.div`
   @media (min-width: 1080px) {
     width: 900px;
   }
-
   @media (min-width: 1440px) {
     width: 1100px;
   }
