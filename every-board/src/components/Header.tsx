@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
+import Avatar from "./Avatar";
 import { useRouter } from "next/navigation";
 
 interface HeaderProps {
@@ -23,10 +24,7 @@ const Header = ({ title }: HeaderProps) => {
         />
         <Title>{title}</Title>
       </Left>
-      <Right>
-        <Avatar></Avatar>
-        사용자
-      </Right>
+      <Avatar />
     </Top>
   );
 };
@@ -64,24 +62,6 @@ const Title = styled.h1`
   @media (min-width: 1080px) {
     font-size: 2.25rem;
   }
-`;
-
-const Right = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 130px;
-  height: 50px;
-  border-radius: 25px;
-  background-color: white;
-`;
-
-const Avatar = styled.div`
-  width: 40px;
-  height: 40px;
-  margin-right: 6px;
-  border-radius: 50%;
-  background-color: #5429ff;
 `;
 
 export default Header;

@@ -236,7 +236,7 @@ export default function page() {
     //EventTarget오류 유형에 files속성이 없다고 오류가 뜨기 때문에 if부분 필수
     if (e.target.files != null) {
       const file = e.target.files[0];
-      let reader = new FileReader();
+      const reader = new FileReader();
 
       reader.onloadend = e => {
         const target = e.target as FileReader;
