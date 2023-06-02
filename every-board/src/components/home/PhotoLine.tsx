@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 import ButtonLayout from "@/components/ButtonLayout";
 
 const PhotoLine = () => {
