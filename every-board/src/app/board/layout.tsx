@@ -4,14 +4,15 @@
 import Footer from "../../components/Footer";
 import styled from "styled-components";
 
-
 interface LayoutProps {
   children: React.ReactNode;
   headerText?: string;
 }
 
 const Wrapper = styled.div`
-  padding: 0 5rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 `;
 
 export default function Layout({ children }: LayoutProps) {
