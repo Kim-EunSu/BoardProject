@@ -10,7 +10,6 @@ const Wrapper = styled.footer`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
   gap: 3px;
 `;
 
