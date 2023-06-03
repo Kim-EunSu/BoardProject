@@ -37,7 +37,7 @@ const Top = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
-  padding-top: 2.5rem;
+  padding: 2.5rem 0;
   width: 350px;
 
   @media (min-width: 768px) {
