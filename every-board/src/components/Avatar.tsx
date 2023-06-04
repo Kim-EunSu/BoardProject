@@ -9,16 +9,21 @@ type Props = {
 //size를 따로 명시하지 않으면 기본적으로 large사이즈
 export default function Avatar({ image }: Props) {
   return (
-    <AvatarWrap>
-      <Image
-        src={"/frame.png"}
-        alt="프로필 사진"
-        width={40}
-        height={40}
-        style={{ borderRadius: "50px" }}
-      />
-      <span>일이삼사오육칠팔구십</span>
-    </AvatarWrap>
+    <Link
+      href="/board/myprofile"
+      style={{ textDecoration: "none", color: "#000000", cursor: "pointer" }}
+    >
+      <AvatarWrap>
+        <Image
+          src={"/frame.png"}
+          alt="프로필 사진"
+          width={40}
+          height={40}
+          style={{ borderRadius: "50px" }}
+        />
+        <NickName>일이삼사오육칠팔</NickName>
+      </AvatarWrap>
+    </Link>
   );
 }
 
@@ -27,17 +32,19 @@ const AvatarWrap = styled.span`
   align-items: center;
   justify-content: center;
   width: fit-content;
-  max-width: 150px;
+  max-width: 170px;
   padding: 8px;
   height: 50px;
   border-radius: 25px;
   background-color: white;
   gap: 6px;
+`;
 
-  white-space: normal;
-  //PostCard 콘텐츠 5줄만 보이기
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+//닉네임 7글자 이상은 ...처리
+const NickName = styled.span`
+  padding: 0 5px;
+  max-width: 108px;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
