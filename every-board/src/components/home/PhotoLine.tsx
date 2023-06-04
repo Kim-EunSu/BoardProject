@@ -14,6 +14,7 @@ const PhotoLine = () => {
           background="var(--primary)"
           color=" #ffffff"
           text="더보기"
+          border="none"
         ></ButtonLayout>
       </TitleWrap>
       <PhotoWrap>
