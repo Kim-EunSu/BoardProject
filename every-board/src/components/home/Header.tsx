@@ -24,7 +24,21 @@ const Header = (): JSX.Element => {
           다양한 주제에 대해 자유롭게 의견을 나눌 수 있도록 하는
           <br /> 커뮤니티 플랫폼입니다.
         </h4>
-        {isLogin ? null : (
+        {isLogin ? (
+          <ButtonLayout
+            text="글 작성 하러가기"
+            width="250px"
+            height="40px"
+            color="var(--pink)" // Pass the CSS variable value as a string
+            background="#ffffff"
+            fontSize="1.125rem"
+            radius="50px"
+            border="none"
+            onClick={() => {
+              router.push("/board/post");
+            }}
+          />
+        ) : (
           <ButtonLayout
             text="로그인 하러가기"
             width="250px"
