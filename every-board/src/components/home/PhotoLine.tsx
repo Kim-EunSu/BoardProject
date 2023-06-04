@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import ButtonLayout from "@/components/ButtonLayout";
+import { useRouter } from "next/navigation";
 
 const PhotoLine = () => {
+  const router = useRouter();
   const photo = [1, 2, 3, 4];
   return (
     <Section>
@@ -15,6 +17,9 @@ const PhotoLine = () => {
           color=" #ffffff"
           text="더보기"
           border="none"
+          onClick={() => {
+            router.push("/gallery");
+          }}
         ></ButtonLayout>
       </TitleWrap>
       <PhotoWrap>
