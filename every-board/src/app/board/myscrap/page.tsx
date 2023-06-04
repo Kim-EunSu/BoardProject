@@ -7,7 +7,6 @@ import styled from "styled-components";
 const Mypost = () => {
   return (
     <Main>
-      <Header title="MyScrap" />
       <PostCard />
       <PostCard />
       <PostCard />

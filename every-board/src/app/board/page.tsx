@@ -7,7 +7,6 @@ import styled from "styled-components";
 const Dashboard = () => {
   return (
     <Main>
-      <Header title="자유게시판" />
       <PostCard />
       <PostCard />
       <PostCard />
