@@ -1,11 +1,26 @@
 "use client";
-import Header from "@/components/Header";
 
-export default function page() {
+import PostCard from "@/components/PostCard";
+import Header from "@/components/Header";
+import styled from "styled-components";
+
+const Mypost = () => {
   return (
-    <>
-      <Header title="Scrap" />
-      <div>스크랩페이지</div>
-    </>
+    <Main>
+      <Header title="MyScrap" />
+      <PostCard />
+      <PostCard />
+      <PostCard />
+      <PostCard />
+    </Main>
   );
-}
+};
+
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 20px;
+`;
+
+export default Mypost;
