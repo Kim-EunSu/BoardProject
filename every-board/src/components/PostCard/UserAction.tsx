@@ -72,24 +72,22 @@ const UserActionContainer = styled.div`
   font-weight: 500;
   color: #838a91;
   line-height: 14px;
+  .comment {
+    margin-left: 50px;
+  }
 
   @media (min-width: 768px) {
     width: 600px;
     justify-content: flex-start;
+    .reply {
+      margin-left: 50px;
+    }
   }
   @media (min-width: 1080px) {
     width: 900px;
   }
   @media (min-width: 1440px) {
     width: 1100px;
-  }
-
-  //댓글 좋아요, 댓글 버튼 위치 소폭 변경
-  .comment,
-  .reply {
-    @media (min-width: 768px) {
-      margin-left: 50px;
-    }
   }
 `;
 
