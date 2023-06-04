@@ -29,28 +29,24 @@ const Header = (): JSX.Element => {
             text="글 작성 하러가기"
             width="250px"
             height="40px"
-            color="var(--pink)" // Pass the CSS variable value as a string
+            color="var(--pink)"
             background="#ffffff"
             fontSize="1.125rem"
             radius="50px"
             border="none"
-            onClick={() => {
-              router.push("/board/post");
-            }}
+            router="/board/post"
           />
         ) : (
           <ButtonLayout
             text="로그인 하러가기"
             width="250px"
             height="40px"
-            color="var(--pink)" // Pass the CSS variable value as a string
+            color="var(--pink)"
             background="#ffffff"
             fontSize="1.125rem"
             radius="50px"
             border="none"
-            onClick={() => {
-              router.push("/signin");
-            }}
+            router="/signin"
           />
         )}
       </TextArea>
@@ -62,7 +58,28 @@ const Header = (): JSX.Element => {
           alt="headerImage"
         />
       </ImageArea>
-      <AvatarArea>{isLogin ? <Avatar /> : null}</AvatarArea>
+
+      <AvatarArea>
+        {isLogin ? (
+          <Avatar />
+        ) : (
+          // 로그인 기능 구현되면 지울 부분
+          <ButtonLayout
+            text="임시 : 로그인 상태로바꾸기"
+            width="fit-content"
+            height="40px"
+            color="var(--pink)" // Pass the CSS variable value as a string
+            background="#ffffff"
+            fontSize="0.9rem"
+            radius="50px"
+            padding="10px"
+            border="none"
+            onClick={() => {
+              setLogin(true);
+            }}
+          />
+        )}
+      </AvatarArea>
     </HeaderLayout>
   );
 };

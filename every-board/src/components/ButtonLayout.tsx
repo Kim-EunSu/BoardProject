@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import Link from "next/link";
 
-type Props = {
+interface Props {
   text?: React.ReactNode;
   width?: string;
   height?: string;
@@ -10,10 +11,11 @@ type Props = {
   radius?: string;
   padding?: string;
   border?: string;
+  router?: string;
   onClick?: () => void;
-};
+}
 
-type StyleProps = {
+interface StyleProps {
   width?: string;
   height?: string;
   color?: string;
@@ -22,10 +24,17 @@ type StyleProps = {
   radius?: string;
   padding?: string;
   border?: string;
-};
+}
 
 const ButtonLayout = (props: Props) => {
-  return <Button {...props}>{props.text}</Button>;
+  return (
+    <Link
+      href={typeof props.router !== "undefined" ? props.router : ""}
+      style={{ textDecoration: "none" }}
+    >
+      <Button {...props}>{props.text}</Button>
+    </Link>
+  );
 };
 
 const Button = styled.button<StyleProps>`
