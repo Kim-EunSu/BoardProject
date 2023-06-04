@@ -21,7 +21,7 @@ export default function Avatar({ image }: Props) {
           height={40}
           style={{ borderRadius: "50px" }}
         />
-        <NickName>일이삼사오육칠팔</NickName>
+        <NickName>지쳐있는멜모</NickName>
       </AvatarWrap>
     </Link>
   );
@@ -32,19 +32,28 @@ const AvatarWrap = styled.span`
   align-items: center;
   justify-content: center;
   width: fit-content;
-  max-width: 170px;
-  padding: 8px;
-  height: 50px;
-  border-radius: 25px;
+  height: fit-content;
+  max-width: 240px;
+  padding: 2px;
+  border-radius: 50px;
   background-color: white;
   gap: 6px;
+  box-shadow: 1px 2px 20px rgba(18, 61, 101, 0.05),
+    inset -18.4px -13.8px 184px rgba(255, 255, 255, 0.18);
+  @media (min-width: 1080px) {
+    padding: 6px;
+  }
 `;
 
-//닉네임 7글자 이상은 ...처리
+//닉네임 10글자 이상은 ...처리
 const NickName = styled.span`
-  padding: 0 5px;
-  max-width: 108px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: none;
+  @media (min-width: 1080px) {
+    display: inline;
+    padding: 0 5px;
+    max-width: 173px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
