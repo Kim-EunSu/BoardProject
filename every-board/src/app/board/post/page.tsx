@@ -91,44 +91,46 @@ const Textarea = styled.textarea`
   min-height: 8rem;
 `;
 
-const FilleWrapper = styled.div`
+const ImageWrapper = styled.div``;
+
+const ImageWrap = styled.div`
   display: flex;
-  margin-bottom: 25px;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const FileInput = styled.input`
-  display: block !important;
-  ${inputCommonStyle}
-  border: 1px dashed #5429ff;
-  padding: 1rem 3rem;
-
-  &::placeholder {
-    color: #5429ff;
-    text-align: center;
-  }
+const ImageLeft = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
-const FileBtnWrapper = styled.div`
-  position: relative;
+const ImageName = styled.p``;
+
+const ImageThumbnail = styled.img`
+  width: 5rem;
+  height: 5rem;
+  padding: 10px;
 `;
 
-// const FileBtn = styled.button`
-//   top: 18px;
-//   position: absolute;
-//   right: 20px;
-//   font-size: 1rem;
-//   color: #fc0374;
-//   border: transparent;
-//   background: transparent;
-//   text-decoration: underline;
+const ImageDeleteBtn = styled.button`
+  font-size: 1rem;
+  color: #fc0374;
+  font-weight: bold;
+  border: transparent;
+  background: transparent;
+  text-decoration: underline;
+`;
 
-//   &:first-child {
-//     margin-right: 80px;
-//   }
-// `;
-const FileInputttt = styled.input``;
-const FileButton = styled.button``;
+const FileInput = styled.input``;
+
+const FileButton = styled.button`
+  width: 100%;
+  padding: 20px 0;
+  color: #5429ff;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #e9eff4;
+`;
 
 const InputBtnWrap = styled.div`
   display: flex;
@@ -154,21 +156,6 @@ const InputBtn = styled.button<{ isSelected: Boolean }>`
     margin-right: 20px;
   }
 `;
-
-const ImageWrapper = styled.div``;
-
-const ImageArea = styled.div`
-  display: flex;
-`;
-
-const ImageName = styled.p``;
-
-const ImageThumbnail = styled.img`
-  width: 30px;
-  height: 30px;
-`;
-
-const DeleteBtn = styled.button``;
 
 export default function page() {
   //전체의 input관리
@@ -314,26 +301,30 @@ export default function page() {
               {images.length > 0 ? (
                 images.map((image, index) => (
                   <div key={index}>
-                    <ImageArea>
-                      <ImageThumbnail
-                        src={URL.createObjectURL(image)}
-                        alt={image.name}
-                      ></ImageThumbnail>
-                      <ImageName>{image.name}</ImageName>
-                      <DeleteBtn onClick={() => onDeleteHandler(index)}>
+                    <ImageWrap>
+                      <ImageLeft>
+                        <ImageThumbnail
+                          src={URL.createObjectURL(image)}
+                          alt={image.name}
+                        ></ImageThumbnail>
+                        <ImageName>{image.name}</ImageName>
+                      </ImageLeft>
+                      <ImageDeleteBtn onClick={() => onDeleteHandler(index)}>
                         삭제
-                      </DeleteBtn>
-                    </ImageArea>
+                      </ImageDeleteBtn>
+                    </ImageWrap>
                   </div>
                 ))
               ) : (
-                <ImageName>이미지 파일을 업로드</ImageName>
+                <ImageName>
+                  파일업로드 칸을 눌러 이미지를 추가해주세요.
+                </ImageName>
               )}
               {/* type을 설정하지 않으면 작성하기 버튼과 같이 작동하여 이미지 추가 버튼만 눌러도 form이 서버에 보내짐 */}
               <FileButton type="button" onClick={onAddHandler}>
-                이미지추가
+                You can add files from your computer here file
               </FileButton>
-              <FileInputttt
+              <FileInput
                 name="file"
                 type="file"
                 accept="image/*"
