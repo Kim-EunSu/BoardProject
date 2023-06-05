@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  padding: 0 5rem;
 `;
 
 export default function Layout({ children }: LayoutProps) {

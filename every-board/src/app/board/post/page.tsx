@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 import Header from "@/components/Header";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Category from "@/components/Category";
 import axios from "axios";
@@ -52,7 +52,7 @@ const Label = styled.label`
   margin-bottom: 10px;
 `;
 
-const Catagory = styled.button<{ isActive: boolean }>`
+const Catagory = styled.button<{ isactive: "true" | "false" }>`
   position: absolute;
   top: 40px;
   right: 15px;
@@ -62,8 +62,9 @@ const Catagory = styled.button<{ isActive: boolean }>`
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
-  color: ${({ isActive }) => (isActive ? "#ffff" : "#5429ff")};
-  background: ${({ isActive }) => (isActive ? "#5429ff" : "transparent")};
+  color: ${({ isactive }) => (isactive === "true" ? "#ffff" : "#5429ff")};
+  background: ${({ isactive }) =>
+    isactive === "true" ? "#5429ff" : "transparent"};
 `;
 
 const CategoryWrap = styled.div`
@@ -90,41 +91,45 @@ const Textarea = styled.textarea`
   min-height: 8rem;
 `;
 
-const FilleWrapper = styled.div`
+const ImageWrapper = styled.div``;
+
+const ImageWrap = styled.div`
   display: flex;
-  margin-bottom: 25px;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const FileInput = styled.input`
-  display: block !important;
-  ${inputCommonStyle}
-  border: 1px dashed #5429ff;
-  padding: 1rem 3rem;
-
-  &::placeholder {
-    color: #5429ff;
-    text-align: center;
-  }
+const ImageLeft = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
-const FileBtnWrapper = styled.div`
-  position: relative;
+const ImageName = styled.p``;
+
+const ImageThumbnail = styled.img`
+  width: 5rem;
+  height: 5rem;
+  padding: 10px;
 `;
 
-const FileBtn = styled.button`
-  top: 18px;
-  position: absolute;
-  right: 20px;
+const ImageDeleteBtn = styled.button`
   font-size: 1rem;
   color: #fc0374;
+  font-weight: bold;
   border: transparent;
   background: transparent;
   text-decoration: underline;
+`;
 
-  &:first-child {
-    margin-right: 80px;
-  }
+const FileInput = styled.input``;
+
+const FileButton = styled.button`
+  width: 100%;
+  padding: 20px 0;
+  color: #5429ff;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #e9eff4;
 `;
 
 const InputBtnWrap = styled.div`
@@ -143,6 +148,7 @@ const InputBtn = styled.button<{ isSelected: Boolean }>`
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
+
   color: ${props => (props.isSelected ? "#ffff" : "#5429ff")};
   background: ${props => (props.isSelected ? "#5429ff" : "transparent")};
 
@@ -152,11 +158,40 @@ const InputBtn = styled.button<{ isSelected: Boolean }>`
 `;
 
 export default function page() {
+  //전체의 input관리
+  const [form, setForm] = useState({
+    category: "",
+    title: "",
+    content: "",
+  });
+
+  //비구조할당을 통해 값 추출
+  const { category, title, content } = form;
+
+  //카테고리modal 클릭 유무를 저장할 state
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   //category버튼
   const [isActive, setIsActive] = useState(false);
 
+  //이미지 파일을 여러개 올리기위한 state
+  const [images, setImages] = useState<File[]>([]);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   //취소하기&작성하기 버튼
   const [inputBtn, setInputBtn] = useState<string>("");
+
+  const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    //이미지파일 중 첫번째 파일 가져옴
+    const files = e.target.files;
+    if (!files) return;
+
+    const newImages = Array.from(files);
+    setImages([...images, ...newImages]);
+  };
 
   const handleInputButton = (buttonName: string) => {
     setInputBtn(buttonName);
@@ -164,36 +199,22 @@ export default function page() {
 
   const router = useRouter();
 
-  //전체의 input관리
-  const [inputs, setInputs] = useState({
-    category: "",
-    title: "",
-    content: "",
-    filename: "",
-  });
-
-  //비구조할당을 통해 값 추출
-  const { category, title, content, filename } = inputs;
-
-  //카테고리modal 클릭 유무를 저장할 state
-  const [showModal, setShowModal] = useState<boolean>(false);
-
-  const onChange = (
+  const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    const { value, name } = e.target;
-    setInputs({
-      ...inputs, // 기존 input객체 복사
+    const { name, value } = e.target;
+    setForm({
+      ...form, // 기존 form객체 복사
       [name]: value,
     });
   };
 
   const saveBoard = async () => {
-    await axios.post(`//localhost:3001/board/post`, inputs).then(res => {
+    await axios.post(`//localhost:3001/board/post`, form).then(res => {
       alert("등록됨");
-      router.push("/");
+      // router.push("/");
     });
   };
 
@@ -203,7 +224,25 @@ export default function page() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(inputs);
+
+    setForm({
+      category: "",
+      title: "",
+      content: "",
+    });
+    console.log(form);
+  };
+
+  const onDeleteHandler = (index: number) => {
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    setImages(newImages);
+  };
+
+  const onAddHandler = () => {
+    if (fileInputRef && fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   //카테고리 modal의 on/off
@@ -215,61 +254,9 @@ export default function page() {
 
   const categoryInput = useRef<HTMLInputElement>(null);
 
-  //사용자가 불러온 파일의 정보를 넣는값
-  const [file, setFile] = useState<File | undefined>();
-
-  //사용자가 불러온 파일의 URL
-  const [previewURL, setPreviewURL] = useState("");
-
-  //preview는 img태그가 들어갈 곳
-  const [preview, setPreview] = useState("");
-
-  //input클릭버튼을 발생시키기위해 생성
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    //input을 통해 파일 업로드시(length의길이가 1일때) 업로드를 취소할 경우 에러가 발생하므로 이와같이 해결
-    if (file?.length === 0) {
-      return;
-    }
-    //EventTarget오류 유형에 files속성이 없다고 오류가 뜨기 때문에 if부분 필수
-    if (e.target.files != null) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-
-      reader.onloadend = e => {
-        const target = e.target as FileReader;
-        const result = target.result;
-        setPreviewURL(result as string);
-
-        if (result) {
-          setPreview(result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-      setFile(file);
-    }
-  };
-
-  const handleFileButton = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (fileRef.current) {
-      fileRef.current.click();
-    }
-  };
-
-  const handleFileDelete = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (fileRef.current) {
-      fileRef.current.value = "";
-    }
-    setPreview("");
-    setPreviewURL("");
-  };
-
   return (
     <>
+      <Header title="PostWriting" />
       <Wrapper>
         <Box1>
           <Avatar></Avatar>
@@ -281,11 +268,11 @@ export default function page() {
             <Input
               name="category"
               value={category}
-              onChange={onChange}
+              onChange={handleChange}
               ref={categoryInput}
               placeholder="카테고리를 선택하세요."
             />
-            <Catagory isActive={isActive} onClick={toggleModal}>
+            <Catagory isactive={"false"} onClick={toggleModal}>
               카테고리
             </Catagory>
             <CategoryWrap>{showModal && <Category></Category>}</CategoryWrap>
@@ -295,7 +282,7 @@ export default function page() {
             <Input
               name="title"
               value={title}
-              onChange={onChange}
+              onChange={handleChange}
               placeholder="제목을 입력하세요."
             />
           </FormWrap>
@@ -304,29 +291,52 @@ export default function page() {
             <Textarea
               name="content"
               value={content}
-              onChange={onChange}
+              onChange={handleChange}
               placeholder="내용을 입력하세요."
             />
           </FormWrap>
           <FormWrap>
             <Label>파일 추가</Label>
-            <FilleWrapper>
-              {preview && (
-                <FileBtnWrapper>
-                  <FileBtn onClick={handleFileButton}>수정하기</FileBtn>
-                  <FileBtn onClick={handleFileDelete}>삭제하기</FileBtn>
-                </FileBtnWrapper>
+            <ImageWrapper>
+              {images.length > 0 ? (
+                images.map((image, index) => (
+                  <div key={index}>
+                    <ImageWrap>
+                      <ImageLeft>
+                        <ImageThumbnail
+                          src={URL.createObjectURL(image)}
+                          alt={image.name}
+                        ></ImageThumbnail>
+                        <ImageName>{image.name}</ImageName>
+                      </ImageLeft>
+                      <ImageDeleteBtn onClick={() => onDeleteHandler(index)}>
+                        삭제
+                      </ImageDeleteBtn>
+                    </ImageWrap>
+                  </div>
+                ))
+              ) : (
+                <ImageName>
+                  파일업로드 칸을 눌러 이미지를 추가해주세요.
+                </ImageName>
               )}
+              {/* type을 설정하지 않으면 작성하기 버튼과 같이 작동하여 이미지 추가 버튼만 눌러도 form이 서버에 보내짐 */}
+              <FileButton type="button" onClick={onAddHandler}>
+                You can add files from your computer here file
+              </FileButton>
               <FileInput
-                name="filename"
+                name="file"
                 type="file"
-                ref={fileRef}
-                onChange={handleFileOnChange}
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={onFileInputChange}
+                style={{ display: "none" }}
               />
-            </FilleWrapper>
+            </ImageWrapper>
           </FormWrap>
           <InputBtnWrap>
             <InputBtn
+              type="submit"
               isSelected={inputBtn === "취소"}
               onClick={() => {
                 handleInputButton("취소");
@@ -335,8 +345,8 @@ export default function page() {
             >
               취소하기
             </InputBtn>
-
             <InputBtn
+              type="submit"
               isSelected={inputBtn === "작성"}
               onClick={() => {
                 handleInputButton("작성");
