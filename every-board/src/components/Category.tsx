@@ -2,10 +2,8 @@
 
 import styled from "styled-components";
 import ButtonLayout from "./ButtonLayout";
-import { useRouter } from "next/navigation";
 
 const Category = () => {
-  const router = useRouter();
   const categories = [
     "자유게시판",
     "IT",
@@ -23,18 +21,18 @@ const Category = () => {
     "맛집",
     "제주도",
     "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
-    "일본",
+    "해외여행",
+    "사건사고",
+    "프론트엔드",
+    "백엔드",
+    "자바",
+    "타입스크립트",
+    "리액트",
+    "테마파크",
+    "조명",
+    "의자",
+    "컴퓨터",
+    "노트북",
   ];
 
   return (
@@ -42,12 +40,7 @@ const Category = () => {
       <ul>
         {categories.map((el, index) => {
           return (
-            <li
-              key={index}
-              onClick={() => {
-                router.push("/board");
-              }}
-            >
+            <li key={index}>
               <ButtonLayout
                 text={`${el}`}
                 width="75px"
@@ -57,6 +50,7 @@ const Category = () => {
                 background="#EFE9FF50"
                 fontSize="0.75rem"
                 border="none"
+                router={`/board?category=${el}`}
               />
             </li>
           );

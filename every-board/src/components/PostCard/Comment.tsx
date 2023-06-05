@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import UserAction from "./UserAction";
 
 const Comment = () => {
