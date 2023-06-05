@@ -1,7 +1,8 @@
 "use client";
 
 // Layout 컴포넌트
-import Footer from "../../components/Footer";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import styled from "styled-components";
 
 interface LayoutProps {
@@ -19,6 +20,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Wrapper>
+        <Header />
         {children}
         <Footer />
       </Wrapper>

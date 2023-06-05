@@ -270,7 +270,6 @@ export default function page() {
 
   return (
     <>
-      <Header title="PostWriting" />
       <Wrapper>
         <Box1>
           <Avatar></Avatar>

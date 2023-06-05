@@ -9,16 +9,21 @@ type Props = {
 //size를 따로 명시하지 않으면 기본적으로 large사이즈
 export default function Avatar({ image }: Props) {
   return (
-    <AvatarWrap>
-      <Image
-        src={"/frame.png"}
-        alt="프로필 사진"
-        width={40}
-        height={40}
-        style={{ borderRadius: "50px" }}
-      />
-      <span>일이삼사오육칠팔구십</span>
-    </AvatarWrap>
+    <Link
+      href="/board/myprofile"
+      style={{ textDecoration: "none", color: "#000000", cursor: "pointer" }}
+    >
+      <AvatarWrap>
+        <Image
+          src={"/frame.png"}
+          alt="프로필 사진"
+          width={40}
+          height={40}
+          style={{ borderRadius: "50px" }}
+        />
+        <NickName>지쳐있는멜모</NickName>
+      </AvatarWrap>
+    </Link>
   );
 }
 
@@ -27,17 +32,28 @@ const AvatarWrap = styled.span`
   align-items: center;
   justify-content: center;
   width: fit-content;
-  max-width: 150px;
-  padding: 8px;
-  height: 50px;
-  border-radius: 25px;
+  height: fit-content;
+  max-width: 240px;
+  padding: 2px;
+  border-radius: 50px;
   background-color: white;
   gap: 6px;
+  box-shadow: 1px 2px 20px rgba(18, 61, 101, 0.05),
+    inset -18.4px -13.8px 184px rgba(255, 255, 255, 0.18);
+  @media (min-width: 1080px) {
+    padding: 6px;
+  }
+`;
 
-  white-space: normal;
-  //PostCard 콘텐츠 5줄만 보이기
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+//닉네임 10글자 이상은 ...처리
+const NickName = styled.span`
+  display: none;
+  @media (min-width: 1080px) {
+    display: inline;
+    padding: 0 5px;
+    max-width: 173px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;

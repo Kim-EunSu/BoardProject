@@ -103,7 +103,6 @@ const Alarm = styled.p``;
 export default function page() {
   return (
     <>
-      <Header title="Profile" />
       <Wrapper>
         <Section1>
           <Left>
