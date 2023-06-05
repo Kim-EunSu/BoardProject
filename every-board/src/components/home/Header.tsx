@@ -1,11 +1,14 @@
 "use client";
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
+import Avatar from "../Avatar";
 import Image from "next/image";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Header = (): JSX.Element => {
   const router = useRouter();
+  const [isLogin, setLogin] = useState<boolean>(false);
   return (
     <HeaderLayout>
       <TextArea>
@@ -21,19 +24,31 @@ const Header = (): JSX.Element => {
           다양한 주제에 대해 자유롭게 의견을 나눌 수 있도록 하는
           <br /> 커뮤니티 플랫폼입니다.
         </h4>
-        <ButtonLayout
-          text="로그인 하러가기"
-          width="250px"
-          height="40px"
-          color="var(--pink)" // Pass the CSS variable value as a string
-          background="#ffffff"
-          fontSize="1.125rem"
-          radius="50px"
-          border="none"
-          onClick={() => {
-            router.push("/signin");
-          }}
-        />
+        {isLogin ? (
+          <ButtonLayout
+            text="글 작성 하러가기"
+            width="250px"
+            height="40px"
+            color="var(--pink)"
+            background="#ffffff"
+            fontSize="1.125rem"
+            radius="50px"
+            border="none"
+            router="/board/post"
+          />
+        ) : (
+          <ButtonLayout
+            text="로그인 하러가기"
+            width="250px"
+            height="40px"
+            color="var(--pink)"
+            background="#ffffff"
+            fontSize="1.125rem"
+            radius="50px"
+            border="none"
+            router="/signin"
+          />
+        )}
       </TextArea>
       <ImageArea>
         <Image
@@ -43,6 +58,28 @@ const Header = (): JSX.Element => {
           alt="headerImage"
         />
       </ImageArea>
+
+      <AvatarArea>
+        {isLogin ? (
+          <Avatar />
+        ) : (
+          // 로그인 기능 구현되면 지울 부분
+          <ButtonLayout
+            text="임시 : 로그인 상태로바꾸기"
+            width="fit-content"
+            height="40px"
+            color="var(--pink)" // Pass the CSS variable value as a string
+            background="#ffffff"
+            fontSize="0.9rem"
+            radius="50px"
+            padding="10px"
+            border="none"
+            onClick={() => {
+              setLogin(true);
+            }}
+          />
+        )}
+      </AvatarArea>
     </HeaderLayout>
   );
 };
@@ -76,13 +113,12 @@ const TextArea = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 100px;
+  margin: auto 0;
   gap: 20px;
   h1 {
     font-size: 1.25rem;
   }
   h4 {
-    display: none;
     font-size: 1rem;
     font-weight: 600;
   }
@@ -98,10 +134,8 @@ const TextArea = styled.div`
     }
     h4 {
       min-width: 351px;
-      display: block;
     }
   }
-
   @media (min-width: 1080px) {
     h1 {
       min-width: 472px;
@@ -112,10 +146,15 @@ const TextArea = styled.div`
 
 const ImageArea = styled.div`
   display: none;
-
   @media (min-width: 768px) {
     display: inline-block;
   }
+`;
+
+const AvatarArea = styled.span`
+  position: absolute;
+  top: 20px;
+  right: 20px;
 `;
 
 export default Header;

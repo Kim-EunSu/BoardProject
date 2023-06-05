@@ -1,7 +1,7 @@
 import Image from "next/image";
 import ButtonLayout from "../ButtonLayout";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import { useState } from "react";
 
 const UserInfo = () => {

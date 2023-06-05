@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import UserAction from "./UserAction";
 
 const Reply = () => {
@@ -49,10 +49,12 @@ const CommentContainer = styled.div`
 `;
 
 const CommentWrap = styled.div`
+  margin-left: -50px;
   display: flex;
   gap: 10px;
 
   @media (min-width: 768px) {
+    margin-left: 0;
     width: 550px;
   }
   @media (min-width: 1080px) {

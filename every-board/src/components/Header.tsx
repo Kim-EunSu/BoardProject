@@ -1,53 +1,25 @@
-// Header 컴포넌트
 import styled from "styled-components";
 import Image from "next/image";
-
-// Head부분은 잘몰라서 주석처리 해놨습니다.
-// import Head from "next/head";
+import Avatar from "./Avatar";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-// const Head = styled.header``;
-
-const Top = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 0;
-`;
-
-const Left = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Title = styled.h1`
-  font-weight: bold;
-`;
-
-const Right = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 130px;
-  height: 50px;
-  border-radius: 25px;
-  background-color: white;
-`;
-
-const Avatar = styled.div`
-  width: 40px;
-  height: 40px;
-  margin-right: 6px;
-  border-radius: 50%;
-  background-color: #5429ff;
-`;
-
-interface HeaderProps {
-  title?: string;
-}
-
-export default function Header({ title }: HeaderProps) {
+const Header = () => {
   const router = useRouter();
+  const [currentTitle, setCurrentTitle] = useState<string | null>(null);
+
+  useEffect(() => {
+    const urlParams = new URL(location.href).searchParams;
+    const category: string | null = urlParams.get("category");
+    const endPoint = window.location.href
+      .split("/")
+      .splice(-1)
+      .join("")
+      .toUpperCase();
+
+    category !== null ? setCurrentTitle(category) : setCurrentTitle(endPoint);
+  }, []);
+
   return (
     <Top>
       <Left>
@@ -56,17 +28,51 @@ export default function Header({ title }: HeaderProps) {
           width={45}
           height={45}
           alt="logo"
+          style={{ cursor: "pointer" }}
           onClick={() => {
             router.push("/");
           }}
-          style={{ cursor: "pointer" }}
         />
-        <Title>My {title}</Title>
+        <Title>{currentTitle}</Title>
       </Left>
-      <Right>
-        <Avatar></Avatar>
-        사용자
-      </Right>
+      <Avatar />
     </Top>
   );
-}
+};
+
+const Top = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 2.5rem 0 1.875rem;
+  width: 350px;
+
+  @media (min-width: 768px) {
+    width: 680px;
+  }
+  @media (min-width: 1080px) {
+    width: 980px;
+  }
+  @media (min-width: 1440px) {
+    width: 1200px;
+  }
+`;
+
+const Left = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+const Title = styled.h1`
+  font-weight: bold;
+  font-size: 1.75rem;
+
+  @media (min-width: 1080px) {
+    font-size: 2.25rem;
+  }
+`;
+
+export default Header;
