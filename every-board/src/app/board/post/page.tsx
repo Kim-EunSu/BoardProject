@@ -65,6 +65,12 @@ const FormWrap = styled.div`
       min-height: 45px;
       width: inherit;
       margin-left: 10px;
+
+      ::placeholder {
+        @media (min-width: 1080px) {
+          font-size: 1rem;
+        }
+      }
     }
   }
 
@@ -84,6 +90,10 @@ const Label = styled.label`
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 10px;
+
+  @media (min-width: 1080px) {
+    font-size: 1.125rem;
+  }
 `;
 
 const Catagory = styled.button<{ isactive: "true" | "false" }>`

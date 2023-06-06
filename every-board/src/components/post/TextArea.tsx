@@ -24,7 +24,10 @@ const QuillEditor = styled(ReactQuill)`
     outline: none;
     min-height: 500px;
     height: auto;
-    font-size: 1rem;
+    font-size: 0.875rem;
+    @media (min-width: 1080px) {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -54,7 +57,6 @@ const TextArea = (props: Props) => {
   }, []);
   return (
     <QuillEditor
-      placeholder="Quill Content"
       theme="snow"
       value={value}
       onChange={setValue}
