@@ -135,7 +135,16 @@ const Icon = styled.div`
   }
 `;
 
-const Right = styled.div``;
+const Right = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  @media (max-width: 1080px) {
+    width: 980px;
+    display: none;
+  }
+`;
 
 type SigninValues = {
   errors: string;
