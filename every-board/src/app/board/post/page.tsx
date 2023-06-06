@@ -4,6 +4,7 @@ import styled from "styled-components";
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Category from "@/components/Category";
+import TextArea from "@/components/post/TextArea";
 import axios from "axios";
 
 interface FormType {
@@ -100,14 +101,6 @@ const Catagory = styled.button<{ isactive: "true" | "false" }>`
   background: ${({ isactive }) =>
     isactive === "true" ? "#5429ff" : "transparent"};
 `;
-
-const inputCommonStyle = {
-  borderRadius: "8px",
-  padding: "10px 14px",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: "#E9EFF4",
-};
 
 const ImageWrapper = styled.div``;
 
@@ -242,7 +235,7 @@ const page = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    setForm({ ...form, title: "", content: "" });
+    setForm({ ...form, title: "" });
     console.log(form);
   };
 
@@ -271,6 +264,11 @@ const page = () => {
   const bringToCategoryState = (el: string) => {
     setForm(form => ({ ...form, category: el }));
     setShowModal(false);
+  };
+
+  //content 상태 끌어올리기
+  const bringToContentState = (el: string) => {
+    setForm(form => ({ ...form, content: el }));
   };
 
   return (
@@ -307,17 +305,16 @@ const page = () => {
               />
             </div>
           </FormWrap>
-          <FormWrap>
-            <Label>내용</Label>
-            <div>
+          <Label>내용</Label>
+          <TextArea fn={bringToContentState} />
+          {/* <div>
               <input
                 name="content"
                 value={content}
                 onChange={handleChange}
                 placeholder="내용을 입력하세요."
               />
-            </div>
-          </FormWrap>
+            </div> */}
           <FormWrap>
             <Label>파일 추가</Label>
             <ImageWrapper>
