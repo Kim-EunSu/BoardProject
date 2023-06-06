@@ -6,84 +6,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const Header = (): JSX.Element => {
-  const router = useRouter();
-  const [isLogin, setLogin] = useState<boolean>(false);
-  return (
-    <HeaderLayout>
-      <TextArea>
-        <h1>
-          당신의 커뮤니티를 연결하는 공간,
-          <br />
-          모두의 게시판
-        </h1>
-        <h4>
-          모두의 게시판은 사람들이 서로 소통하고
-          <br /> 정보를 공유할 수 있는 공간으로,
-          <br />
-          다양한 주제에 대해 자유롭게 의견을 나눌 수 있도록 하는
-          <br /> 커뮤니티 플랫폼입니다.
-        </h4>
-        {isLogin ? (
-          <ButtonLayout
-            text="글 작성 하러가기"
-            width="250px"
-            height="40px"
-            color="var(--pink)"
-            background="#ffffff"
-            fontSize="1.125rem"
-            radius="50px"
-            border="none"
-            router="/board/post"
-          />
-        ) : (
-          <ButtonLayout
-            text="로그인 하러가기"
-            width="250px"
-            height="40px"
-            color="var(--pink)"
-            background="#ffffff"
-            fontSize="1.125rem"
-            radius="50px"
-            border="none"
-            router="/signin"
-          />
-        )}
-      </TextArea>
-      <ImageArea>
-        <Image
-          src={"/headerImg.svg"}
-          width={500}
-          height={320}
-          alt="headerImage"
-        />
-      </ImageArea>
-
-      <AvatarArea>
-        {isLogin ? (
-          <Avatar />
-        ) : (
-          // 로그인 기능 구현되면 지울 부분
-          <ButtonLayout
-            text="임시 : 로그인 상태로바꾸기"
-            width="fit-content"
-            height="40px"
-            color="var(--pink)" // Pass the CSS variable value as a string
-            background="#ffffff"
-            fontSize="0.9rem"
-            radius="50px"
-            padding="10px"
-            border="none"
-            onClick={() => {
-              setLogin(true);
-            }}
-          />
-        )}
-      </AvatarArea>
-    </HeaderLayout>
-  );
-};
-
 const HeaderLayout = styled.header`
   width: 100%;
   height: 320px;
@@ -156,5 +78,83 @@ const AvatarArea = styled.span`
   top: 20px;
   right: 20px;
 `;
+
+const Header = (): JSX.Element => {
+  const router = useRouter();
+  const [isLogin, setLogin] = useState<boolean>(false);
+  return (
+    <HeaderLayout>
+      <TextArea>
+        <h1>
+          당신의 커뮤니티를 연결하는 공간,
+          <br />
+          모두의 게시판
+        </h1>
+        <h4>
+          모두의 게시판은 사람들이 서로 소통하고
+          <br /> 정보를 공유할 수 있는 공간으로,
+          <br />
+          다양한 주제에 대해 자유롭게 의견을 나눌 수 있도록 하는
+          <br /> 커뮤니티 플랫폼입니다.
+        </h4>
+        {isLogin ? (
+          <ButtonLayout
+            text="글 작성 하러가기"
+            width="250px"
+            height="40px"
+            color="var(--pink)"
+            background="#ffffff"
+            fontSize="1.125rem"
+            radius="50px"
+            border="none"
+            onClick={() => router.push("/board/post")}
+          />
+        ) : (
+          <ButtonLayout
+            text="로그인 하러가기"
+            width="250px"
+            height="40px"
+            color="var(--pink)"
+            background="#ffffff"
+            fontSize="1.125rem"
+            radius="50px"
+            border="none"
+            onClick={() => router.push("/signin")}
+          />
+        )}
+      </TextArea>
+      <ImageArea>
+        <Image
+          src={"/headerImg.svg"}
+          width={500}
+          height={320}
+          alt="headerImage"
+        />
+      </ImageArea>
+
+      <AvatarArea>
+        {isLogin ? (
+          <Avatar />
+        ) : (
+          // 로그인 기능 구현되면 지울 부분
+          <ButtonLayout
+            text="임시 : 로그인 상태로바꾸기"
+            width="fit-content"
+            height="40px"
+            color="var(--pink)" // Pass the CSS variable value as a string
+            background="#ffffff"
+            fontSize="0.9rem"
+            radius="50px"
+            padding="10px"
+            border="none"
+            onClick={() => {
+              setLogin(true);
+            }}
+          />
+        )}
+      </AvatarArea>
+    </HeaderLayout>
+  );
+};
 
 export default Header;
