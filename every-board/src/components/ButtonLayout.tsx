@@ -11,7 +11,7 @@ interface Props {
   radius?: string;
   padding?: string;
   border?: string;
-  router?: string;
+  margin?: string;
   onClick?: () => void;
 }
 
@@ -24,18 +24,8 @@ interface StyleProps {
   radius?: string;
   padding?: string;
   border?: string;
+  margin?: string;
 }
-
-const ButtonLayout = (props: Props) => {
-  return (
-    <Link
-      href={typeof props.router !== "undefined" ? props.router : ""}
-      style={{ textDecoration: "none" }}
-    >
-      <Button {...props}>{props.text}</Button>
-    </Link>
-  );
-};
 
 const Button = styled.button<StyleProps>`
   display: flex;
@@ -50,10 +40,15 @@ const Button = styled.button<StyleProps>`
   border-radius: ${props => props.radius};
   padding: ${props => props.padding};
   border: ${props => props.border};
+  margin: ${props => props.margin};
 
   font-weight: 600;
   outline: none;
   cursor: pointer;
 `;
+
+const ButtonLayout = (props: Props) => {
+  return <Button {...props}>{props.text}</Button>;
+};
 
 export default ButtonLayout;
