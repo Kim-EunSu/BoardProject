@@ -1,6 +1,5 @@
 "use client";
 
-import Header from "@/components/Header";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -16,6 +15,10 @@ const Section1 = styled.div`
   padding: 1.5rem 3.75rem;
   background-color: white;
   justify-content: space-between;
+
+  @media (max-width: 350px) {
+    padding: 1.5rem 0.75rem;
+  }
 `;
 
 const Left = styled.div`
@@ -53,39 +56,105 @@ const Edit = styled.div`
 
 const Section2 = styled.div`
   display: flex;
-  padding: 19px 5rem;
+  flex-wrap: nowrap;
   border-radius: 18px;
+  padding: 20px 5rem;
   background-color: white;
-  justify-content: space-around;
+  justify-content: space-between;
+
+  @media (max-width: 1080px) {
+    padding: 20px 3rem;
+  }
+
+  @media (max-width: 680px) {
+    padding: 20px 1rem;
+  }
+
+  @media (max-width: 350px) {
+    padding: 20px 0rem;
+  }
 `;
 
-const Post = styled.div`
+const TopWrapper = styled.div`
+  width: 250px;
   display: flex;
+  gap: 10px;
+  padding: 1rem;
+  margin: 1rem;
+  align-items: center;
+  flex-direction: row;
   border-radius: 20px;
-  padding: 1.25rem 3rem 1.25rem 1rem;
   box-shadow: 1px 1px 5px 1px #e2e2e2;
+
+  @media (max-width: 350px) {
+    margin: 10px;
+    padding: 0.5rem;
+    flex-direction: column;
+  }
 `;
 
 const Icon = styled.div`
-  width: 56px;
-  height: 56px;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
-  margin-right: 18px;
   background-color: #f4f7fe;
 `;
 
-const SubWrapper = styled.div`
-  border-radius: 20px;
+const TopWrap = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: 350px) {
+    align-items: center;
+  }
 `;
 
-const Subtitle = styled.h4`
+const Toptitle = styled.h4`
+  font-size: 14px;
+  font-weight: 500;
   color: #a3aed0;
-  margin-bottom: 10px;
 `;
 
-const Amount = styled.h3`
+const TopContent = styled.h3`
   font-size: 1.5rem;
   color: #2b3674;
+
+  @media (max-width: 350px) {
+    font-size: 1rem;
+  }
+`;
+
+const BottomWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  padding: 1rem;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 20px;
+  box-shadow: 1px 1px 5px 1px #e2e2e2;
+`;
+
+const BottomWrap = styled.div``;
+
+const BottomTitle = styled.h4`
+  color: #a3aed0;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  @media (max-width: 350px) {
+    font-size: 0.5rem;
+  }
+`;
+const BottomContent = styled.p`
+  color: #343e4c;
+  font-weight: 600;
+  font-size: 1.2rem;
+
+  @media (max-width: 350px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Section3 = styled.div`
@@ -96,6 +165,10 @@ const Section3 = styled.div`
   background-color: white;
   padding: 20px 5rem 100px;
   margin-bottom: 100px;
+
+  @media (max-width: 350px) {
+    padding: 20px;
+  }
 `;
 
 const Alarm = styled.p``;
@@ -114,66 +187,66 @@ export default function page() {
           </Right>
         </Section1>
         <Section2>
-          <Post>
+          <TopWrapper>
             <Icon></Icon>
-            <SubWrapper>
-              <Subtitle>My Post</Subtitle>
-              <Amount>24</Amount>
-            </SubWrapper>
-          </Post>
-          <Post>
+            <TopWrap>
+              <Toptitle>My Post</Toptitle>
+              <TopContent>24</TopContent>
+            </TopWrap>
+          </TopWrapper>
+          <TopWrapper>
             <Icon></Icon>
-            <SubWrapper>
-              <Subtitle>My Post</Subtitle>
-              <Amount>24</Amount>
-            </SubWrapper>
-          </Post>
-          <Post>
+            <TopWrap>
+              <Toptitle>My Scrap</Toptitle>
+              <TopContent>78</TopContent>
+            </TopWrap>
+          </TopWrapper>
+          <TopWrapper>
             <Icon></Icon>
-            <SubWrapper>
-              <Subtitle>My Post</Subtitle>
-              <Amount>24</Amount>
-            </SubWrapper>
-          </Post>
+            <TopWrap>
+              <Toptitle>Views</Toptitle>
+              <TopContent>7,302</TopContent>
+            </TopWrap>
+          </TopWrapper>
         </Section2>
         <Section3>
           <Alarm>8개알림</Alarm>
-          <Post>
+          <BottomWrapper>
             <Icon></Icon>
-            <SubWrapper>
-              <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
-              <Amount>
+            <BottomWrap>
+              <BottomTitle>사용자님이 좋아요를 눌렀습니다.</BottomTitle>
+              <BottomContent>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              </Amount>
-            </SubWrapper>
-          </Post>{" "}
-          <Post>
+              </BottomContent>
+            </BottomWrap>
+          </BottomWrapper>
+          <BottomWrapper>
             <Icon></Icon>
-            <SubWrapper>
-              <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
-              <Amount>
+            <BottomWrap>
+              <BottomTitle>사용자님이 좋아요를 눌렀습니다.</BottomTitle>
+              <BottomContent>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              </Amount>
-            </SubWrapper>
-          </Post>
-          <Post>
+              </BottomContent>
+            </BottomWrap>
+          </BottomWrapper>
+          <BottomWrapper>
             <Icon></Icon>
-            <SubWrapper>
-              <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
-              <Amount>
+            <BottomWrap>
+              <BottomTitle>사용자님이 좋아요를 눌렀습니다.</BottomTitle>
+              <BottomContent>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              </Amount>
-            </SubWrapper>
-          </Post>
-          <Post>
+              </BottomContent>
+            </BottomWrap>
+          </BottomWrapper>
+          <BottomWrapper>
             <Icon></Icon>
-            <SubWrapper>
-              <Subtitle>사용자님이 좋아요를 눌렀습니다.</Subtitle>
-              <Amount>
+            <BottomWrap>
+              <BottomTitle>사용자님이 좋아요를 눌렀습니다.</BottomTitle>
+              <BottomContent>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              </Amount>
-            </SubWrapper>
-          </Post>
+              </BottomContent>
+            </BottomWrap>
+          </BottomWrapper>
         </Section3>
       </Wrapper>
     </>
