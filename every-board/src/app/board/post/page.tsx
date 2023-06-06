@@ -65,6 +65,10 @@ const FormWrap = styled.div`
       min-height: 45px;
       width: inherit;
       margin-left: 10px;
+      font-weight: 700;
+      @media (min-width: 1080px) {
+        font-size: 1rem;
+      }
 
       ::placeholder {
         @media (min-width: 1080px) {
