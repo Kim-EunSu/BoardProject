@@ -1,6 +1,12 @@
 "use client";
 
 import styled from "styled-components";
+import { BsGrid1X2Fill } from "react-icons/bs";
+import { BsBarChartFill } from "react-icons/bs";
+import { BsPeopleFill } from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
+import { BiMessageAltDetail } from "react-icons/bi";
+import { MdTag } from "react-icons/md";
 
 const Wrapper = styled.div`
   display: flex;
@@ -94,10 +100,19 @@ const TopWrapper = styled.div`
 `;
 
 const Icon = styled.div`
+  display: flex;
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
+  align-items: center;
+  justify-content: center;
   background-color: #f4f7fe;
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+    color: #fc0374;
+  }
 `;
 
 const TopWrap = styled.div`
@@ -173,6 +188,7 @@ const Section3 = styled.div`
 
 const Alarm = styled.p``;
 
+//color를 지정하지 않으면 기본적으로 pink설정
 export default function page() {
   return (
     <>
@@ -188,21 +204,27 @@ export default function page() {
         </Section1>
         <Section2>
           <TopWrapper>
-            <Icon></Icon>
+            <Icon>
+              <BsGrid1X2Fill color="#5429FF" />
+            </Icon>
             <TopWrap>
               <Toptitle>My Post</Toptitle>
               <TopContent>24</TopContent>
             </TopWrap>
           </TopWrapper>
           <TopWrapper>
-            <Icon></Icon>
+            <Icon>
+              <BsBarChartFill color="#5429FF" />
+            </Icon>
             <TopWrap>
               <Toptitle>My Scrap</Toptitle>
               <TopContent>78</TopContent>
             </TopWrap>
           </TopWrapper>
           <TopWrapper>
-            <Icon></Icon>
+            <Icon>
+              <BsPeopleFill color="#5429FF" />
+            </Icon>
             <TopWrap>
               <Toptitle>Views</Toptitle>
               <TopContent>7,302</TopContent>
@@ -212,7 +234,9 @@ export default function page() {
         <Section3>
           <Alarm>8개알림</Alarm>
           <BottomWrapper>
-            <Icon></Icon>
+            <Icon>
+              <AiFillHeart />
+            </Icon>
             <BottomWrap>
               <BottomTitle>사용자님이 좋아요를 눌렀습니다.</BottomTitle>
               <BottomContent>
@@ -221,7 +245,21 @@ export default function page() {
             </BottomWrap>
           </BottomWrapper>
           <BottomWrapper>
-            <Icon></Icon>
+            <Icon>
+              <AiFillHeart />
+            </Icon>
+            <BottomWrap>
+              <BottomTitle>
+                사용자님이 ‘Lorem ipsum dolor sit amet ‘ 게시글에 댓글을
+                달았습니다.
+              </BottomTitle>
+              <BottomContent>좋은 정보 감사합니다~! </BottomContent>
+            </BottomWrap>
+          </BottomWrapper>
+          <BottomWrapper>
+            <Icon>
+              <BiMessageAltDetail />
+            </Icon>
             <BottomWrap>
               <BottomTitle>사용자님이 좋아요를 눌렀습니다.</BottomTitle>
               <BottomContent>
@@ -230,18 +268,11 @@ export default function page() {
             </BottomWrap>
           </BottomWrapper>
           <BottomWrapper>
-            <Icon></Icon>
+            <Icon>
+              <MdTag />
+            </Icon>
             <BottomWrap>
-              <BottomTitle>사용자님이 좋아요를 눌렀습니다.</BottomTitle>
-              <BottomContent>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              </BottomContent>
-            </BottomWrap>
-          </BottomWrapper>
-          <BottomWrapper>
-            <Icon></Icon>
-            <BottomWrap>
-              <BottomTitle>사용자님이 좋아요를 눌렀습니다.</BottomTitle>
+              <BottomTitle>사용자님이 나를 태그했습니다.</BottomTitle>
               <BottomContent>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               </BottomContent>
