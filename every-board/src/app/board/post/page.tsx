@@ -52,7 +52,7 @@ const Label = styled.label`
   margin-bottom: 10px;
 `;
 
-const Catagory = styled.button<{ isactive: "true" | "false" }>`
+const Catagory = styled.button<{ $isActive: Boolean }>`
   position: absolute;
   top: 40px;
   right: 15px;
@@ -62,9 +62,9 @@ const Catagory = styled.button<{ isactive: "true" | "false" }>`
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
-  color: ${({ isactive }) => (isactive === "true" ? "#ffff" : "#5429ff")};
-  background: ${({ isactive }) =>
-    isactive === "true" ? "#5429ff" : "transparent"};
+
+  color: ${props => (props.$isActive ? "#ffff" : "#5429ff")};
+  background: ${props => (props.$isActive ? "#5429ff" : "transparent")};
 `;
 
 const CategoryWrap = styled.div`
@@ -141,16 +141,15 @@ const InputBtnWrap = styled.div`
   }
 `;
 
-const InputBtn = styled.button<{ isSelected: Boolean }>`
+const InputBtn = styled.button<{ $isSelected?: Boolean }>`
   max-width: 150px;
   font-weight: bold;
   padding: 0.3rem 2rem;
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
-
-  color: ${props => (props.isSelected ? "#ffff" : "#5429ff")};
-  background: ${props => (props.isSelected ? "#5429ff" : "transparent")};
+  color: ${props => (props.$isSelected ? "#ffff" : "#5429ff")};
+  background: ${props => (props.$isSelected ? "#5429ff" : "transparent")};
 
   &:first-child {
     margin-right: 20px;
@@ -219,7 +218,7 @@ export default function page() {
   };
 
   const backBoard = () => {
-    router.push("/");
+    // router.push("/");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -256,7 +255,6 @@ export default function page() {
 
   return (
     <>
-      <Header title="PostWriting" />
       <Wrapper>
         <Box1>
           <Avatar></Avatar>
@@ -272,7 +270,7 @@ export default function page() {
               ref={categoryInput}
               placeholder="카테고리를 선택하세요."
             />
-            <Catagory isactive={"false"} onClick={toggleModal}>
+            <Catagory $isActive onClick={toggleModal}>
               카테고리
             </Catagory>
             <CategoryWrap>{showModal && <Category></Category>}</CategoryWrap>
@@ -337,7 +335,7 @@ export default function page() {
           <InputBtnWrap>
             <InputBtn
               type="submit"
-              isSelected={inputBtn === "취소"}
+              $isSelected={inputBtn === "취소"}
               onClick={() => {
                 handleInputButton("취소");
                 backBoard();
@@ -347,7 +345,7 @@ export default function page() {
             </InputBtn>
             <InputBtn
               type="submit"
-              isSelected={inputBtn === "작성"}
+              $isSelected={inputBtn === "작성"}
               onClick={() => {
                 handleInputButton("작성");
                 saveBoard();
