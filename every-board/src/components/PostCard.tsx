@@ -1,9 +1,9 @@
 "use client";
 import styled from "styled-components";
-import UserInfo from "./PostCard/UserInfo";
-import Content from "./PostCard/Content";
-import UserAction from "./PostCard/UserAction";
-import CommentInput from "./PostCard/CommentInput";
+import UserInfo from "./detail_PostCard/UserInfo";
+import Content from "./detail_PostCard/Content";
+import UserAction from "./detail_PostCard/UserAction";
+import CommentInput from "./detail_PostCard/CommentInput";
 import Link from "next/link";
 
 interface Props {

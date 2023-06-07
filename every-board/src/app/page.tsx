@@ -7,21 +7,6 @@ import PhotoLine from "@/components/home/PhotoLine";
 import Footer from "@/components/Footer";
 import styled from "styled-components";
 
-const Home = (): JSX.Element => {
-  return (
-    <HomeWrapper>
-      <Header />
-      <Category />
-      <SearchBar />
-      <Article>
-        <HotTopic /> <HotTopic /> <HotTopic />
-      </Article>
-      <PhotoLine />
-      <Footer />
-    </HomeWrapper>
-  );
-};
-
 const HomeWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,4 +31,20 @@ const Article = styled.article`
     width: 1330px;
   }
 `;
+
+const Home = (): JSX.Element => {
+  return (
+    <HomeWrapper>
+      <Header />
+      <Category home="home" />
+      <SearchBar />
+      <Article>
+        <HotTopic /> <HotTopic /> <HotTopic />
+      </Article>
+      <PhotoLine />
+      <Footer />
+    </HomeWrapper>
+  );
+};
+
 export default Home;

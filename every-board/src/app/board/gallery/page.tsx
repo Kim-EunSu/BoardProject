@@ -1,33 +1,16 @@
+"use client";
+
 import styled from "styled-components";
-import ButtonLayout from "@/components/ButtonLayout";
-import { useRouter } from "next/navigation";
 const Section = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 40px;
-`;
-
-const TitleWrap = styled.div`
-  color: #5429ff;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 320px;
-  height: 30px;
-
-  @media (min-width: 768px) {
-    width: 715px;
-  }
-  @media (min-width: 1080px) {
-    width: 1000px;
-  }
-  @media (min-width: 1440px) {
-    width: 1330px;
-  }
+  gap: 40px;
 `;
 
 const PhotoWrap = styled.div`
   display: flex;
+  flex-wrap: wrap;
   border-radius: 10px;
   width: 330px;
   height: 250px;
@@ -52,7 +35,8 @@ const PhotoWrap = styled.div`
 
   @media (min-width: 1080px) {
     width: 1000px;
-    height: 180px;
+    /* height: 180px; */
+    height: auto;
     img {
       width: 242.5px;
       height: 180px;
@@ -70,24 +54,10 @@ const PhotoWrap = styled.div`
   }
 `;
 
-const PhotoLine = () => {
-  const router = useRouter();
-  const photo = [1, 2, 3, 4];
+const Gallery = () => {
+  const photo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   return (
     <Section>
-      <TitleWrap>
-        <h4>🚀 갤러리</h4>
-        <ButtonLayout
-          width="58px"
-          height="28px"
-          radius="25px"
-          background="var(--primary)"
-          color=" #ffffff"
-          text="더보기"
-          border="none"
-          onClick={() => router.push("/board/gallery")}
-        ></ButtonLayout>
-      </TitleWrap>
       <PhotoWrap>
         {photo.map((el, index) => {
           return (
@@ -101,4 +71,4 @@ const PhotoLine = () => {
   );
 };
 
-export default PhotoLine;
+export default Gallery;
