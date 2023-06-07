@@ -3,41 +3,6 @@
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
-const HotTopic = () => {
-  const router = useRouter();
-  const topics = [
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-  ];
-
-  return (
-    <Article>
-      <div>
-        <h4>🚀 Today Hot Topics</h4>
-        <ol>
-          {topics.map((el, index) => {
-            return (
-              <li key={index} onClick={() => router.push("/board/detail")}>
-                {el}
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-    </Article>
-  );
-};
-
 const Article = styled.section`
   width: 320px;
   height: 540px;
@@ -69,10 +34,44 @@ const Article = styled.section`
   ol {
     padding: 0 20px;
     li {
-      padding: 8px 0;
+      padding: 12px 0;
       border-bottom: 1px solid #e8e9ff;
       cursor: pointer;
     }
   }
 `;
+
+const HotTopic = () => {
+  const router = useRouter();
+  const topics = [
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+    "오늘의 화제의글1",
+  ];
+
+  return (
+    <Article>
+      <div>
+        <h4>🚀 Today Hot Topics</h4>
+        <ol>
+          {topics.map((el, index) => {
+            return (
+              <li key={index} onClick={() => router.push("/board/detail")}>
+                {el}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </Article>
+  );
+};
+
 export default HotTopic;

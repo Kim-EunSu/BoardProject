@@ -1,94 +1,119 @@
 "use client";
 
 import styled from "styled-components";
-import Header from "@/components/Header";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Category from "@/components/Category";
+import TextArea from "@/components/post/TextArea";
 import axios from "axios";
 
+interface FormType {
+  category?: string;
+  title?: string;
+  content?: string;
+}
+
 const Wrapper = styled.div`
-  padding: 1rem 3rem;
+  width: 350px;
+  margin: 0 auto;
   border-radius: 18px;
   background-color: white;
-`;
-
-const Avatar = styled.div`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  margin-right: 1.5rem;
-  background-color: #5429ff;
-`;
-
-const Name = styled.p`
-  font-size: 1.5rem;
-`;
-
-const Box1 = styled.div`
-  display: flex;
-  align-items: center;
+  @media (min-width: 768px) {
+    width: 680px;
+  }
+  @media (min-width: 1080px) {
+    width: 980px;
+  }
+  @media (min-width: 1440px) {
+    width: 1200px;
+  }
 `;
 
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
-  margin-top: 18px;
+  margin-top: 25px;
+  padding: 0 15px;
+  gap: 25px;
 `;
 
 const FormWrap = styled.div`
   display: flex;
-  margin-bottom: 25px;
   flex-direction: column;
 
-  &:first-child {
-    position: relative;
+  div {
+    width: 320px;
+    height: auto;
+    min-height: 45px;
+    background: #ffffff;
+    border: 1px solid #e9eff4;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (min-width: 768px) {
+      width: 650px;
+    }
+    @media (min-width: 1080px) {
+      width: 950px;
+    }
+    @media (min-width: 1440px) {
+      width: 1170px;
+    }
+    input {
+      min-height: 45px;
+      width: inherit;
+      margin-left: 10px;
+      font-weight: 700;
+      @media (min-width: 1080px) {
+        font-size: 1rem;
+      }
+
+      ::placeholder {
+        @media (min-width: 1080px) {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  Input {
+    border: none;
+    outline: none;
   }
 `;
 
+const CategoryWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: -25px;
+`;
+
 const Label = styled.label`
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 10px;
+
+  @media (min-width: 1080px) {
+    font-size: 1.125rem;
+  }
 `;
 
 const Catagory = styled.button<{ $isActive: Boolean }>`
-  position: absolute;
-  top: 40px;
-  right: 15px;
+  cursor: pointer;
   max-width: 150px;
+  margin: 0 5px;
+  width: 200px;
+  height: 28.65px;
+  font-size: 0.775rem;
   font-weight: bold;
-  padding: 0.3rem 2rem;
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
 
   color: ${props => (props.$isActive ? "#ffff" : "#5429ff")};
   background: ${props => (props.$isActive ? "#5429ff" : "transparent")};
-`;
-
-const CategoryWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-`;
-
-const inputCommonStyle = {
-  borderRadius: "8px",
-  padding: "10px 14px",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: "#E9EFF4",
-};
-
-const Input = styled.input`
-  ${inputCommonStyle}
-`;
-
-const Textarea = styled.textarea`
-  ${inputCommonStyle}
-  resize: none;
-  min-height: 8rem;
 `;
 
 const ImageWrapper = styled.div``;
@@ -156,9 +181,10 @@ const InputBtn = styled.button<{ $isSelected?: Boolean }>`
   }
 `;
 
-export default function page() {
+const page = () => {
+  const router = useRouter();
   //전체의 input관리
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormType>({
     category: "",
     title: "",
     content: "",
@@ -196,8 +222,6 @@ export default function page() {
     setInputBtn(buttonName);
   };
 
-  const router = useRouter();
-
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -211,7 +235,7 @@ export default function page() {
   };
 
   const saveBoard = async () => {
-    await axios.post(`//localhost:3001/board/post`, form).then(res => {
+    await axios.post(`//localhost:3000/board/post`, form).then(res => {
       alert("등록됨");
       // router.push("/");
     });
@@ -224,11 +248,7 @@ export default function page() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    setForm({
-      category: "",
-      title: "",
-      content: "",
-    });
+    setForm({ ...form, title: "" });
     console.log(form);
   };
 
@@ -253,74 +273,86 @@ export default function page() {
 
   const categoryInput = useRef<HTMLInputElement>(null);
 
+  //category 상태 끌어올리기
+  const bringToCategoryState = (el: string) => {
+    setForm(form => ({ ...form, category: el }));
+    setShowModal(false);
+  };
+
+  //content 상태 끌어올리기
+  const bringToContentState = (el: string) => {
+    setForm(form => ({ ...form, content: el }));
+  };
+
   return (
     <>
       <Wrapper>
-        <Box1>
-          <Avatar></Avatar>
-          <Name>사용자</Name>
-        </Box1>
         <FormWrapper onSubmit={handleSubmit}>
           <FormWrap>
             <Label>카테코리</Label>
-            <Input
-              name="category"
-              value={category}
-              onChange={handleChange}
-              ref={categoryInput}
-              placeholder="카테고리를 선택하세요."
-            />
-            <Catagory $isActive onClick={toggleModal}>
-              카테고리
-            </Catagory>
-            <CategoryWrap>{showModal && <Category></Category>}</CategoryWrap>
+            <div>
+              <input
+                name="category"
+                value={form.category}
+                onChange={handleChange}
+                ref={categoryInput}
+                placeholder="카테고리를 선택하세요."
+                readOnly
+              />
+
+              <Catagory $isActive onClick={toggleModal}>
+                카테고리
+              </Catagory>
+            </div>
           </FormWrap>
+          <CategoryWrap className="category">
+            {showModal && <Category post="post" fn={bringToCategoryState} />}
+          </CategoryWrap>
           <FormWrap>
             <Label>제목</Label>
-            <Input
-              name="title"
-              value={title}
-              onChange={handleChange}
-              placeholder="제목을 입력하세요."
-            />
+            <div>
+              <input
+                name="title"
+                value={title}
+                onChange={handleChange}
+                placeholder="제목을 입력하세요."
+              />
+            </div>
           </FormWrap>
-          <FormWrap>
-            <Label>내용</Label>
-            <Textarea
-              name="content"
-              value={content}
-              onChange={handleChange}
-              placeholder="내용을 입력하세요."
-            />
-          </FormWrap>
+          <Label>내용</Label>
+          <TextArea fn={bringToContentState} />
+          {/* <div>
+              <input
+                name="content"
+                value={content}
+                onChange={handleChange}
+                placeholder="내용을 입력하세요."
+              />
+            </div> */}
           <FormWrap>
             <Label>파일 추가</Label>
             <ImageWrapper>
-              {images.length > 0 ? (
-                images.map((image, index) => (
-                  <div key={index}>
-                    <ImageWrap>
-                      <ImageLeft>
-                        <ImageThumbnail
-                          src={URL.createObjectURL(image)}
-                          alt={image.name}
-                        ></ImageThumbnail>
-                        <ImageName>{image.name}</ImageName>
-                      </ImageLeft>
-                      <ImageDeleteBtn onClick={() => onDeleteHandler(index)}>
-                        삭제
-                      </ImageDeleteBtn>
-                    </ImageWrap>
-                  </div>
-                ))
-              ) : (
-                <ImageName>
-                  파일업로드 칸을 눌러 이미지를 추가해주세요.
-                </ImageName>
-              )}
+              {images.length > 0
+                ? images.map((image, index) => (
+                    <div key={index}>
+                      <ImageWrap>
+                        <ImageLeft>
+                          <ImageThumbnail
+                            src={URL.createObjectURL(image)}
+                            alt={image.name}
+                          ></ImageThumbnail>
+                          <ImageName>{image.name}</ImageName>
+                        </ImageLeft>
+                        <ImageDeleteBtn onClick={() => onDeleteHandler(index)}>
+                          삭제
+                        </ImageDeleteBtn>
+                      </ImageWrap>
+                    </div>
+                  ))
+                : null}
               {/* type을 설정하지 않으면 작성하기 버튼과 같이 작동하여 이미지 추가 버튼만 눌러도 form이 서버에 보내짐 */}
               <FileButton type="button" onClick={onAddHandler}>
-                You can add files from your computer here file
+                이미지 추가하기
               </FileButton>
               <FileInput
                 name="file"
@@ -358,4 +390,6 @@ export default function page() {
       </Wrapper>
     </>
   );
-}
+};
+
+export default page;
