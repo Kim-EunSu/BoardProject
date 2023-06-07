@@ -100,7 +100,7 @@ const Label = styled.label`
   }
 `;
 
-const Catagory = styled.button<{ isactive: "true" | "false" }>`
+const Catagory = styled.button<{ $isActive: Boolean }>`
   cursor: pointer;
   max-width: 150px;
   margin: 0 5px;
@@ -111,9 +111,9 @@ const Catagory = styled.button<{ isactive: "true" | "false" }>`
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
-  color: ${({ isactive }) => (isactive === "true" ? "#ffff" : "#5429ff")};
-  background: ${({ isactive }) =>
-    isactive === "true" ? "#5429ff" : "transparent"};
+
+  color: ${props => (props.$isActive ? "#ffff" : "#5429ff")};
+  background: ${props => (props.$isActive ? "#5429ff" : "transparent")};
 `;
 
 const ImageWrapper = styled.div``;
@@ -166,16 +166,15 @@ const InputBtnWrap = styled.div`
   }
 `;
 
-const InputBtn = styled.button<{ isSelected: Boolean }>`
+const InputBtn = styled.button<{ $isSelected?: Boolean }>`
   max-width: 150px;
   font-weight: bold;
   padding: 0.3rem 2rem;
   border-radius: 4px;
   background: transparent;
   border: 2px solid #5429ff;
-
-  color: ${props => (props.isSelected ? "#ffff" : "#5429ff")};
-  background: ${props => (props.isSelected ? "#5429ff" : "transparent")};
+  color: ${props => (props.$isSelected ? "#ffff" : "#5429ff")};
+  background: ${props => (props.$isSelected ? "#5429ff" : "transparent")};
 
   &:first-child {
     margin-right: 20px;
@@ -243,7 +242,7 @@ const page = () => {
   };
 
   const backBoard = () => {
-    router.push("/");
+    // router.push("/");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -300,7 +299,8 @@ const page = () => {
                 placeholder="카테고리를 선택하세요."
                 readOnly
               />
-              <Catagory isactive={"false"} onClick={toggleModal}>
+
+              <Catagory $isActive onClick={toggleModal}>
                 카테고리
               </Catagory>
             </div>
@@ -367,7 +367,7 @@ const page = () => {
           <InputBtnWrap>
             <InputBtn
               type="submit"
-              isSelected={inputBtn === "취소"}
+              $isSelected={inputBtn === "취소"}
               onClick={() => {
                 handleInputButton("취소");
                 backBoard();
@@ -377,7 +377,7 @@ const page = () => {
             </InputBtn>
             <InputBtn
               type="submit"
-              isSelected={inputBtn === "작성"}
+              $isSelected={inputBtn === "작성"}
               onClick={() => {
                 handleInputButton("작성");
                 saveBoard();

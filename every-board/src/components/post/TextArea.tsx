@@ -6,6 +6,7 @@ import styled from "styled-components";
 interface Props {
   fn: Function;
 }
+
 const QuillEditor = styled(ReactQuill)`
   margin-top: -25px;
   border: 1px solid #e9eff4;
