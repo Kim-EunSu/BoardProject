@@ -116,17 +116,15 @@ const Catagory = styled.button<{ $isActive: Boolean }>`
   background: ${props => (props.$isActive ? "#5429ff" : "transparent")};
 `;
 
-const ImageWrapper = styled.div``;
+const ImageWrapper = styled.div`
+  border: 0 !important;
+`;
 
 const ImageWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-`;
-
-const ImageLeft = styled.div`
-  display: flex;
-  align-items: center;
+  border: 0 !important;
+  justify-content: flex-start !important;
 `;
 
 const ImageName = styled.p``;
@@ -138,6 +136,7 @@ const ImageThumbnail = styled.img`
 `;
 
 const ImageDeleteBtn = styled.button`
+  width: 100px;
   font-size: 1rem;
   color: #fc0374;
   font-weight: bold;
@@ -331,38 +330,36 @@ const page = () => {
             </div> */}
           <FormWrap>
             <Label>파일 추가</Label>
-            <ImageWrapper>
-              {images.length > 0
-                ? images.map((image, index) => (
-                    <div key={index}>
+            {images.length > 0
+              ? images.map((image, index) => (
+                  <div key={index} style={{ border: "none" }}>
+                    <ImageWrapper>
                       <ImageWrap>
-                        <ImageLeft>
-                          <ImageThumbnail
-                            src={URL.createObjectURL(image)}
-                            alt={image.name}
-                          ></ImageThumbnail>
-                          <ImageName>{image.name}</ImageName>
-                        </ImageLeft>
-                        <ImageDeleteBtn onClick={() => onDeleteHandler(index)}>
-                          삭제
-                        </ImageDeleteBtn>
+                        <ImageThumbnail
+                          src={URL.createObjectURL(image)}
+                          alt={image.name}
+                        ></ImageThumbnail>
+                        <ImageName>{image.name}</ImageName>
                       </ImageWrap>
-                    </div>
-                  ))
-                : null}
-              {/* type을 설정하지 않으면 작성하기 버튼과 같이 작동하여 이미지 추가 버튼만 눌러도 form이 서버에 보내짐 */}
-              <FileButton type="button" onClick={onAddHandler}>
-                이미지 추가하기
-              </FileButton>
-              <FileInput
-                name="file"
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                onChange={onFileInputChange}
-                style={{ display: "none" }}
-              />
-            </ImageWrapper>
+                      <ImageDeleteBtn onClick={() => onDeleteHandler(index)}>
+                        삭제
+                      </ImageDeleteBtn>
+                    </ImageWrapper>
+                  </div>
+                ))
+              : null}
+            {/* type을 설정하지 않으면 작성하기 버튼과 같이 작동하여 추 추가 버튼만 눌러도 form이 서버에 보내짐 */}
+            <FileButton type="button" onClick={onAddHandler}>
+              이미지 추가하기
+            </FileButton>
+            <FileInput
+              name="file"
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={onFileInputChange}
+              style={{ display: "none" }}
+            />
           </FormWrap>
           <InputBtnWrap>
             <InputBtn
