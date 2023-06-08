@@ -234,7 +234,7 @@ const page = () => {
   };
 
   const saveBoard = async () => {
-    await axios.post(`//localhost:3000/board/post`, form).then(res => {
+    await axios.post(`//localhost:3001/board/post`, form).then(res => {
       alert("등록됨");
       // router.push("/");
     });
