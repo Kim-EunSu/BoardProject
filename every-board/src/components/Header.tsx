@@ -9,15 +9,11 @@ const Header = () => {
   const [currentTitle, setCurrentTitle] = useState<string | null>(null);
 
   useEffect(() => {
-    const urlParams = new URL(location.href).searchParams;
-    const category: string | null = urlParams.get("category");
-    const endPoint = window.location.href
-      .split("/")
-      .splice(-1)
-      .join("")
-      .toUpperCase();
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("category");
+    const endPoint = window.location.pathname.split("/").pop()?.toUpperCase();
 
-    category !== null ? setCurrentTitle(category) : setCurrentTitle(endPoint);
+    setCurrentTitle(category || endPoint || "");
   }, []);
 
   return (
