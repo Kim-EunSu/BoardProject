@@ -149,8 +149,25 @@ export default function Login() {
   const router = useRouter();
 
   //로그인하면 넘어가는 data
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     console.log(data);
+
+    await fetch(
+      "http://ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      },
+    )
+      .then(res => {
+        if (res.status === 200) {
+          alert("로그인");
+        }
+      })
+      .catch(err => console.log(err));
   };
 
   //checkbox
@@ -176,8 +193,8 @@ export default function Login() {
             <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
             <Title>모두의 게시판</Title>
           </TitleWrap>
-          <Form>
-            <FormWrap onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <FormWrap>
               <Label>Email</Label>
               <Input
                 placeholder="test@example.com"
