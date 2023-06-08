@@ -1,13 +1,13 @@
 "use client";
 
 import styled from "styled-components";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { AiOutlineEye } from "react-icons/ai";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -44,6 +44,10 @@ const FormWrap = styled.div`
   display: flex;
   flex-direction: column;
 
+  &:first-child {
+    position: relative;
+  }
+
   &:nth-child(4) {
     position: relative;
   }
@@ -79,6 +83,18 @@ const PWButton = styled.div`
     top: 38px;
     right: 20px;
   }
+`;
+
+const EmailBtn = styled.button`
+  position: absolute;
+  top: 35px;
+  right: 7px;
+  padding: 6px;
+  border: none;
+  color: white;
+  font-size: 8px;
+  border-radius: 7px;
+  background: #5429ff;
 `;
 
 const ErrorText = styled.span`
@@ -187,6 +203,8 @@ export default function Login() {
     console.log(data);
   };
 
+  //이메일 인증 구헌 - 해야할 것
+
   return (
     <>
       <Wrapper>
@@ -209,6 +227,7 @@ export default function Login() {
                   },
                 })}
               />
+              <EmailBtn>이메일 확인</EmailBtn>
               <ErrorText>{errors.email && errors.email.message}</ErrorText>
             </FormWrap>
             <FormWrap>
