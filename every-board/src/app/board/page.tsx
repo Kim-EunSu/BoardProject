@@ -1,7 +1,8 @@
 "use client";
 
 import PostCard from "@/components/PostCard";
-import Loading from "@/components/Loading";
+import LoadingPage from "@/components/LoadingPage";
+import ErrorPage from "@/components/ErrorPage";
 import styled from "styled-components";
 import { useGetCategoryContent } from "@/utils/api";
 import type { ContentDetail } from "@/utils/type";
@@ -13,7 +14,10 @@ const Dashboard = () => {
   const { data, isLoading, isError } = useGetCategoryContent(category);
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingPage />;
+  }
+  if (isError) {
+    return <ErrorPage />;
   }
 
   return (
