@@ -39,7 +39,9 @@ const Home = (): JSX.Element => {
       <Category home="home" />
       <SearchBar />
       <Article>
-        <HotTopic /> <HotTopic /> <HotTopic />
+        <HotTopic title="🔥 Today Hot Topic" sort="today" />
+        <HotTopic title="🚀 Weekly hot Topic" sort="weekly" />
+        <HotTopic title="❣️ Most Like Post" sort="like" />
       </Article>
       <PhotoLine />
       <Footer />
