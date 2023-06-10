@@ -1,4 +1,10 @@
-import type { ContentDetail, UserInfo, HotTopic, CategoryType } from "./type";
+import type {
+  ContentDetail,
+  UserInfo,
+  HotTopic,
+  CategoryType,
+  SearchKeyword,
+} from "./type";
 import axios from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import Content from "@/components/detail_PostCard/Content";
@@ -23,7 +29,7 @@ export const useGetDetailContent = (contentId: string | null) => {
 };
 
 //사용자 정보 조회
-export const useGetUserInfo = (userId: number | undefined) => {
+export const useGetUserInfo = (userId: number | undefined | null) => {
   const getUserInfo = async () => {
     return await axios.get<UserInfo>(`/user/${userId}`).then(res => {
       return res.data;
@@ -62,6 +68,23 @@ export const useGetHotTopic = (endpoint: string) => {
   const { data, isLoading, isError } = useQuery(
     ["getHotTopic", endpoint],
     getHotTopic,
+  );
+  return { data, isLoading, isError };
+};
+
+//게시글 검색 기능
+export const useGetKeyword = (keyword: string | null) => {
+  const getKeyword = async () => {
+    return await axios
+      .get<SearchKeyword[]>(`contents/search?keyword=${keyword}`)
+      .then(res => {
+        console.log(res.data);
+        return res.data;
+      });
+  };
+  const { data, isLoading, isError } = useQuery(
+    ["getKeyword", keyword],
+    getKeyword,
   );
   return { data, isLoading, isError };
 };

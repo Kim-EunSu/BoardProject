@@ -5,7 +5,7 @@ import Content from "./detail_PostCard/Content";
 import UserAction from "./detail_PostCard/UserAction";
 import CommentInput from "./detail_PostCard/CommentInput";
 import Link from "next/link";
-import type { ContentDetail } from "@/utils/type";
+import type { ContentDetail, SearchKeyword } from "@/utils/type";
 
 const Article = styled.article`
   width: 350px;
@@ -35,7 +35,7 @@ const Article = styled.article`
 
 interface Props {
   detail?: boolean;
-  data: ContentDetail | undefined;
+  data: ContentDetail | SearchKeyword | undefined;
   onClick?: () => void;
 }
 

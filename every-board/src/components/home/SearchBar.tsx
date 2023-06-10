@@ -1,12 +1,34 @@
 import { BiSearch } from "react-icons/bi";
 import ButtonLayout from "../ButtonLayout";
 import styled from "styled-components";
+import { useState } from "react";
+import { useGetKeyword } from "@/utils/api";
+import { useRouter } from "next/navigation";
 
 const SearchBar = (): JSX.Element => {
+  const route = useRouter();
+  const [keyword, setKeyword] = useState<string>("");
+
+  const handleKeywordChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    console.log(event.target.value);
+    setKeyword(event.target.value);
+  };
+
+  const sendKeyword = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    route.push(`board/result?keyword=${keyword}`);
+  };
   return (
     <SearchBarLayout>
       <BiSearch size="30px" color="var(--primary)" />
-      <input placeholder="검색어를 입력하세요."></input>
+      <form onSubmit={sendKeyword}>
+        <input
+          placeholder="검색어를 입력하세요."
+          onChange={handleKeywordChange}
+        ></input>
+      </form>
       <ButtonLayout
         width="58px"
         height="28px"

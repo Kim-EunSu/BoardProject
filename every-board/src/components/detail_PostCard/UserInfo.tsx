@@ -46,7 +46,7 @@ const TextArea = styled.span`
 `;
 
 interface Props {
-  userId: number | undefined;
+  userId: number | undefined | null;
   createdAt: string | undefined;
 }
 

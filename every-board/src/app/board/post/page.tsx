@@ -116,7 +116,10 @@ const Catagory = styled.button<{ $isActive: Boolean }>`
   background: ${props => (props.$isActive ? "#5429ff" : "transparent")};
 `;
 
-const ImageWrapper = styled.div``;
+const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const ImageWrap = styled.div`
   display: flex;
@@ -126,6 +129,7 @@ const ImageWrap = styled.div`
 
 const ImageLeft = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 
@@ -321,14 +325,6 @@ const page = () => {
           </FormWrap>
           <Label>내용</Label>
           <TextArea fn={bringToContentState} />
-          {/* <div>
-              <input
-                name="content"
-                value={content}
-                onChange={handleChange}
-                placeholder="내용을 입력하세요."
-              />
-            </div> */}
           <FormWrap>
             <Label>파일 추가</Label>
             <ImageWrapper>

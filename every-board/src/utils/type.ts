@@ -1,5 +1,5 @@
 //게시글 단건조회 타입
-interface ContentDetail {
+export interface ContentDetail {
   category: string;
   content: string;
   contentHeartCount: number;
@@ -9,18 +9,18 @@ interface ContentDetail {
   modifiedAt: string;
   tag: string;
   title: string;
-  userId: number;
+  userId: number | null | undefined;
   viewCount: number;
 }
 
-interface ContentImage {
+export interface ContentImage {
   contentImageId: number;
   contentId: number;
   contentImgUrl: string;
 }
 
 //회원 단건 조회 타입
-interface UserInfo {
+export interface UserInfo {
   userId: number;
   email: string;
   nickname: string;
@@ -31,14 +31,28 @@ interface UserInfo {
 }
 
 //카테고리
-interface CategoryType {
+export interface CategoryType {
   category: string;
   contents: ContentDetail[];
 }
 
 //핫 토픽 타입
-interface HotTopic {
+export interface HotTopic {
   contentId: string;
   title: string;
 }
-export type { ContentDetail, ContentImage, UserInfo, CategoryType, HotTopic };
+
+//게시글 검색
+export interface SearchKeyword {
+  contentId: number;
+  userId: number | null | undefined;
+  viewCount: number;
+  contentHeartCount: number;
+  title: string;
+  content: string;
+  contentImages: ContentImage[];
+  category: string;
+  tag: string;
+  createdAt: string;
+  modifiedAt: string;
+}

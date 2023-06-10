@@ -1,9 +1,11 @@
+import axios from "axios";
 import Comment from "./Comment";
 import Reply from "./Reply";
 import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import styled from "styled-components";
+import { useMutation } from "@tanstack/react-query";
 
 interface Props {
   comment?: boolean;
@@ -14,6 +16,7 @@ const UserAction = (props: Props) => {
   const { comment, reply } = props;
   const [isLikeClick, setLike] = useState<boolean>(false);
   const [isCommentClick, setComment] = useState<boolean>(false);
+
   return (
     <UserActionContainer className={comment ? "comment" : ""}>
       <UserActionWrap>
