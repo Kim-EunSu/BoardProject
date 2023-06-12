@@ -3,6 +3,7 @@
 import PostCard from "@/components/PostCard";
 import LoadingPage from "@/components/LoadingPage";
 import ErrorPage from "@/components/ErrorPage";
+import Category from "@/components/Category";
 import styled from "styled-components";
 import { useGetCategoryContent } from "@/utils/api";
 import type { ContentDetail } from "@/utils/type";
@@ -22,10 +23,16 @@ const Dashboard = () => {
 
   return (
     <Main>
-      {data &&
+      <Category route="board" />
+      {data && data.length > 0 ? (
         data.map((el: ContentDetail, index: number) => {
           return <PostCard key={index} data={el} />;
-        })}
+        })
+      ) : (
+        <NoResult>
+          <span>{category}</span> 에대한 글이 없습니다.
+        </NoResult>
+      )}
     </Main>
   );
 };
@@ -33,9 +40,16 @@ const Dashboard = () => {
 const Main = styled.main`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 30px;
   margin-bottom: 20px;
   min-height: 100vh;
+`;
+
+const NoResult = styled.div`
+  span {
+    font-weight: 700;
+  }
 `;
 
 export default Dashboard;

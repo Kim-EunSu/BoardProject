@@ -36,7 +36,7 @@ const Home = (): JSX.Element => {
   return (
     <HomeWrapper>
       <Header />
-      <Category home="home" />
+      <Category route="home" />
       <SearchBar />
       <Article>
         <HotTopic title="🔥 Today Hot Topic" sort="today" />
