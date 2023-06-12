@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 import Avatar from "../Avatar";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const HeaderLayout = styled.header`
@@ -81,7 +81,19 @@ const AvatarArea = styled.span`
 
 const Header = (): JSX.Element => {
   const router = useRouter();
-  const [isLogin, setLogin] = useState<boolean>(false);
+  const [isLogin, setLogin] = useState<boolean>(true);
+
+  //이부분이 있어야 로그인했을때 저장된 token을 가져와짐!
+  useEffect(() => {
+    const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+
+    if (ACCESS_TOKEN) {
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+  }, []);
+
   return (
     <HeaderLayout>
       <TextArea>
