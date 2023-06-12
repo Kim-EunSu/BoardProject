@@ -4,14 +4,16 @@ import PostCard from "@/components/PostCard";
 import LoadingPage from "@/components/LoadingPage";
 import ErrorPage from "@/components/ErrorPage";
 import Category from "@/components/Category";
+import NoResut from "@/components/NoResult";
 import styled from "styled-components";
 import { useGetCategoryContent } from "@/utils/api";
+import { useSearchParams } from "next/navigation";
 import type { ContentDetail } from "@/utils/type";
 
 const Dashboard = () => {
   // 상단 URL 쿼리로부터 contentId 가져오기
-  const urlParams = new URL(location.href).searchParams;
-  const category: string | null = urlParams.get("category");
+  const params = useSearchParams();
+  const category: string | null | undefined = params?.get("category");
   const { data, isLoading, isError } = useGetCategoryContent(category);
 
   if (isLoading) {
@@ -29,9 +31,7 @@ const Dashboard = () => {
           return <PostCard key={index} data={el} />;
         })
       ) : (
-        <NoResult>
-          <span>{category}</span> 에대한 글이 없습니다.
-        </NoResult>
+        <NoResut item={category} />
       )}
     </Main>
   );
