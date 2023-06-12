@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { AiOutlineEye } from "react-icons/ai";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -171,7 +171,7 @@ type SigninValues = {
   passwordconfirm: string;
 };
 
-export default function Login() {
+export default function SignUp() {
   const {
     register,
     handleSubmit,
@@ -199,8 +199,24 @@ export default function Login() {
 
   const password = getValues("password");
 
-  const onSubmit = (data: SigninValues) => {
-    console.log(data);
+  const onSubmit = async (data: SigninValues) => {
+    await fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.accessToken) {
+          router.push("/signin");
+          localStorage.setItem("accessToken", data.accessToken);
+          localStorage.setItem("refreshToken", data.refreshToken);
+        }
+      })
+      .catch(err => console.log(err));
   };
 
   //이메일 인증 구헌 - 해야할 것
@@ -210,11 +226,17 @@ export default function Login() {
       <Wrapper>
         <Left>
           <TitleWrap>
-            <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
+            <Image
+              src={"/logo.svg"}
+              width={50}
+              height={50}
+              alt="logo"
+              priority
+            />
             <Title>모두의 게시판</Title>
           </TitleWrap>
-          <Form>
-            <FormWrap onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <FormWrap>
               <Label>Email</Label>
               <Input
                 placeholder="test@example.com"
@@ -255,6 +277,8 @@ export default function Login() {
               <Label>Password</Label>
               <Input
                 type={ShowPassword ? "text" : "password"}
+                id="password"
+                autoComplete="off"
                 placeholder="●●●●●●●●"
                 {...register("password", {
                   required: "비밀번호를 입력해주세요.",
@@ -300,26 +324,25 @@ export default function Login() {
                 border: "none",
                 fontWeight: "bold",
               }}
-              onClick={handleSubmit(onSubmit)}
             >
               회원가입
             </Button>
-            <Button>
-              <Icon>
-                <FcGoogle />
-              </Icon>
-              Sign in with Google
-            </Button>
-            <SubmitWrap>
-              <Submit>이미 계정이 있으신가요?</Submit>
-              <Submit
-                onClick={() => router.push("/signin")}
-                style={{ color: "#fc0374", fontWeight: "bold" }}
-              >
-                로그인
-              </Submit>
-            </SubmitWrap>
           </Form>
+          <Button>
+            <Icon>
+              <FcGoogle />
+            </Icon>
+            Sign in with Google
+          </Button>
+          <SubmitWrap>
+            <Submit>이미 계정이 있으신가요?</Submit>
+            <Submit
+              onClick={() => router.push("/signin")}
+              style={{ color: "#fc0374", fontWeight: "bold" }}
+            >
+              로그인
+            </Submit>
+          </SubmitWrap>
         </Left>
         <Right>
           <Image src={"/frame.png"} width={400} height={500} alt="frame" />

@@ -152,22 +152,27 @@ export default function Login() {
   const onSubmit = async (data: FormValues) => {
     console.log(data);
 
-    await fetch(
-      "http://ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+    await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    )
+      body: JSON.stringify(data),
+    })
       .then(res => {
         if (res.status === 200) {
-          alert("로그인");
+          router.push("/");
+
+          const ACCESS_TOKEN: string | null = res.headers.get("Authorization");
+          const REFRESH_TOKEN: string | null = res.headers.get("Refresh-Token");
+
+          if (ACCESS_TOKEN)
+            return sessionStorage.setItem("Authorization", ACCESS_TOKEN);
+          if (REFRESH_TOKEN)
+            sessionStorage.setItem("Refresh-Token", REFRESH_TOKEN);
         }
       })
-      .catch(err => console.log(err));
+      .then(data => console.log(data));
   };
 
   //checkbox
@@ -190,7 +195,13 @@ export default function Login() {
       <Wrapper>
         <Left>
           <TitleWrap>
-            <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
+            <Image
+              src={"/logo.svg"}
+              width={50}
+              height={50}
+              alt="logo"
+              priority
+            />
             <Title>모두의 게시판</Title>
           </TitleWrap>
           <Form onSubmit={handleSubmit(onSubmit)}>
