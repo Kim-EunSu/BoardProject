@@ -35,6 +35,7 @@ const Main = styled.main`
   flex-direction: column;
   gap: 30px;
   margin-bottom: 20px;
+  min-height: 100vh;
 `;
 
 export default Dashboard;
