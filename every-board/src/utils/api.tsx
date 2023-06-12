@@ -57,7 +57,7 @@ export const useGetUserInfo = (userId: number | undefined | null) => {
 };
 
 //카테고리
-export const useGetCategoryContent = (category: string | null) => {
+export const useGetCategoryContent = (category: string | null | undefined) => {
   const getCategoryContent = async () => {
     return await axios
       .get(`${BASE_URL}/contents/category/${category}`)
@@ -105,7 +105,7 @@ export const useGetHotTopic = (endpoint: string) => {
 };
 
 //게시글 검색 기능
-export const useGetKeyword = (keyword: string | null) => {
+export const useGetKeyword = (keyword: string | null | undefined) => {
   const getKeyword = async () => {
     return await axios
       .get<contentResponseDto>(`${BASE_URL}/contents/search?keyword=${keyword}`)
