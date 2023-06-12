@@ -4,6 +4,7 @@ import type {
   HotTopic,
   CategoryType,
   SearchKeyword,
+  contentResponseDto,
 } from "./type";
 import axios from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -16,9 +17,17 @@ const url = "ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080";
 export const useGetDetailContent = (contentId: string | null) => {
   const getDetailContent = async () => {
     return await axios
-      .get<ContentDetail>(`/contents/${contentId}`)
+      .get<ContentDetail | SearchKeyword>(`/contents/${contentId}`)
       .then(res => {
+        console.log(
+          "디테일 데이터 가져오기 성공",
+          `/contents/${contentId}`,
+          res.data,
+        );
         return res.data;
+      })
+      .catch(err => {
+        console.error(err);
       });
   };
   const { data, isLoading, isError } = useQuery(
@@ -31,9 +40,13 @@ export const useGetDetailContent = (contentId: string | null) => {
 //사용자 정보 조회
 export const useGetUserInfo = (userId: number | undefined | null) => {
   const getUserInfo = async () => {
-    return await axios.get<UserInfo>(`/user/${userId}`).then(res => {
-      return res.data;
-    });
+    return await axios
+      .get<UserInfo>(`/user/${userId}`)
+      .then(res => {
+        console.log("사용자 정보 가져오기 성공", `/user/${userId}`, res.data);
+        return res.data;
+      })
+      .catch(err => console.error(err));
   };
   const { data, isLoading, isError } = useQuery(
     ["getuserInfo", userId],
@@ -45,9 +58,19 @@ export const useGetUserInfo = (userId: number | undefined | null) => {
 //카테고리
 export const useGetCategoryContent = (category: string | null) => {
   const getCategoryContent = async () => {
-    return await axios.get(`/contents/category/${category}`).then(res => {
-      return res.data?.data.contents;
-    });
+    return await axios
+      .get(`/contents/category/${category}`)
+      .then(res => {
+        console.log(
+          "카테고리 데이터 가져오기 성공",
+          `/contents/category/${category}`,
+          res.data?.data.contents,
+        );
+        return res.data?.data.contents;
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
   const { data, isLoading, isError } = useQuery(
     ["getCategoryContent", category],
@@ -62,7 +85,15 @@ export const useGetHotTopic = (endpoint: string) => {
     return await axios
       .get<HotTopic[]>(`contents/homepage/${endpoint}`)
       .then(res => {
+        console.log(
+          "핫토픽 데이터 가져오기 성공",
+          `contents/homepage/${endpoint}`,
+          res.data,
+        );
         return res.data;
+      })
+      .catch(err => {
+        console.error(err);
       });
   };
   const { data, isLoading, isError } = useQuery(
@@ -76,15 +107,20 @@ export const useGetHotTopic = (endpoint: string) => {
 export const useGetKeyword = (keyword: string | null) => {
   const getKeyword = async () => {
     return await axios
-      .get<SearchKeyword[]>(`contents/search?keyword=${keyword}`)
+      .get<contentResponseDto>(`/contents/search?keyword=${keyword}`)
       .then(res => {
-        console.log(res.data);
-        return res.data;
-      });
+        console.log(
+          "게시글 검색 성공",
+          `contents/search?keyword=${keyword}`,
+          res.data?.contentResponseDto,
+        );
+        return res.data?.contentResponseDto;
+      })
+      .catch(err => console.error(err));
   };
-  const { data, isLoading, isError } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     ["getKeyword", keyword],
     getKeyword,
   );
-  return { data, isLoading, isError };
+  return { data, isLoading, isError, refetch };
 };

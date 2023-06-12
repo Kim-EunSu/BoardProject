@@ -43,6 +43,10 @@ export interface HotTopic {
 }
 
 //게시글 검색
+export interface contentResponseDto {
+  contentResponseDto: SearchKeyword[];
+}
+
 export interface SearchKeyword {
   contentId: number;
   userId: number | null | undefined;
