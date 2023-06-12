@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 import { ContentImage } from "@/utils/type";
+import Image from "next/image";
 
 const ContentWrap = styled.div`
   width: 320px;
@@ -77,10 +78,17 @@ const Content = (props: Props) => {
       <div>
         <h4>{title}</h4>
         <span className={props.detail ? "detail" : ""}>{content}</span>
-        {contentImages &&
+        {/* 서버 이미지 미구현 상태 */}
+        {/* {contentImages &&
           contentImages.map(image => (
-            <span key={image.contentImageId}>{image.contentImgUrl}</span>
-          ))}
+            <Image
+              key={image.contentImageId}
+              src={`http://${image.contentImgUrl}`}
+              alt="Content Image"
+              width={500} // 필요에 따라 조정하세요
+              height={300} // 필요에 따라 조정하세요
+            />
+          ))} */}
       </div>
     </ContentWrap>
   );

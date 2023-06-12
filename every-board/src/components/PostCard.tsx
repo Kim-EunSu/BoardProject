@@ -35,7 +35,7 @@ const Article = styled.article`
 
 interface Props {
   detail?: boolean;
-  data: ContentDetail | SearchKeyword | undefined;
+  data: ContentDetail | SearchKeyword | undefined | void;
   onClick?: () => void;
 }
 
