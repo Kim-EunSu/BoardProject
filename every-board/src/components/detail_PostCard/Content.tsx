@@ -78,17 +78,16 @@ const Content = (props: Props) => {
       <div>
         <h4>{title}</h4>
         <span className={props.detail ? "detail" : ""}>{content}</span>
-        {/* 서버 이미지 미구현 상태 */}
-        {/* {contentImages &&
+        {contentImages &&
           contentImages.map(image => (
             <Image
               key={image.contentImageId}
-              src={`http://${image.contentImgUrl}`}
+              src={`https://backendcontentimage.s3.ap-northeast-2.amazonaws.com/${image.contentImgUrl}`}
               alt="Content Image"
               width={500} // 필요에 따라 조정하세요
               height={300} // 필요에 따라 조정하세요
             />
-          ))} */}
+          ))}
       </div>
     </ContentWrap>
   );
