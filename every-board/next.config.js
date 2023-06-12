@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} **/
 
 const nextConfig = {
+  images: {
+    domains: ["backendcontentimage.s3.ap-northeast-2.amazonaws.com"], //해당 도메인의 이미지만 허용
+  },
   compiler: { styledComponents: true },
   experimental: {
     appDir: true,
@@ -10,15 +13,6 @@ const nextConfig = {
   reactStrictMode: true,
   compiler: {
     styledComponents: true,
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/:path*",
-        destination:
-          "http://ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080/:path*",
-      },
-    ];
   },
 };
 
