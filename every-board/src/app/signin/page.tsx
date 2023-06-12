@@ -160,7 +160,7 @@ export default function Login() {
       body: JSON.stringify(data),
     })
       .then(res => {
-        if (res.status === 200) {
+        if (res.ok) {
           router.push("/");
 
           const ACCESS_TOKEN: string | null = res.headers.get("Authorization");
@@ -170,9 +170,11 @@ export default function Login() {
             return sessionStorage.setItem("Authorization", ACCESS_TOKEN);
           if (REFRESH_TOKEN)
             sessionStorage.setItem("Refresh-Token", REFRESH_TOKEN);
+        } else {
+          throw new Error("회원가입 정보를 확인하세요.");
         }
       })
-      .then(data => console.log(data));
+      .catch(err => console.log(err));
   };
 
   //checkbox
