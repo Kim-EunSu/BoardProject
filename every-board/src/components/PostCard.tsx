@@ -5,26 +5,7 @@ import Content from "./detail_PostCard/Content";
 import UserAction from "./detail_PostCard/UserAction";
 import CommentInput from "./detail_PostCard/CommentInput";
 import Link from "next/link";
-
-interface Props {
-  detail?: boolean;
-  onClick?: () => void;
-}
-const PostCard = (props: Props) => {
-  return (
-    <Article>
-      <UserInfo />
-      <Link
-        href="board/detail"
-        style={{ textDecoration: "none", color: "#000000" }}
-      >
-        <Content detail={props.detail} />
-      </Link>
-      <UserAction comment={false} />
-      <CommentInput />
-    </Article>
-  );
-};
+import type { ContentDetail, SearchKeyword } from "@/utils/type";
 
 const Article = styled.article`
   width: 350px;
@@ -51,4 +32,34 @@ const Article = styled.article`
     width: 1200px;
   }
 `;
+
+interface Props {
+  detail?: boolean;
+  data: ContentDetail | SearchKeyword | undefined;
+  onClick?: () => void;
+}
+
+const PostCard = (props: Props) => {
+  const { data } = props;
+  return (
+    <Article>
+      <UserInfo userId={data?.userId} createdAt={data?.createdAt} />
+      <Link
+        href="board/detail"
+        style={{ textDecoration: "none", color: "#000000" }}
+      >
+        <Content
+          detail={props.detail}
+          content={data?.content}
+          title={data?.title}
+          category={data?.category}
+          contentImages={data?.contentImages}
+        />
+      </Link>
+      <UserAction comment={false} />
+      <CommentInput />
+    </Article>
+  );
+};
+
 export default PostCard;

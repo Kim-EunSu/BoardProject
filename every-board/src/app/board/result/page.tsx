@@ -1,16 +1,18 @@
 "use client";
 
-import styled from "styled-components";
 import PostCard from "@/components/PostCard";
 import LoadingPage from "@/components/LoadingPage";
 import ErrorPage from "@/components/ErrorPage";
-import { useGetDetailContent } from "@/utils/api";
+import styled from "styled-components";
+import { useGetKeyword } from "@/utils/api";
+import type { ContentDetail, SearchKeyword } from "@/utils/type";
 
 const Dashboard = () => {
   // 상단 URL 쿼리로부터 contentId 가져오기
   const urlParams = new URL(location.href).searchParams;
-  const contentId: string | null = urlParams.get("contentId");
-  const { data, isLoading, isError } = useGetDetailContent(contentId);
+  const keyword: string | null = urlParams.get("keyword");
+  const { data, isLoading, isError } = useGetKeyword(keyword);
+
   if (isLoading) {
     return <LoadingPage />;
   }
@@ -20,7 +22,10 @@ const Dashboard = () => {
 
   return (
     <Main>
-      <PostCard detail={true} data={data} />
+      {data &&
+        data.map((el: ContentDetail | SearchKeyword, index: number) => {
+          return <PostCard key={index} data={el} />;
+        })}
     </Main>
   );
 };
@@ -28,9 +33,8 @@ const Dashboard = () => {
 const Main = styled.main`
   display: flex;
   flex-direction: column;
+  gap: 30px;
   margin-bottom: 20px;
-  min-height: 100vh;
-  height: fit-content;
 `;
 
 export default Dashboard;

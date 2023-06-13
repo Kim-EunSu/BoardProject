@@ -3,9 +3,58 @@ import ButtonLayout from "../ButtonLayout";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import styled from "styled-components";
 import { useState } from "react";
+import { useGetUserInfo } from "@/utils/api";
+import { useCreatedAtFormat } from "@/utils/customHooks";
 
-const UserInfo = () => {
+const UserInfoWrap = styled.div`
+  width: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 20px 0;
+
+  @media (min-width: 768px) {
+    width: 600px;
+  }
+  @media (min-width: 1080px) {
+    width: 900px;
+  }
+  @media (min-width: 1440px) {
+    width: 1100px;
+  }
+
+  .star {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+const User = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const TextArea = styled.span`
+  display: flex;
+  flex-direction: column;
+  .nickname {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+`;
+
+interface Props {
+  userId: number | undefined | null;
+  createdAt: string | undefined;
+}
+
+const UserInfo = (props: Props) => {
+  const { userId, createdAt } = props;
   const [isscrap, setScrap] = useState<boolean>(false);
+  const { data } = useGetUserInfo(userId);
+  const formattedCreatedAt = useCreatedAtFormat(createdAt);
 
   return (
     <UserInfoWrap>
@@ -18,8 +67,8 @@ const UserInfo = () => {
           style={{ borderRadius: "50px" }}
         />
         <TextArea>
-          <span className="nickname">강지넌</span>
-          <span>2023년 5월 4일, 10:58</span>
+          <span className="nickname">{data?.nickname}</span>
+          <span>{formattedCreatedAt}</span>
         </TextArea>
       </User>
       <div onClick={() => setScrap(!isscrap)}>
@@ -48,46 +97,5 @@ const UserInfo = () => {
     </UserInfoWrap>
   );
 };
-
-const UserInfoWrap = styled.div`
-  width: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 auto;
-  padding: 20px 0;
-
-  @media (min-width: 768px) {
-    width: 600px;
-  }
-
-  @media (min-width: 1080px) {
-    width: 900px;
-  }
-
-  @media (min-width: 1440px) {
-    width: 1100px;
-  }
-
-  .star {
-    width: 18px;
-    height: 18px;
-  }
-`;
-
-const User = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const TextArea = styled.span`
-  display: flex;
-  flex-direction: column;
-  .nickname {
-    font-size: 1.125rem;
-    font-weight: 600;
-  }
-`;
 
 export default UserInfo;
