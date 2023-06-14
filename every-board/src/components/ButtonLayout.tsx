@@ -1,5 +1,5 @@
+import { MouseEvent, MouseEventHandler } from "react";
 import styled from "styled-components";
-import Link from "next/link";
 
 interface Props {
   text?: React.ReactNode;
@@ -12,7 +12,7 @@ interface Props {
   padding?: string;
   border?: string;
   margin?: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 interface StyleProps {

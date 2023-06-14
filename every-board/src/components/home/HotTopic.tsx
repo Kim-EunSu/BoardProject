@@ -2,6 +2,19 @@
 
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
+import { useGetHotTopic } from "@/utils/api";
+import LoadingPage from "../LoadingPage";
+import ErrorPage from "../ErrorPage";
+
+interface Props {
+  title: string;
+  sort: string;
+}
+
+interface Data {
+  contentId: string;
+  title: string;
+}
 
 const Article = styled.section`
   width: 320px;
@@ -41,33 +54,40 @@ const Article = styled.section`
   }
 `;
 
-const HotTopic = () => {
+const HotTopic = (props: Props) => {
+  const { title, sort } = props;
   const router = useRouter();
-  const topics = [
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-    "오늘의 화제의글1",
-  ];
+  const { data, isLoading, isError } = useGetHotTopic(sort);
+
+  if (isLoading) {
+    // 데이터 로딩 중일 때의 처리
+    return <LoadingPage />;
+  }
+
+  if (isError) {
+    // 데이터 로딩 중 에러가 발생한 경우의 처리
+    return <ErrorPage />;
+  }
 
   return (
     <Article>
       <div>
-        <h4>🚀 Today Hot Topics</h4>
+        <h4>{title}</h4>
         <ol>
-          {topics.map((el, index) => {
-            return (
-              <li key={index} onClick={() => router.push("/board/detail")}>
-                {el}
-              </li>
-            );
-          })}
+          {data
+            ? data.map(el => {
+                return (
+                  <li
+                    key={el.contentId}
+                    onClick={() =>
+                      router.push(`/board/detail?contentId=${el.contentId}`)
+                    }
+                  >
+                    {el.title}
+                  </li>
+                );
+              })
+            : null}
         </ol>
       </div>
     </Article>

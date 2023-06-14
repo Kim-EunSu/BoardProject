@@ -1,40 +1,57 @@
+import axios from "axios";
 import Comment from "./Comment";
 import Reply from "./Reply";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import styled from "styled-components";
+import { usePostLike } from "@/utils/api";
 
 interface Props {
   comment?: boolean;
   reply?: boolean;
+  like?: number | undefined;
+  userId?: number | undefined | null;
+  contentId?: number | undefined;
 }
 
 const UserAction = (props: Props) => {
-  const { comment, reply } = props;
+  const { comment, reply, like, userId, contentId } = props;
   const [isLikeClick, setLike] = useState<boolean>(false);
   const [isCommentClick, setComment] = useState<boolean>(false);
+  const { data, mutate } = usePostLike(userId, contentId);
+
+  useEffect(() => {
+    console.log(`data?.userId`, data?.data.userId);
+    console.log(`userId`, userId);
+  }, [data]);
+
   return (
     <UserActionContainer className={comment ? "comment" : ""}>
       <UserActionWrap>
+        //좋아요
         <span
-          onClick={() => setLike(!isLikeClick)}
+          onClick={() => {
+            mutate();
+            setLike(!isLikeClick);
+          }}
           className={reply ? "reply" : ""}
         >
           {isLikeClick ? (
             <span style={{ color: "var(--pink)" }}>
-              <AiFillHeart size={15} />
+              <AiFillHeart size={18} />
               <span>좋아요</span>
-              <span>248</span>
+              <span>{like}</span>
             </span>
           ) : (
             <span>
-              <AiFillHeart size={15} />
+              <AiFillHeart size={18} />
               <span>좋아요</span>
-              <span>248</span>
+              <span>{like}</span>
             </span>
           )}
         </span>
+        //댓글
         {reply ? null : (
           <span onClick={() => setComment(!isCommentClick)}>
             {isCommentClick ? (
@@ -94,10 +111,12 @@ const UserActionContainer = styled.div`
 const UserActionWrap = styled.div`
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   gap: 20px;
 
   span {
     display: flex;
+    align-items: center;
     gap: 3px;
     cursor: pointer;
   }

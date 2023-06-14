@@ -1,7 +1,6 @@
 import Document, { DocumentContext } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
-//CSS파일 서버에서 렌더링하기
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();

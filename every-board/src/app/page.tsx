@@ -6,6 +6,7 @@ import SearchBar from "@/components/home/SearchBar";
 import PhotoLine from "@/components/home/PhotoLine";
 import Footer from "@/components/Footer";
 import styled from "styled-components";
+import Head from "next/head";
 
 const HomeWrapper = styled.div`
   display: flex;
@@ -36,10 +37,12 @@ const Home = (): JSX.Element => {
   return (
     <HomeWrapper>
       <Header />
-      <Category home="home" />
+      <Category route="home" />
       <SearchBar />
       <Article>
-        <HotTopic /> <HotTopic /> <HotTopic />
+        <HotTopic title="🔥 Today Hot Topic" sort="today" />
+        <HotTopic title="🚀 Weekly hot Topic" sort="weekly" />
+        <HotTopic title="❣️ Most Like Post" sort="like" />
       </Article>
       <PhotoLine />
       <Footer />
