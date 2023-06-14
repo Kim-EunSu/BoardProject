@@ -6,6 +6,7 @@ import SearchBar from "@/components/home/SearchBar";
 import PhotoLine from "@/components/home/PhotoLine";
 import Footer from "@/components/Footer";
 import styled from "styled-components";
+import Head from "next/head";
 
 const HomeWrapper = styled.div`
   display: flex;
@@ -35,6 +36,12 @@ const Article = styled.article`
 const Home = (): JSX.Element => {
   return (
     <HomeWrapper>
+      <Head>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </Head>
       <Header />
       <Category route="home" />
       <SearchBar />
