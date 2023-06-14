@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 
-const HeaderLayout = styled.head`
+const HeaderLayout = styled.header`
   width: 100%;
   height: 320px;
   background-color: #5e66f6;
@@ -85,11 +85,6 @@ const Header = (): JSX.Element => {
   const [isLogin, setLogin] = useState<boolean>(false);
   return (
     <HeaderLayout>
-      <meta
-        http-equiv="Content-Security-Policy"
-        content="upgrade-insecure-requests"
-      />
-
       <TextArea>
         <h1>
           당신의 커뮤니티를 연결하는 공간,
