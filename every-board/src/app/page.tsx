@@ -36,12 +36,6 @@ const Article = styled.article`
 const Home = (): JSX.Element => {
   return (
     <HomeWrapper>
-      <Head>
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
-      </Head>
       <Header />
       <Category route="home" />
       <SearchBar />
