@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 import Avatar from "../Avatar";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 
@@ -82,7 +82,19 @@ const AvatarArea = styled.span`
 
 const Header = (): JSX.Element => {
   const router = useRouter();
-  const [isLogin, setLogin] = useState<boolean>(false);
+  const [isLogin, setLogin] = useState<boolean>(true);
+
+  //이부분이 있어야 로그인했을때 저장된 token을 가져와짐!
+  useEffect(() => {
+    const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+
+    if (ACCESS_TOKEN) {
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+  }, []);
+
   return (
     <HeaderLayout>
       <TextArea>
@@ -132,28 +144,7 @@ const Header = (): JSX.Element => {
           alt="headerImage"
         />
       </ImageArea>
-
-      <AvatarArea>
-        {isLogin ? (
-          <Avatar />
-        ) : (
-          // 로그인 기능 구현되면 지울 부분
-          <ButtonLayout
-            text="임시 : 로그인 상태로바꾸기"
-            width="fit-content"
-            height="40px"
-            color="var(--pink)" // Pass the CSS variable value as a string
-            background="#ffffff"
-            fontSize="0.9rem"
-            radius="50px"
-            padding="10px"
-            border="none"
-            onClick={() => {
-              setLogin(true);
-            }}
-          />
-        )}
-      </AvatarArea>
+      <AvatarArea>{isLogin && <Avatar />}</AvatarArea>
     </HeaderLayout>
   );
 };

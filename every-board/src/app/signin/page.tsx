@@ -149,8 +149,32 @@ export default function Login() {
   const router = useRouter();
 
   //로그인하면 넘어가는 data
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     console.log(data);
+
+    await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then(res => {
+        if (res.ok) {
+          router.push("/");
+
+          const ACCESS_TOKEN: string | null = res.headers.get("Authorization");
+          const REFRESH_TOKEN: string | null = res.headers.get("Refresh-Token");
+
+          if (ACCESS_TOKEN)
+            return sessionStorage.setItem("Authorization", ACCESS_TOKEN);
+          if (REFRESH_TOKEN)
+            sessionStorage.setItem("Refresh-Token", REFRESH_TOKEN);
+        } else {
+          throw new Error("회원가입 정보를 확인하세요.");
+        }
+      })
+      .catch(err => console.log(err));
   };
 
   //checkbox
@@ -173,11 +197,17 @@ export default function Login() {
       <Wrapper>
         <Left>
           <TitleWrap>
-            <Image src={"/logo.svg"} width={50} height={50} alt="logo" />
+            <Image
+              src={"/logo.svg"}
+              width={50}
+              height={50}
+              alt="logo"
+              priority
+            />
             <Title>모두의 게시판</Title>
           </TitleWrap>
-          <Form>
-            <FormWrap onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <FormWrap>
               <Label>Email</Label>
               <Input
                 placeholder="test@example.com"
