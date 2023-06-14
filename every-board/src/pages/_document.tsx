@@ -7,6 +7,13 @@ import Document, {
 } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
+<Head>
+  <meta
+    httpEquiv="Content-Security-Policy"
+    content="upgrade-insecure-requests"
+  />
+</Head>;
+
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
@@ -31,22 +38,5 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
-  }
-
-  render() {
-    return (
-      <Html>
-        <Head>
-          <meta
-            httpEquiv="Content-Security-Policy"
-            content="upgrade-insecure-requests"
-          />
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    );
   }
 }
