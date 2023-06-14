@@ -6,7 +6,6 @@ import SearchBar from "@/components/home/SearchBar";
 import PhotoLine from "@/components/home/PhotoLine";
 import Footer from "@/components/Footer";
 import styled from "styled-components";
-import Head from "next/head";
 
 const HomeWrapper = styled.div`
   display: flex;
@@ -35,27 +34,18 @@ const Article = styled.article`
 
 const Home = (): JSX.Element => {
   return (
-    <>
-      {/* 클라이언트 https, 서버http 요청 오류 해결 코드 방법 */}
-      <Head>
-        <meta
-          http-equiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
-      </Head>
-      <HomeWrapper>
-        <Header />
-        <Category route="home" />
-        <SearchBar />
-        <Article>
-          <HotTopic title="🔥 Today Hot Topic" sort="today" />
-          <HotTopic title="🚀 Weekly hot Topic" sort="weekly" />
-          <HotTopic title="❣️ Most Like Post" sort="like" />
-        </Article>
-        <PhotoLine />
-        <Footer />
-      </HomeWrapper>
-    </>
+    <HomeWrapper>
+      <Header />
+      <Category route="home" />
+      <SearchBar />
+      <Article>
+        <HotTopic title="🔥 Today Hot Topic" sort="today" />
+        <HotTopic title="🚀 Weekly hot Topic" sort="weekly" />
+        <HotTopic title="❣️ Most Like Post" sort="like" />
+      </Article>
+      <PhotoLine />
+      <Footer />
+    </HomeWrapper>
   );
 };
 
