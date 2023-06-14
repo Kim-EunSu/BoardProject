@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import ButtonLayout from "@/components/ButtonLayout";
 import { useRouter } from "next/navigation";
+import { useGetDetailContent, useGetImg } from "@/utils/api";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { BiCommentDetail } from "react-icons/bi";
+import { ContentDetail } from "@/utils/type";
+
 const Section = styled.section`
   display: flex;
   flex-direction: column;
@@ -30,8 +36,7 @@ const PhotoWrap = styled.div`
   display: flex;
   border-radius: 10px;
   width: 330px;
-  height: 250px;
-  overflow: hidden;
+  overflow-x: hidden;
 
   img {
     border-radius: 10px;
@@ -39,29 +44,23 @@ const PhotoWrap = styled.div`
     width: 330px;
     height: 250px;
   }
-
   @media (min-width: 768px) {
     width: 715px;
-    height: 150px;
     gap: 10px;
     img {
       width: 171.25px;
       height: 150px;
     }
   }
-
   @media (min-width: 1080px) {
     width: 1000px;
-    height: 180px;
     img {
       width: 242.5px;
       height: 180px;
     }
   }
-
   @media (min-width: 1440px) {
     width: 1330px;
-    height: 220px;
     gap: 20px;
     img {
       width: 317.5px;
@@ -69,10 +68,34 @@ const PhotoWrap = styled.div`
     }
   }
 `;
+const ContentWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const TextWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  h5 {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  span {
+    color: gray;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+  }
+`;
 
 const PhotoLine = () => {
   const router = useRouter();
-  const photo = [1, 2, 3, 4];
+  const [contentId, setContentId] = useState<number>();
+  // const { data, isLoading, isError } = useGetImg();
+  const { data: detail } = useGetDetailContent(contentId);
+
   return (
     <Section>
       <TitleWrap>
@@ -89,13 +112,33 @@ const PhotoLine = () => {
         ></ButtonLayout>
       </TitleWrap>
       <PhotoWrap>
-        {photo.map((el, index) => {
+        {/* {data?.map(el => {
           return (
-            <div key={index}>
+            <ContentWrap
+              onClick={() => {
+                router.push(`board/detail?contentId=${el.contentId}`);
+              }}
+              // onLoad={() => setContentId(el.contentId)}
+              style={{ cursor: "pointer" }}
+            >
+              <Image
+                key={el.contentImages[0]?.contentImageId}
+                src={`https://backendcontentimage.s3.ap-northeast-2.amazonaws.com/${el.contentImages[0]?.contentImgUrl}`}
+                width={500}
+                height={500}
+                alt="이미지"
+              />
               <img></img>
-            </div>
+              <TextWrap>
+                <h5>제목입니당</h5>
+                <span>
+                  <BiCommentDetail size={15} />
+                  <span>21</span>
+                </span>
+              </TextWrap>
+            </ContentWrap>
           );
-        })}
+        })} */}
       </PhotoWrap>
     </Section>
   );

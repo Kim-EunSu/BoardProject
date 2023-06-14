@@ -51,10 +51,4 @@ const Main = styled.main`
   min-height: 100vh;
 `;
 
-const NoResult = styled.div`
-  span {
-    font-weight: 700;
-  }
-`;
-
 export default Search;

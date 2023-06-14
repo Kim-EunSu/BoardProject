@@ -56,7 +56,12 @@ const PostCard = (props: Props) => {
           contentImages={data?.contentImages}
         />
       </Link>
-      <UserAction comment={false} />
+      <UserAction
+        comment={false}
+        like={data?.contentHeartCount}
+        userId={data?.userId}
+        contentId={data?.contentId}
+      />
       <CommentInput />
     </Article>
   );

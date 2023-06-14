@@ -60,3 +60,17 @@ export interface SearchKeyword {
   createdAt: string;
   modifiedAt: string;
 }
+
+//이미지 받아오기
+export interface Image {
+  contentId: number;
+  contentImages: ContentImage[];
+}
+
+//Like
+export interface PostLike {
+  contentHeartId: number;
+  contentId: number;
+  userId: number;
+  heartType: string;
+}
