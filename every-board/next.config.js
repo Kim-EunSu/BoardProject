@@ -29,8 +29,8 @@ const nextConfig = {
         source: "/:path*",
         headers: [
           {
-            key: "Content-Security-Policy",
-            value: "upgrade-insecure-requests",
+            key: "Upgrade-Insecure-Requests",
+            value: "1",
           },
         ],
       },

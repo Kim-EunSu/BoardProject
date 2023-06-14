@@ -29,6 +29,7 @@ const UserAction = (props: Props) => {
   return (
     <UserActionContainer className={comment ? "comment" : ""}>
       <UserActionWrap>
+        //좋아요
         <span
           onClick={() => {
             mutate();
@@ -50,6 +51,7 @@ const UserAction = (props: Props) => {
             </span>
           )}
         </span>
+        //댓글
         {reply ? null : (
           <span onClick={() => setComment(!isCommentClick)}>
             {isCommentClick ? (
