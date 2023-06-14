@@ -4,7 +4,7 @@ import Head from "next/head";
 
 //CSS파일 서버에서 렌더링하기
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+  static async getServerSideProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -33,7 +33,7 @@ export default class MyDocument extends Document {
     return (
       <Head>
         <meta
-          http-equiv="Content-Security-Policy"
+          httpEquiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
         />
       </Head>
