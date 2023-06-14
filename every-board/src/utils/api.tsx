@@ -14,7 +14,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 const BASE_URL =
   "http://ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080";
 const Authorization =
-  "BearereyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJuYW1lIjoiZGtzc3VkODI1M0BnbWFpbC5jb20iLCJzdWIiOiJka3NzdWQ4MjUzQGdtYWlsLmNvbSIsImlhdCI6MTY4NjcxNTg1MiwiZXhwIjoxNjg2NzE3NjUyfQ.nVdlSIkMsn0G0hnM9EgzawfI9khJR8zPqTikKDk4avoG-sl86pBGKSeI5GN5gJkeoKjrUFjUTDhtiOwocRdPlQ";
+  "BearereyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJuYW1lIjoiZGtzc3VkODI1M0BnbWFpbC5jb20iLCJzdWIiOiJka3NzdWQ4MjUzQGdtYWlsLmNvbSIsImlhdCI6MTY4NjcyMTM5MywiZXhwIjoxNjg2NzIzMTkzfQ.o_PkqikvWyQ9IDpDiCdj1G_J2wzgPd6uKLu8_OHG6L6O-NIko9kxhYGhuzEZid-rkOABoVDzX6RfFbzhFuJh_w";
 
 //게시글 단건조회
 export const useGetDetailContent = (
