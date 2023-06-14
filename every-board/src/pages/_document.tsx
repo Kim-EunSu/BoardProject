@@ -1,10 +1,14 @@
-import Document, { DocumentContext } from "next/document";
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+} from "next/document";
 import { ServerStyleSheet } from "styled-components";
-import Head from "next/head";
 
-//CSS파일 서버에서 렌더링하기
 export default class MyDocument extends Document {
-  static async getServerSideProps(ctx: DocumentContext) {
+  static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -31,12 +35,18 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Head>
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
-      </Head>
+      <Html>
+        <Head>
+          <meta
+            httpEquiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
     );
   }
 }
