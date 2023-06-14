@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} **/
 
 const nextConfig = {
+  images: {
+    domains: ["backendcontentimage.s3.ap-northeast-2.amazonaws.com"], // 모든 호스트에 대한 경로 허용
+  },
   compiler: { styledComponents: true },
   experimental: {
     appDir: true,

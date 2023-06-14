@@ -43,6 +43,10 @@ export interface HotTopic {
 }
 
 //게시글 검색
+export interface contentResponseDto {
+  contentResponseDto: SearchKeyword[];
+}
+
 export interface SearchKeyword {
   contentId: number;
   userId: number | null | undefined;
@@ -55,4 +59,18 @@ export interface SearchKeyword {
   tag: string;
   createdAt: string;
   modifiedAt: string;
+}
+
+//이미지 받아오기
+export interface Image {
+  contentId: number;
+  contentImages: ContentImage[];
+}
+
+//Like
+export interface PostLike {
+  contentHeartId: number;
+  contentId: number;
+  userId: number;
+  heartType: string;
 }

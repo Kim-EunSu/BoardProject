@@ -74,19 +74,20 @@ const HotTopic = (props: Props) => {
       <div>
         <h4>{title}</h4>
         <ol>
-          {data &&
-            data.map(el => {
-              return (
-                <li
-                  key={el.contentId}
-                  onClick={() =>
-                    router.push(`/board/detail?contentId=${el.contentId}`)
-                  }
-                >
-                  {el.title}
-                </li>
-              );
-            })}
+          {data
+            ? data.map(el => {
+                return (
+                  <li
+                    key={el.contentId}
+                    onClick={() =>
+                      router.push(`/board/detail?contentId=${el.contentId}`)
+                    }
+                  >
+                    {el.title}
+                  </li>
+                );
+              })
+            : null}
         </ol>
       </div>
     </Article>

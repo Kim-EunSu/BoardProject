@@ -35,7 +35,7 @@ const Article = styled.article`
 
 interface Props {
   detail?: boolean;
-  data: ContentDetail | SearchKeyword | undefined;
+  data: ContentDetail | SearchKeyword | undefined | void;
   onClick?: () => void;
 }
 
@@ -56,7 +56,12 @@ const PostCard = (props: Props) => {
           contentImages={data?.contentImages}
         />
       </Link>
-      <UserAction comment={false} />
+      <UserAction
+        comment={false}
+        like={data?.contentHeartCount}
+        userId={data?.userId}
+        contentId={data?.contentId}
+      />
       <CommentInput />
     </Article>
   );
