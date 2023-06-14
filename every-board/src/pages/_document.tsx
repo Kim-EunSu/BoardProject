@@ -1,5 +1,6 @@
 import Document, { DocumentContext } from "next/document";
 import { ServerStyleSheet } from "styled-components";
+import Head from "next/head";
 
 //CSS파일 서버에서 렌더링하기
 export default class MyDocument extends Document {
@@ -26,5 +27,16 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render() {
+    return (
+      <Head>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </Head>
+    );
   }
 }
