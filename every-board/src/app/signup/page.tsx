@@ -328,7 +328,7 @@ export default function SignUp() {
               회원가입
             </Button>
           </Form>
-          <Button>
+          <Button style={{ margin: "20px 0" }}>
             <Icon>
               <FcGoogle />
             </Icon>

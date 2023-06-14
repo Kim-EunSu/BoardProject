@@ -143,28 +143,7 @@ const Header = (): JSX.Element => {
           alt="headerImage"
         />
       </ImageArea>
-
-      <AvatarArea>
-        {isLogin ? (
-          <Avatar />
-        ) : (
-          // 로그인 기능 구현되면 지울 부분
-          <ButtonLayout
-            text="임시 : 로그인 상태로바꾸기"
-            width="fit-content"
-            height="40px"
-            color="var(--pink)" // Pass the CSS variable value as a string
-            background="#ffffff"
-            fontSize="0.9rem"
-            radius="50px"
-            padding="10px"
-            border="none"
-            onClick={() => {
-              setLogin(true);
-            }}
-          />
-        )}
-      </AvatarArea>
+      <AvatarArea>{isLogin && <Avatar />}</AvatarArea>
     </HeaderLayout>
   );
 };
