@@ -152,7 +152,7 @@ export default function Login() {
   const onSubmit = async (data: FormValues) => {
     console.log(data);
 
-    await fetch("/login", {
+    await fetch("https://every-board.shop/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
