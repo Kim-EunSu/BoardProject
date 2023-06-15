@@ -22,7 +22,7 @@ const Left = styled.div`
   min-width: 530px;
   display: flex;
   flex-direction: column;
-  padding: 5rem;
+  padding: 0 5rem;
 `;
 
 const TitleWrap = styled.div`
@@ -34,6 +34,7 @@ const TitleWrap = styled.div`
 const Title = styled.h1`
   margin-left: 8px;
 `;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -48,12 +49,16 @@ const FormWrap = styled.div`
     position: relative;
   }
 
-  &:nth-child(4) {
+  &:nth-child(5) {
     position: relative;
   }
 
-  &:nth-child(5) {
+  &:nth-child(6) {
     position: relative;
+  }
+
+  input[type="file"] {
+    background-color: white;
   }
 `;
 
@@ -100,23 +105,6 @@ const EmailBtn = styled.button`
 const ErrorText = styled.span`
   margin: 5px;
   font-size: 0.8rem;
-  color: #fc0374;
-`;
-
-const Remember = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  cursor: pointer;
-`;
-
-const Rem1 = styled.p`
-  margin: 0;
-  color: #344054;
-`;
-
-const Rem2 = styled.p`
-  margin: 0;
   color: #fc0374;
 `;
 
@@ -169,6 +157,7 @@ type SigninValues = {
   nickname: string;
   password: string;
   passwordconfirm: string;
+  profileImage: string;
 };
 
 export default function SignUp() {
@@ -200,26 +189,64 @@ export default function SignUp() {
   const password = getValues("password");
 
   const onSubmit = async (data: SigninValues) => {
+    const formData = new FormData();
+
+    formData.append("email", data.email);
+    formData.append("emailconfirm", data.emailconfirm);
+    formData.append("nickname", data.nickname);
+    formData.append("password", data.password);
+    formData.append("passwordconfirm", data.passwordconfirm);
+
     await fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: formData,
     })
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        if (data.accessToken) {
-          router.push("/signin");
-          localStorage.setItem("accessToken", data.accessToken);
-          localStorage.setItem("refreshToken", data.refreshToken);
-        }
+
+        // if (data.accessToken) {
+        //   router.push("/signin");
+        //   localStorage.setItem("accessToken", data.accessToken);
+        //   localStorage.setItem("refreshToken", data.refreshToken);
+        // }
       })
       .catch(err => console.log(err));
   };
 
-  //이메일 인증 구헌 - 해야할 것
+  // const onSubmit = async (data: SigninValues) => {
+  //   try {
+  //     //무조건 /signup이여함
+  //     const response = await fetch("/signup", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     const result = await response.json();
+
+  //     if (result.statusCode !== 201) {
+  //       throw new Error(result.message);
+  //     } else {
+  //       router.push("/signin");
+  //     }
+  //     return result;
+  //     // console.log(response.json());
+
+  //     // if (!response.ok) {
+  //     //   throw new Error(`HTTP error! Status: ${response.status}`);
+  //     // }
+
+  //     // 회원 가입 성공 시 로그인 페이지로 이동
+  //   } catch (err) {
+  //     console.error("회원 가입 과정에서 문제가 발생했습니다:", err);
+  //   }
+  // };
 
   return (
     <>
@@ -272,6 +299,16 @@ export default function SignUp() {
               <ErrorText>
                 {errors.nickname && errors.nickname.message}
               </ErrorText>
+            </FormWrap>
+            <FormWrap>
+              <Label>Profile Image</Label>
+              <Input
+                placeholder="profileImage"
+                {...register("profileImage", {
+                  required: "이미지업로드는 필수사항입니다.",
+                })}
+                type="file"
+              />
             </FormWrap>
             <FormWrap>
               <Label>Password</Label>
@@ -328,7 +365,7 @@ export default function SignUp() {
               회원가입
             </Button>
           </Form>
-          <Button>
+          <Button style={{ margin: "20px 0" }}>
             <Icon>
               <FcGoogle />
             </Icon>

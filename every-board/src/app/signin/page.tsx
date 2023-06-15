@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { AiOutlineEye } from "react-icons/ai";
+import axios from "axios";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -152,7 +153,8 @@ export default function Login() {
   const onSubmit = async (data: FormValues) => {
     console.log(data);
 
-    await fetch("/login", {
+    //여기도 무조건 signin이여야함!
+    await fetch("/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -176,6 +178,26 @@ export default function Login() {
       })
       .catch(err => console.log(err));
   };
+
+  // const onSubmit = async (data: FormValues) => {
+  //   console.log(data);
+
+  //   try {
+  //     const response = await axios.post("/login", {
+  //       email: data.email,
+  //       password: data.password,
+  //     });
+
+  //     if (response.status === 200) {
+  //       router.push("/");
+  //       console.log(response);
+  //     } else {
+  //       alert("로그인에 실패했습니다.");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   //checkbox
   const [ischecked, setIsChecked] = useState<boolean>(false);
