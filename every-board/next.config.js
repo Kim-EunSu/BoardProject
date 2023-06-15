@@ -1,6 +1,4 @@
-
 / @type {import('next').NextConfig} /;
-
 
 const nextConfig = {
   images: {
@@ -15,6 +13,15 @@ const nextConfig = {
   reactStrictMode: true,
   compiler: {
     styledComponents: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/:path*",
+        destination:
+          "https://ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080/:path*",
+      },
+    ];
   },
 };
 
