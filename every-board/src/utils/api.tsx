@@ -12,7 +12,7 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const BASE_URL =
-  "http://ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080";
+  "https://ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080";
 const Authorization =
   "BearereyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJuYW1lIjoiZGtzc3VkODI1M0BnbWFpbC5jb20iLCJzdWIiOiJka3NzdWQ4MjUzQGdtYWlsLmNvbSIsImlhdCI6MTY4NjcyMTM5MywiZXhwIjoxNjg2NzIzMTkzfQ.o_PkqikvWyQ9IDpDiCdj1G_J2wzgPd6uKLu8_OHG6L6O-NIko9kxhYGhuzEZid-rkOABoVDzX6RfFbzhFuJh_w";
 
@@ -22,7 +22,7 @@ export const useGetDetailContent = (
 ) => {
   const getDetailContent = async () => {
     return await axios
-      .get<ContentDetail | SearchKeyword>(`${BASE_URL}/contents/${contentId}`)
+      .get<ContentDetail | SearchKeyword>(`/contents/${contentId}`)
       .then(res => {
         console.log(
           "디테일 데이터 가져오기 성공",
@@ -46,7 +46,7 @@ export const useGetDetailContent = (
 export const useGetUserInfo = (userId: number | undefined | null) => {
   const getUserInfo = async () => {
     return await axios
-      .get<UserInfo>(`${BASE_URL}/user/${userId}`)
+      .get<UserInfo>(`/user/${userId}`)
       .then(res => {
         console.log("사용자 정보 가져오기 성공", `/user/${userId}`, res.data);
         return res.data;
@@ -64,7 +64,7 @@ export const useGetUserInfo = (userId: number | undefined | null) => {
 export const useGetCategoryContent = (category: string | null | undefined) => {
   const getCategoryContent = async () => {
     return await axios
-      .get(`${BASE_URL}/contents/category/${category}`)
+      .get(`/contents/category/${category}`)
       .then(res => {
         console.log(
           "카테고리 데이터 가져오기 성공",
@@ -88,7 +88,7 @@ export const useGetCategoryContent = (category: string | null | undefined) => {
 export const useGetHotTopic = (endpoint: string) => {
   const getHotTopic = async () => {
     return await axios
-      .get<HotTopic[]>(`${BASE_URL}/contents/homepage/${endpoint}`)
+      .get<HotTopic[]>(`/contents/homepage/${endpoint}`)
       .then(res => {
         console.log(
           "핫토픽 데이터 가져오기 성공",
@@ -112,7 +112,7 @@ export const useGetHotTopic = (endpoint: string) => {
 export const useGetKeyword = (keyword: string | null | undefined) => {
   const getKeyword = async () => {
     return await axios
-      .get<contentResponseDto>(`${BASE_URL}/contents/search?keyword=${keyword}`)
+      .get<contentResponseDto>(`/contents/search?keyword=${keyword}`)
       .then(res => {
         console.log(
           "게시글 검색 성공",
@@ -134,7 +134,7 @@ export const useGetKeyword = (keyword: string | null | undefined) => {
 export const useGetImg = () => {
   const GetImg = async () => {
     return await axios
-      .get<Image[]>(`${BASE_URL}/contents/homepage/image`)
+      .get<Image[]>(`/contents/homepage/image`)
       .then(res => {
         console.log(
           "이미지 받아오기 성공",
