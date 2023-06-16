@@ -154,7 +154,7 @@ export default function Login() {
     console.log(data);
 
     //여기도 무조건 signin이여야함!
-    await fetch("/signin", {
+    await fetch("https://every-board.shop/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

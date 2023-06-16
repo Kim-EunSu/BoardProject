@@ -211,7 +211,7 @@ export default function SignUp() {
     formData.append("password", data.password);
     formData.append("passwordconfirm", data.passwordconfirm);
 
-    await fetch("/signup", {
+    await fetch("https://every-board.shop/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
