@@ -15,8 +15,7 @@ const nextConfig = {
   //   return [
   //     {
   //       source: "/:path",
-  //       destination:
-  //         "http://ec2-43-202-32-108.ap-northeast-2.compute.amazonaws.com:8080/:path",
+  //       destination: "https://every-board.shop/:path",
   //     },
   //   ];
   // },
