@@ -234,14 +234,34 @@ const page = () => {
   };
 
   const saveBoard = async () => {
-    await axios.post(`//localhost:3001/board/post`, form).then(res => {
-      alert("등록됨");
-      // router.push("/");
-    });
+    const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+
+    if (ACCESS_TOKEN) {
+      try {
+        const formData = new FormData();
+        formData.append("category", form.category || "");
+        formData.append("title", form.title || "");
+        formData.append("content", form.content || "");
+        images.forEach(image => formData.append("images", image));
+
+        await axios.post("https://every-board.shop/contents", formData, {
+          headers: {
+            Authorization: ACCESS_TOKEN,
+          },
+        });
+        alert("등록성공");
+        router.push("/board/gallery");
+      } catch (err) {
+        console.log("Error", err);
+        alert("오류가 발생했습니다.");
+      }
+    } else {
+      alert("인증 정보가 없습니다");
+    }
   };
 
   const backBoard = () => {
-    // router.push("/");
+    router.push("/");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -320,14 +340,6 @@ const page = () => {
           </FormWrap>
           <Label>내용</Label>
           <TextArea fn={bringToContentState} />
-          {/* <div>
-              <input
-                name="content"
-                value={content}
-                onChange={handleChange}
-                placeholder="내용을 입력하세요."
-              />
-            </div> */}
           <FormWrap>
             <Label>파일 추가</Label>
             {images.length > 0
