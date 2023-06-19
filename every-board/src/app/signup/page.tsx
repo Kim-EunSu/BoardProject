@@ -49,16 +49,12 @@ const FormWrap = styled.div`
     position: relative;
   }
 
+  &:nth-child(4) {
+    position: relative;
+  }
+
   &:nth-child(5) {
     position: relative;
-  }
-
-  &:nth-child(6) {
-    position: relative;
-  }
-
-  input[type="file"] {
-    background-color: white;
   }
 `;
 
@@ -157,7 +153,6 @@ type SigninValues = {
   nickname: string;
   password: string;
   passwordconfirm: string;
-  profileImage: string;
 };
 
 export default function SignUp() {
@@ -188,79 +183,60 @@ export default function SignUp() {
 
   const password = getValues("password");
 
-  //프로필이미지
-  //setSelectedProfile는 File 객체를 저장하기 위한 상태를 관리해야 하므로, 초기값을 null 또는 File 객체로 설정해야함
-  // 초기 상태 값이 null이고 File 객체를 저장할 수 있는 상태로 설정
-  const [selectedprofile, setSelectedProfile] = useState<File | null>(null);
+  // const onSubmit = async (data: SigninValues) => {
+  //   const formData = new FormData();
 
-  const handleChangeProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setSelectedProfile(e.target.files[0]);
-    }
-  };
+  //   formData.append("email", data.email);
+  //   formData.append("emailconfirm", data.emailconfirm);
+  //   formData.append("nickname", data.nickname);
+  //   formData.append("password", data.password);
+  //   formData.append("passwordconfirm", data.passwordconfirm);
+
+  //   await fetch("/signup", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "multipart/form-data",
+  //     },
+  //     body: formData,
+  //   })
+  //     .then(res => {
+  //       res.json();
+  //       console.log(res.json());
+  //     })
+  //     .then(data => {
+  //       console.log(data);
+  //       router.push("/signin");
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
   const onSubmit = async (data: SigninValues) => {
-    const formData = new FormData();
+    try {
+      // const formData = new FormData();
 
-    formData.append("email", data.email);
-    formData.append("emailconfirm", data.emailconfirm);
-    formData.append("nickname", data.nickname);
-    if (selectedprofile) {
-      formData.append("profileImage", selectedprofile);
+      // formData.append("email", data.email);
+      // formData.append("nickname", data.nickname);
+      // formData.append("password", data.password);
+
+      const response = await fetch("https://every-board.shop/user/join", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("Error Data", errorData);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      // 회원 가입 성공 시 로그인 페이지로 이동
+      router.push("/signin");
+    } catch (err) {
+      console.error("회원 가입 과정에서 문제가 발생했습니다:", err);
     }
-    formData.append("password", data.password);
-    formData.append("passwordconfirm", data.passwordconfirm);
-
-    await fetch("/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: formData,
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-
-        // if (data.accessToken) {
-        //   router.push("/signin");
-        //   localStorage.setItem("accessToken", data.accessToken);
-        //   localStorage.setItem("refreshToken", data.refreshToken);
-        // }
-      })
-      .catch(err => console.log(err));
   };
-
-  // const onSubmit = async (data: SigninValues) => {
-  //   try {
-  //     //무조건 /signup이여함
-  //     const response = await fetch("/signup", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     const result = await response.json();
-
-  //     if (result.statusCode !== 201) {
-  //       throw new Error(result.message);
-  //     } else {
-  //       router.push("/signin");
-  //     }
-  //     return result;
-  //     // console.log(response.json());
-
-  //     // if (!response.ok) {
-  //     //   throw new Error(`HTTP error! Status: ${response.status}`);
-  //     // }
-
-  //     // 회원 가입 성공 시 로그인 페이지로 이동
-  //   } catch (err) {
-  //     console.error("회원 가입 과정에서 문제가 발생했습니다:", err);
-  //   }
-  // };
 
   return (
     <>
@@ -315,17 +291,6 @@ export default function SignUp() {
               </ErrorText>
             </FormWrap>
             <FormWrap>
-              <Label>Profile Image</Label>
-              <Input
-                placeholder="profileImage"
-                {...register("profileImage", {
-                  required: "이미지업로드는 필수사항입니다.",
-                })}
-                type="file"
-                onChange={handleChangeProfile}
-              />
-            </FormWrap>
-            <FormWrap>
               <Label>Password</Label>
               <Input
                 type={ShowPassword ? "text" : "password"}
@@ -358,6 +323,7 @@ export default function SignUp() {
                     value === getValues("password") ||
                     "비밀번호가 일치하지 않습니다.",
                 })}
+                autoComplete="off"
               />
               <PWButton onClick={togglePasswordCheck}>
                 {ShowPasswordCheck ? (

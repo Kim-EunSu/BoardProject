@@ -154,7 +154,7 @@ export default function Login() {
     console.log(data);
 
     //여기도 무조건 signin이여야함!
-    await fetch("/signin", {
+    await fetch("https://every-board.shop/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -178,26 +178,6 @@ export default function Login() {
       })
       .catch(err => console.log(err));
   };
-
-  // const onSubmit = async (data: FormValues) => {
-  //   console.log(data);
-
-  //   try {
-  //     const response = await axios.post("/login", {
-  //       email: data.email,
-  //       password: data.password,
-  //     });
-
-  //     if (response.status === 200) {
-  //       router.push("/");
-  //       console.log(response);
-  //     } else {
-  //       alert("로그인에 실패했습니다.");
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   //checkbox
   const [ischecked, setIsChecked] = useState<boolean>(false);
