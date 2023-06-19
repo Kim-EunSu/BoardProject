@@ -183,41 +183,8 @@ export default function SignUp() {
 
   const password = getValues("password");
 
-  // const onSubmit = async (data: SigninValues) => {
-  //   const formData = new FormData();
-
-  //   formData.append("email", data.email);
-  //   formData.append("emailconfirm", data.emailconfirm);
-  //   formData.append("nickname", data.nickname);
-  //   formData.append("password", data.password);
-  //   formData.append("passwordconfirm", data.passwordconfirm);
-
-  //   await fetch("/signup", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //     },
-  //     body: formData,
-  //   })
-  //     .then(res => {
-  //       res.json();
-  //       console.log(res.json());
-  //     })
-  //     .then(data => {
-  //       console.log(data);
-  //       router.push("/signin");
-  //     })
-  //     .catch(err => console.log(err));
-  // };
-
   const onSubmit = async (data: SigninValues) => {
     try {
-      // const formData = new FormData();
-
-      // formData.append("email", data.email);
-      // formData.append("nickname", data.nickname);
-      // formData.append("password", data.password);
-
       const response = await fetch("https://every-board.shop/user/join", {
         method: "POST",
         headers: {
@@ -231,6 +198,7 @@ export default function SignUp() {
         console.log("Error Data", errorData);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
       // 회원 가입 성공 시 로그인 페이지로 이동
       router.push("/signin");
     } catch (err) {
