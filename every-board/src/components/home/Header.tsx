@@ -94,6 +94,13 @@ const Header = (): JSX.Element => {
     }
   }, []);
 
+  //로그아웃할때 token삭제
+  const handleLogout = () => {
+    sessionStorage.removeItem("Authorization");
+    setLogin(false);
+    router.push("/");
+  };
+
   return (
     <HeaderLayout>
       <TextArea>
@@ -156,7 +163,7 @@ const Header = (): JSX.Element => {
               fontSize="1rem"
               radius="50px"
               border="none"
-              onClick={() => router.push("/")}
+              onClick={handleLogout}
             ></ButtonLayout>
           </>
         ) : null}
