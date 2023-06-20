@@ -11,14 +11,6 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/:path",
-  //       destination: "https://every-board.shop/:path",
-  //     },
-  //   ];
-  // },
 };
 
 module.exports = nextConfig;
