@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { AiOutlineEye } from "react-icons/ai";
+import axios from "axios";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -164,12 +165,14 @@ export default function Login() {
           router.push("/");
 
           const ACCESS_TOKEN: string | null = res.headers.get("Authorization");
-          const REFRESH_TOKEN: string | null = res.headers.get("Refresh-Token");
+          const REFRESH_TOKEN: string | null = res.headers.get("Refresh");
 
           if (ACCESS_TOKEN)
-            return sessionStorage.setItem("Authorization", ACCESS_TOKEN);
-          if (REFRESH_TOKEN)
-            sessionStorage.setItem("Refresh-Token", REFRESH_TOKEN);
+            sessionStorage.setItem("Authorization", ACCESS_TOKEN);
+          if (REFRESH_TOKEN) sessionStorage.setItem("Refresh", REFRESH_TOKEN);
+
+          console.log("Authorization:", res.headers.get("Authorization"));
+          console.log("Refresh:", res.headers.get("Refresh"));
         } else {
           throw new Error("회원가입 정보를 확인하세요.");
         }

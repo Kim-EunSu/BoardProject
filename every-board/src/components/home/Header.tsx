@@ -82,7 +82,7 @@ const AvatarArea = styled.span`
 
 const Header = (): JSX.Element => {
   const router = useRouter();
-  const [isLogin, setLogin] = useState<boolean>(true);
+  const [isLogin, setLogin] = useState<boolean>(false);
 
   //이부분이 있어야 로그인했을때 저장된 token을 가져와짐!
   useEffect(() => {
@@ -94,6 +94,13 @@ const Header = (): JSX.Element => {
       setLogin(false);
     }
   }, []);
+
+  //로그아웃할때 token삭제
+  const handleLogout = () => {
+    sessionStorage.removeItem("Authorization");
+    setLogin(false);
+    router.push("/");
+  };
 
   return (
     <HeaderLayout>
@@ -144,7 +151,24 @@ const Header = (): JSX.Element => {
           alt="headerImage"
         />
       </ImageArea>
-      <AvatarArea>{isLogin && <Avatar />}</AvatarArea>
+      <AvatarArea>
+        {isLogin ? (
+          <>
+            <Avatar />
+            <ButtonLayout
+              text="로그아웃"
+              width="100px"
+              height="40px"
+              color="var(--pink)"
+              background="#ffffff"
+              fontSize="1rem"
+              radius="50px"
+              border="none"
+              onClick={handleLogout}
+            ></ButtonLayout>
+          </>
+        ) : null}
+      </AvatarArea>
     </HeaderLayout>
   );
 };
