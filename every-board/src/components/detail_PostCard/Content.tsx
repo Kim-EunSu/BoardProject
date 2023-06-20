@@ -1,54 +1,7 @@
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
-
-interface Props {
-  detail?: boolean;
-  onClick?: () => void;
-}
-const Content = (props: Props) => {
-  return (
-    <ContentWrap>
-      <ButtonLayout
-        text="자유게시판"
-        width="fit-content"
-        height="fit-content"
-        padding="5px 10px"
-        color="#ffffff"
-        background="var(--primary)"
-        border="none"
-        radius="35px"
-      />
-      <div>
-        <h4>Lorem ipsum dolor sit amet </h4>
-        <span className={props.detail ? "detail" : ""}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, Lorem ipsum dolor sit amet,
-          consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim veniam, Lorem ipsum
-          dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, Lorem ipsum dolor sit amet,
-          consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim veniam, Lorem ipsum
-          dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam,
-        </span>
-      </div>
-    </ContentWrap>
-  );
-};
+import { ContentImage } from "@/utils/type";
+import Image from "next/image";
 
 const ContentWrap = styled.div`
   width: 320px;
@@ -95,5 +48,49 @@ const ContentWrap = styled.div`
     width: 1100px;
   }
 `;
+
+interface Props {
+  detail?: boolean;
+  onClick?: () => void;
+  //undefined 넣어도 되는지 공부하기
+  //undefined 안넣으면 Type 오류 발생, 상위 컴포넌트에서 전달 받는 prop이 undefined 일 수 있기 때문,
+  //해결방법 찾아보기
+  category: string | undefined;
+  title: string | undefined;
+  content: string | undefined;
+  contentImages: ContentImage[] | undefined;
+}
+
+const Content = (props: Props) => {
+  const { category, title, content, contentImages } = props;
+  return (
+    <ContentWrap>
+      <ButtonLayout
+        text={category}
+        width="fit-content"
+        height="fit-content"
+        padding="5px 10px"
+        color="#ffffff"
+        background="var(--primary)"
+        border="none"
+        radius="35px"
+      />
+      <div>
+        <h4>{title}</h4>
+        <span className={props.detail ? "detail" : ""}>{content}</span>
+        {contentImages &&
+          contentImages.map(image => (
+            <Image
+              key={image.contentImageId}
+              src={`https://backendcontentimage.s3.ap-northeast-2.amazonaws.com/${image.contentImgUrl}`}
+              alt="Content Image"
+              width={500} // 필요에 따라 조정하세요
+              height={300} // 필요에 따라 조정하세요
+            />
+          ))}
+      </div>
+    </ContentWrap>
+  );
+};
 
 export default Content;

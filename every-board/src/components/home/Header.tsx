@@ -5,6 +5,7 @@ import Avatar from "../Avatar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 
 const HeaderLayout = styled.header`
   width: 100%;
