@@ -5,14 +5,7 @@ import Header from "@/components/Header";
 import styled from "styled-components";
 
 const Mypost = () => {
-  return (
-    <Main>
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-    </Main>
-  );
+  return <Main></Main>;
 };
 
 const Main = styled.main`

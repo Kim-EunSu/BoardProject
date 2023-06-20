@@ -153,7 +153,6 @@ export default function Login() {
   const onSubmit = async (data: FormValues) => {
     console.log(data);
 
-    //여기도 무조건 signin이여야함!
     await fetch("https://every-board.shop/login", {
       method: "POST",
       headers: {

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { AiOutlineEye } from "react-icons/ai";
 import { useState } from "react";
+import axios from "axios";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -165,6 +166,26 @@ export default function SignUp() {
 
   const router = useRouter();
 
+  //이메일인증번호 전송
+  const [isSendEmail, setIsSendEmail] = useState<string | null>(null);
+
+  // const handleEmailSubmit = async (e: React.MouseEvent) => {
+  //   e.preventDefault();
+
+  //   //이메일 상태를 getValues에서 가져온 값으로 업데이트
+  //   setIsSendEmail(getValues("email"));
+
+  //   try {
+  //     await axios.post("https://every-board.shop/auth/email", {
+  //       email: getValues("email"),
+  //     });
+  //     alert("이메일을 전송했습니다.");
+  //   } catch (err: any) {
+  //     console.error(err.message);
+  //     alert("Error sending email");
+  //   }
+  // };
+
   //비밀번호
   const [ShowPassword, setShowPassword] = useState<boolean>(false);
 
@@ -198,6 +219,11 @@ export default function SignUp() {
         console.log("Error Data", errorData);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      // if (data.email !== isSendEmail) {
+      //   alert("이메일 인증을 완료해주세요");
+      //   return;
+      // }
 
       // 회원 가입 성공 시 로그인 페이지로 이동
       router.push("/signin");
@@ -234,7 +260,9 @@ export default function SignUp() {
                   },
                 })}
               />
-              <EmailBtn>이메일 확인</EmailBtn>
+              {/* <EmailBtn type="submit" onClick={handleEmailSubmit}>
+                이메일 확인
+              </EmailBtn> */}
               <ErrorText>{errors.email && errors.email.message}</ErrorText>
             </FormWrap>
             <FormWrap>

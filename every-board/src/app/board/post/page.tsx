@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Category from "@/components/Category";
 import TextArea from "@/components/post/TextArea";
 import axios from "axios";
+import axiosInstance from "@/utils/auth";
 
 interface FormType {
   category?: string;
@@ -117,14 +118,21 @@ const Catagory = styled.button<{ $isActive: Boolean }>`
 `;
 
 const ImageWrapper = styled.div`
-  border: 0 !important;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ImageWrap = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  border: 0 !important;
-  justify-content: flex-start !important;
+  justify-content: space-between;
+`;
+
+const ImageLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ImageName = styled.p``;
@@ -233,30 +241,73 @@ const page = () => {
     });
   };
 
+  // const saveBoard = async () => {
+  //   const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+  //   const REFRESH_TOKEN = sessionStorage.getItem("Refresh");
+
+  //   if (!ACCESS_TOKEN) {
+  //     console.log("인증 정보가 없습니다.");
+  //     return;
+  //   }
+
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("category", form.category || "");
+  //     formData.append("title", form.title || "");
+  //     formData.append("content", form.content || "");
+  //     images.forEach(image => formData.append("ContentImgUrl", image));
+
+  //     await axios.post("https://every-board.shop/contents", formData, {
+  //       headers: {
+  //         Authorization: ACCESS_TOKEN,
+  //       },
+  //     });
+  //     alert("등록성공");
+  //     router.push("/board/gallery");
+  //   } catch (err: any) {
+  //     if (err.response && err.response.status === 401) {
+  //       console.log("Token expired...");
+  //       const newAccessToken = await getNewAccessToken(REFRESH_TOKEN);
+  //       if (newAccessToken) {
+  //         console.log("New accesstoken");
+  //         saveBoard();
+  //       } else {
+  //         console.error("Failed to refresh token");
+  //         alert("오류가 발생1.");
+  //       }
+  //     } else {
+  //       console.log("Error", err);
+  //       alert("오류가 발생2.");
+  //     }
+  //   }
+  // };
+
   const saveBoard = async () => {
     const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+    const REFRESH_TOKEN = sessionStorage.getItem("Refresh");
 
-    if (ACCESS_TOKEN) {
-      try {
-        const formData = new FormData();
-        formData.append("category", form.category || "");
-        formData.append("title", form.title || "");
-        formData.append("content", form.content || "");
-        images.forEach(image => formData.append("images", image));
+    if (!ACCESS_TOKEN) {
+      console.log("인증 정보가 없습니다.");
+      return;
+    }
 
-        await axios.post("https://every-board.shop/contents", formData, {
-          headers: {
-            Authorization: ACCESS_TOKEN,
-          },
-        });
-        alert("등록성공");
-        router.push("/board/gallery");
-      } catch (err) {
-        console.log("Error", err);
-        alert("오류가 발생했습니다.");
+    try {
+      // 게시물 저장 부분을 여기에 추가하십시오.
+      const formData = new FormData();
+      formData.append("category", form.category || "");
+      formData.append("title", form.title || "");
+      formData.append("content", form.content || "");
+      images.forEach(image => formData.append("ContentImgUrl", image));
+
+      await axiosInstance.post("https://every-board.shop/contents", formData);
+
+      alert("등록성공");
+      router.push("/board/gallery");
+    } catch (err: any) {
+      if (err.response && err.response.status === 401) {
+        console.log("Token expired...");
+        saveBoard();
       }
-    } else {
-      alert("인증 정보가 없습니다");
     }
   };
 
@@ -325,7 +376,7 @@ const page = () => {
             </div>
           </FormWrap>
           <CategoryWrap className="category">
-            {showModal && <Category post="post" fn={bringToCategoryState} />}
+            {showModal && <Category route="post" fn={bringToCategoryState} />}
           </CategoryWrap>
           <FormWrap>
             <Label>제목</Label>
