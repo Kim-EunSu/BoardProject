@@ -160,16 +160,22 @@ export default function Login() {
       },
       body: JSON.stringify(data),
     })
-      .then(res => {
+      .then(async res => {
         if (res.ok) {
           router.push("/");
-
           const ACCESS_TOKEN: string | null = res.headers.get("Authorization");
           const REFRESH_TOKEN: string | null = res.headers.get("Refresh");
+
+          const clonedRes = res.clone();
+          const responseData = await clonedRes.json();
+          const USER_ID = responseData.userId;
 
           if (ACCESS_TOKEN)
             sessionStorage.setItem("Authorization", ACCESS_TOKEN);
           if (REFRESH_TOKEN) sessionStorage.setItem("Refresh", REFRESH_TOKEN);
+          if (USER_ID) sessionStorage.setItem("userId", USER_ID);
+
+          console.log("User ID:", responseData.userId);
 
           console.log("Authorization:", res.headers.get("Authorization"));
           console.log("Refresh:", res.headers.get("Refresh"));
