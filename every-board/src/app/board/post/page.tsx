@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Category from "@/components/Category";
 import TextArea from "@/components/post/TextArea";
 import axios from "axios";
-import axiosInstance from "@/utils/auth";
 
 interface FormType {
   category?: string;
@@ -244,14 +243,16 @@ const page = () => {
   // const saveBoard = async () => {
   //   const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
   //   const REFRESH_TOKEN = sessionStorage.getItem("Refresh");
+  //   const USER_ID = sessionStorage.getItem("userId");
 
-  //   if (!ACCESS_TOKEN) {
-  //     console.log("인증 정보가 없습니다.");
+  //   if (!form.category || !form.title || !form.content) {
+  //     alert("모든 필드를 작성해주세요.");
   //     return;
   //   }
 
   //   try {
   //     const formData = new FormData();
+  //     formData.append("userId", USER_ID || "");
   //     formData.append("category", form.category || "");
   //     formData.append("title", form.title || "");
   //     formData.append("content", form.content || "");
@@ -262,53 +263,60 @@ const page = () => {
   //         Authorization: ACCESS_TOKEN,
   //       },
   //     });
-  //     alert("등록성공");
+
+  //     alert("등록 성공!");
   //     router.push("/board/gallery");
+
+  //     alert("오류 발생!");
   //   } catch (err: any) {
-  //     if (err.response && err.response.status === 401) {
-  //       console.log("Token expired...");
-  //       const newAccessToken = await getNewAccessToken(REFRESH_TOKEN);
-  //       if (newAccessToken) {
-  //         console.log("New accesstoken");
-  //         saveBoard();
-  //       } else {
-  //         console.error("Failed to refresh token");
-  //         alert("오류가 발생1.");
-  //       }
-  //     } else {
-  //       console.log("Error", err);
-  //       alert("오류가 발생2.");
-  //     }
+  //     console.error(err);
   //   }
   // };
 
   const saveBoard = async () => {
     const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
     const REFRESH_TOKEN = sessionStorage.getItem("Refresh");
+    const USER_ID = sessionStorage.getItem("userId");
 
-    if (!ACCESS_TOKEN) {
-      console.log("인증 정보가 없습니다.");
+    console.log(ACCESS_TOKEN);
+
+    if (!form.category || !form.title || !form.content) {
+      alert("모든 필드를 작성해주세요.");
       return;
     }
+    const formData = new FormData();
 
-    try {
-      // 게시물 저장 부분을 여기에 추가하십시오.
-      const formData = new FormData();
-      formData.append("category", form.category || "");
-      formData.append("title", form.title || "");
-      formData.append("content", form.content || "");
-      images.forEach(image => formData.append("ContentImgUrl", image));
+    let userIdNumber = 0;
 
-      await axiosInstance.post("https://every-board.shop/contents", formData);
-
-      alert("등록성공");
-      router.push("/board/gallery");
-    } catch (err: any) {
-      if (err.response && err.response.status === 401) {
-        console.log("Token expired...");
-        saveBoard();
-      }
+    //sessionStorage에 저장되어있는 USER_ID는 string이므로 숫자형으로 변환해야함!
+    if (USER_ID !== null) {
+      userIdNumber = parseInt(USER_ID);
     }
+
+    // formData.append("userId", USER_ID || "");
+    // formData.append("category", form.category || "");
+    // formData.append("title", form.title || "");
+    // formData.append("content", form.content || "");
+
+    const data = {
+      userId: userIdNumber || "",
+      category: form.category || "",
+      title: form.title || "",
+      content: form.content || "",
+    };
+
+    formData.append("data", JSON.stringify(data));
+
+    images.forEach(image => formData.append("ContentImgUrl", image));
+
+    await axios
+      .post("https://every-board.shop/contents", formData, {
+        headers: {
+          Authorization: ACCESS_TOKEN,
+        },
+      })
+      .then(res => alert("등록성공"));
+    alert("등록성공");
   };
 
   const backBoard = () => {
@@ -317,6 +325,12 @@ const page = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (inputBtn === "작성") {
+      saveBoard();
+    } else {
+      backBoard();
+    }
 
     setForm({ ...form, title: "" });
     console.log(form);
@@ -428,20 +442,24 @@ const page = () => {
             <InputBtn
               type="submit"
               $isSelected={inputBtn === "취소"}
-              onClick={() => {
-                handleInputButton("취소");
-                backBoard();
-              }}
+              onClick={() => handleInputButton("취소")}
+
+              // onClick={() => {
+              //   handleInputButton("취소");
+              //   backBoard();
+              // }}
             >
               취소하기
             </InputBtn>
             <InputBtn
               type="submit"
               $isSelected={inputBtn === "작성"}
-              onClick={() => {
-                handleInputButton("작성");
-                saveBoard();
-              }}
+              onClick={() => handleInputButton("작성")}
+
+              // onClick={() => {
+              //   handleInputButton("작성");
+              //   saveBoard();
+              // }}
             >
               작성하기
             </InputBtn>
