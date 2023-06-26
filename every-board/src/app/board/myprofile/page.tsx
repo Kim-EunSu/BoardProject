@@ -7,6 +7,9 @@ import { BsPeopleFill } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { MdTag } from "react-icons/md";
+import { useState } from "react";
+import ModalPortal from "@/components/ui/ModalPortal";
+import ProfileModal from "@/components/ProfileModal";
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,8 +51,8 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 30px;
+  width: 130px;
+  height: 50px;
   border-radius: 25px;
   border: 2px solid #5429ff;
 `;
@@ -190,6 +193,18 @@ const Alarm = styled.p``;
 
 //color를 지정하지 않으면 기본적으로 pink설정
 export default function page() {
+  //모달창
+  const [openModal, setOpenModal] = useState(false);
+
+  // const [idEdit, setIsEdit] = useState<boolean>(false);
+
+  // const handleEditClick = async (e: React.MouseEvent) => {
+  //   setIsEdit(true);
+
+  //   const userId = sessionStorage.getItem("userId");
+  //   const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+  // };
+
   return (
     <>
       <Wrapper>
@@ -199,7 +214,14 @@ export default function page() {
             <Name>사용자</Name>
           </Left>
           <Right>
-            <Edit>회원정보 수정</Edit>
+            <Edit onClick={() => setOpenModal(true)}>프로필 이미지 수정</Edit>
+            {openModal && (
+              <ModalPortal>
+                <ProfileModal onClose={() => setOpenModal(false)}>
+                  프로필이미지수정
+                </ProfileModal>
+              </ModalPortal>
+            )}
           </Right>
         </Section1>
         <Section2>

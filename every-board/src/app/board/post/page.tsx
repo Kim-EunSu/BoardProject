@@ -268,7 +268,6 @@ const page = () => {
 
   const saveBoard = async () => {
     const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
-    const REFRESH_TOKEN = sessionStorage.getItem("Refresh");
     const USER_ID = sessionStorage.getItem("userId");
 
     console.log(ACCESS_TOKEN);
@@ -305,11 +304,16 @@ const page = () => {
     await axios
       .post("https://every-board.shop/contents", formData, {
         headers: {
+          // "Content-Type": "application/json;charset=UTF-8",
           Authorization: ACCESS_TOKEN,
         },
       })
-      .then(res => alert("등록성공"));
-    alert("등록성공");
+      .then(res => alert("등록성공"))
+      .catch(error => {
+        console.error("Error message:", error.message);
+        console.error("Error response:", error.response);
+        alert("오류 발생!");
+      });
   };
 
   const backBoard = () => {
