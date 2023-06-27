@@ -10,6 +10,7 @@ import { MdTag } from "react-icons/md";
 import { useState } from "react";
 import ModalPortal from "@/components/ui/ModalPortal";
 import ProfileModal from "@/components/ProfileModal";
+import Avatar from "@/components/Avatar";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,14 +34,6 @@ const Section1 = styled.div`
 const Left = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Avatar = styled.div`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  margin-right: 1.5rem;
-  background-color: #5429ff;
 `;
 
 const Name = styled.p`
@@ -191,6 +184,20 @@ const Section3 = styled.div`
 
 const Alarm = styled.p``;
 
+const ModalTitle = styled.h3`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #5429ff;
+  background: white;
+  border-radius: 18px 18px 0 0;
+`;
+
 //color를 지정하지 않으면 기본적으로 pink설정
 export default function page() {
   //모달창
@@ -210,7 +217,7 @@ export default function page() {
       <Wrapper>
         <Section1>
           <Left>
-            <Avatar></Avatar>
+            <Avatar />
             <Name>사용자</Name>
           </Left>
           <Right>
@@ -218,7 +225,7 @@ export default function page() {
             {openModal && (
               <ModalPortal>
                 <ProfileModal onClose={() => setOpenModal(false)}>
-                  프로필이미지수정
+                  <ModalTitle>프로필 수정</ModalTitle>
                 </ProfileModal>
               </ModalPortal>
             )}

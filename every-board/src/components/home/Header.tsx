@@ -153,7 +153,7 @@ const Header = (): JSX.Element => {
       <AvatarArea>
         {isLogin ? (
           <>
-            <Avatar />
+            <Avatar size="medium" />
             <ButtonLayout
               text="로그아웃"
               width="100px"
