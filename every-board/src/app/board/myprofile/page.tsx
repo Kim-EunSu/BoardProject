@@ -7,6 +7,10 @@ import { BsPeopleFill } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { MdTag } from "react-icons/md";
+import { useState } from "react";
+import ModalPortal from "@/components/ui/ModalPortal";
+import ProfileModal from "@/components/ProfileModal";
+import Avatar from "@/components/Avatar";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,14 +36,6 @@ const Left = styled.div`
   align-items: center;
 `;
 
-const Avatar = styled.div`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  margin-right: 1.5rem;
-  background-color: #5429ff;
-`;
-
 const Name = styled.p`
   font-size: 1.5rem;
 `;
@@ -48,8 +44,8 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 30px;
+  width: 130px;
+  height: 50px;
   border-radius: 25px;
   border: 2px solid #5429ff;
 `;
@@ -188,18 +184,51 @@ const Section3 = styled.div`
 
 const Alarm = styled.p``;
 
+const ModalTitle = styled.h3`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #5429ff;
+  background: white;
+  border-radius: 18px 18px 0 0;
+`;
+
 //color를 지정하지 않으면 기본적으로 pink설정
 export default function page() {
+  //모달창
+  const [openModal, setOpenModal] = useState(false);
+
+  // const [idEdit, setIsEdit] = useState<boolean>(false);
+
+  // const handleEditClick = async (e: React.MouseEvent) => {
+  //   setIsEdit(true);
+
+  //   const userId = sessionStorage.getItem("userId");
+  //   const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+  // };
+
   return (
     <>
       <Wrapper>
         <Section1>
           <Left>
-            <Avatar></Avatar>
+            <Avatar />
             <Name>사용자</Name>
           </Left>
           <Right>
-            <Edit>회원정보 수정</Edit>
+            <Edit onClick={() => setOpenModal(true)}>프로필 이미지 수정</Edit>
+            {openModal && (
+              <ModalPortal>
+                <ProfileModal onClose={() => setOpenModal(false)}>
+                  <ModalTitle>프로필 수정</ModalTitle>
+                </ProfileModal>
+              </ModalPortal>
+            )}
           </Right>
         </Section1>
         <Section2>
