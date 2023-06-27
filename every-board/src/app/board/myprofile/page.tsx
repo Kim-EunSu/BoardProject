@@ -11,6 +11,7 @@ import { useState } from "react";
 import ModalPortal from "@/components/ui/ModalPortal";
 import ProfileModal from "@/components/ProfileModal";
 import Avatar from "@/components/Avatar";
+import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
   display: flex;
@@ -203,21 +204,15 @@ export default function page() {
   //모달창
   const [openModal, setOpenModal] = useState(false);
 
-  // const [idEdit, setIsEdit] = useState<boolean>(false);
-
-  // const handleEditClick = async (e: React.MouseEvent) => {
-  //   setIsEdit(true);
-
-  //   const userId = sessionStorage.getItem("userId");
-  //   const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
-  // };
+  const router = useRouter();
 
   return (
     <>
       <Wrapper>
+        <div onClick={() => router.push("/")}>뒤로</div>
         <Section1>
           <Left>
-            <Avatar />
+            <Avatar size="medium" />
             <Name>사용자</Name>
           </Left>
           <Right>
