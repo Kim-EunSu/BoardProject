@@ -239,11 +239,13 @@
 
 import styled from "styled-components";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 import { useState, useRef } from "react";
-import { useAvatar } from "../context/AvatarContext";
+import { useAvatar } from "../../context/AvatarContext";
+import axios from "axios";
 
 const Wrapper = styled.div`
+  gap: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -258,17 +260,23 @@ const Wrapper = styled.div`
   z-index: 100;
 `;
 
+const ProfilWrapper = styled.div`
+  gap: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const CloseIcon = styled.button`
+  top: 8px;
+  right: 8px;
   border: none;
+  position: absolute;
   background-color: transparent;
 
   svg {
-    top: 0;
-    right: 0;
-    position: absolute;
     color: #5429ff;
-    font-size: 3.2rem;
-    padding: 10px;
+    font-size: 2rem;
   }
 `;
 
@@ -278,14 +286,15 @@ const InputWrapper = styled.div`
 `;
 
 const UploadWrapper = styled.div`
-  padding: 10px;
+  padding: 12px;
   color: #5429ff;
+  border-radius: 7px;
   background-color: white;
 `;
 
 const UploadImage = styled.label`
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
 `;
 
 const Input = styled.input`
@@ -296,10 +305,11 @@ const Input = styled.input`
 
 const DeleteImage = styled.button`
   border: none;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   color: #5429ff;
+  border-radius: 7px;
   background-color: white;
 `;
 
@@ -313,16 +323,17 @@ export default function ProfileModal({ onClose, children }: Props) {
   const { setAvatarImage } = useAvatar();
   const inputFileRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
       const reader = new FileReader();
 
-      reader.onload = e => {
+      reader.onload = async e => {
         const result = e.target?.result as string;
         setImage(result);
         setAvatarImage(result); // Update the global avatarImage
+        await uploadImage();
       };
       reader.readAsDataURL(file);
     }
@@ -333,25 +344,124 @@ export default function ProfileModal({ onClose, children }: Props) {
     setAvatarImage(null);
   };
 
+  const userId = sessionStorage.getItem("userId");
+  const Access_Token = sessionStorage.getItem("Authorization");
+
+  // const uploadImage = async () => {
+  //   if (
+  //     inputFileRef.current &&
+  //     inputFileRef.current.files &&
+  //     inputFileRef.current.files[0]
+  //   ) {
+  //     const formData = new FormData();
+  //     formData.append("data", JSON.stringify({ userId: Number(userId) || 0 }));
+  //     formData.append(
+  //       "ProfileUrl",
+  //       inputFileRef.current.files[0],
+  //       inputFileRef.current.files[0].name,
+  //     );
+
+  //     try {
+  //       const response = await axios.post(
+  //         `https://every-board.shop/user/${userId}/profile`,
+  //         formData,
+  //         {
+  //           headers: {
+  //             Authorization: Access_Token,
+  //           },
+  //         },
+  //       );
+
+  //       if (response.status === 200) {
+  //         const data = response.data;
+  //         console.log(data);
+  //       } else {
+  //         console.error("Error:", response.statusText);
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
+
+  const uploadImage = async () => {
+    if (
+      inputFileRef.current &&
+      inputFileRef.current.files &&
+      inputFileRef.current.files[0]
+    ) {
+      const formData = new FormData();
+      formData.append("data", JSON.stringify({ userId: Number(userId) || 0 }));
+      formData.append(
+        "ProfileUrl",
+        inputFileRef.current.files[0],
+        inputFileRef.current.files[0].name,
+      );
+
+      try {
+        await fetch(`https://every-board.shop/user/${userId}/profile`, {
+          method: "POST",
+          headers: {
+            Authorization: Access_Token || "",
+          },
+          body: formData,
+        })
+          .then(res => {
+            if (res.ok === true) {
+              return res.json();
+            }
+            throw new Error("에러 발생!");
+          })
+          .catch(error => {
+            alert(error);
+            console.log(error);
+          })
+          .then(data => {
+            console.log(data);
+          });
+
+        // const response = await axios.post(
+        //   `https://every-board.shop/user/${userId}/profile`,
+        //   formData,
+        //   {
+        //     headers: {
+        //       Authorization: Access_Token,
+        //     },
+        //   },
+        // );
+
+        // if (response.status === 200) {
+        //   const data = response.data;
+        //   console.log(data);
+        // } else {
+        //   console.error("Error:", response.statusText);
+        // }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   return (
     <Wrapper>
+      {children}
       <CloseIcon onClick={() => onClose()}>
         <AiOutlineCloseCircle />
       </CloseIcon>
-      {children}
-      <Avatar size="large" image={image} />
-      <InputWrapper>
-        <UploadWrapper>
-          <UploadImage htmlFor="upload">사진 올리기</UploadImage>
-          <Input
-            type="file"
-            id="upload"
-            ref={inputFileRef}
-            onChange={handleFileChange}
-          />
-        </UploadWrapper>
-        <DeleteImage onClick={DeleteImageFile}>사진 삭제하기</DeleteImage>
-      </InputWrapper>
+      <ProfilWrapper>
+        <Avatar size="large" image={image} />
+        <InputWrapper>
+          <UploadWrapper>
+            <UploadImage htmlFor="upload">사진 올리기</UploadImage>
+            <Input
+              type="file"
+              id="upload"
+              ref={inputFileRef}
+              onChange={handleFileChange}
+            />
+          </UploadWrapper>
+          <DeleteImage onClick={DeleteImageFile}>사진 삭제하기</DeleteImage>
+        </InputWrapper>
+      </ProfilWrapper>
     </Wrapper>
   );
 }

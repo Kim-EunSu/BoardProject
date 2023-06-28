@@ -72,13 +72,13 @@ type Props = {
 const getImageSize = (size: AvatarSize) => {
   switch (size) {
     case "small":
-      return { width: 40, height: 40 };
+      return { width: 50, height: 50 };
     case "medium":
       return { width: 70, height: 70 };
     case "large":
-      return { width: 120, height: 120 };
+      return { width: 140, height: 140 };
     default:
-      return { width: 40, height: 40 };
+      return { width: 50, height: 50 };
   }
 };
 
@@ -104,7 +104,7 @@ const ImageWrapper = styled.div`
   background-color: red;
   width: 100%;
   height: 100%;
-  border-radius: 9999px;
+  border-radius: 50%;
   padding: 0.1rem;
 `;
 

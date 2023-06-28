@@ -17,7 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AvatarProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          {children}
+          <div id="portal" />
+        </body>
       </AvatarProvider>
     </html>
   );
