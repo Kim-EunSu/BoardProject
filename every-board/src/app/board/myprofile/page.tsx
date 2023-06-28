@@ -9,8 +9,9 @@ import { BiMessageAltDetail } from "react-icons/bi";
 import { MdTag } from "react-icons/md";
 import { useState } from "react";
 import ModalPortal from "@/components/ui/ModalPortal";
-import ProfileModal from "@/components/ProfileModal";
+import ProfileModal from "@/components/Modal/ProfileModal";
 import Avatar from "@/components/Avatar";
+import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
   display: flex;
@@ -190,12 +191,13 @@ const ModalTitle = styled.h3`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 50px;
+  height: 60px;
   font-size: 22px;
   font-weight: 500;
   color: #5429ff;
   background: white;
-  border-radius: 18px 18px 0 0;
+  border: 5px solid #5429ff;
+  border-radius: 13px 13px 0 0;
 `;
 
 //color를 지정하지 않으면 기본적으로 pink설정
@@ -203,21 +205,15 @@ export default function page() {
   //모달창
   const [openModal, setOpenModal] = useState(false);
 
-  // const [idEdit, setIsEdit] = useState<boolean>(false);
-
-  // const handleEditClick = async (e: React.MouseEvent) => {
-  //   setIsEdit(true);
-
-  //   const userId = sessionStorage.getItem("userId");
-  //   const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
-  // };
+  const router = useRouter();
 
   return (
     <>
       <Wrapper>
+        <div onClick={() => router.push("/")}>뒤로</div>
         <Section1>
           <Left>
-            <Avatar />
+            <Avatar size="medium" />
             <Name>사용자</Name>
           </Left>
           <Right>

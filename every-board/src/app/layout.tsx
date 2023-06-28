@@ -1,8 +1,13 @@
 import "./globals.css";
+<<<<<<< HEAD
 // import { Inter } from "next/font/google";
 import Providers from "@/utils/provider";
 import React from "react";
 import Head from "next/head";
+=======
+import { Inter } from "next/font/google";
+import { AvatarProvider } from "@/context/AvatarContext";
+>>>>>>> upstream/EunSu
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+<<<<<<< HEAD
       <Head>
         <meta
           httpEquiv="Content-Security-Policy"
@@ -27,6 +33,14 @@ export default function RootLayout({
       <body>
         <Providers>{children}</Providers>
       </body>
+=======
+      <AvatarProvider>
+        <body className={inter.className}>
+          {children}
+          <div id="portal" />
+        </body>
+      </AvatarProvider>
+>>>>>>> upstream/EunSu
     </html>
   );
 }

@@ -60,6 +60,7 @@
 
 import Link from "next/link";
 import styled, { css } from "styled-components";
+import { useAvatar } from "@/context/AvatarContext";
 
 type AvatarSize = "small" | "medium" | "large";
 
@@ -71,13 +72,13 @@ type Props = {
 const getImageSize = (size: AvatarSize) => {
   switch (size) {
     case "small":
-      return { width: 40, height: 40 };
+      return { width: 50, height: 50 };
     case "medium":
-      return { width: 80, height: 80 };
+      return { width: 70, height: 70 };
     case "large":
-      return { width: 120, height: 120 };
+      return { width: 140, height: 140 };
     default:
-      return { width: 40, height: 40 };
+      return { width: 50, height: 50 };
   }
 };
 
@@ -103,7 +104,7 @@ const ImageWrapper = styled.div`
   background-color: red;
   width: 100%;
   height: 100%;
-  border-radius: 9999px;
+  border-radius: 50%;
   padding: 0.1rem;
 `;
 
@@ -116,6 +117,7 @@ const StyledImage = styled.img`
 
 //size을 따로 명시하지 않으면 기본 사이즈는 small
 export default function Avatar({ image, size = "small" }: Props) {
+  const { avatarImage } = useAvatar();
   return (
     <Link
       href="/board/myprofile"
@@ -124,7 +126,7 @@ export default function Avatar({ image, size = "small" }: Props) {
       <Container size={size}>
         <ImageWrapper>
           <StyledImage
-            src={image ?? undefined}
+            src={avatarImage ?? undefined}
             alt="user profile"
             referrerPolicy="no-referrer"
           />
