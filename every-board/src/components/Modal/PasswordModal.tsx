@@ -96,6 +96,8 @@ export default function PasswordModal({ onClose, children }: Props) {
     setEmail(e.target.value);
   };
 
+  //const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+
   const handleEmailSubmission = async () => {
     try {
       const response = await axios.post(
