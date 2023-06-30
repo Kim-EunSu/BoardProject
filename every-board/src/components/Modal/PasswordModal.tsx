@@ -101,7 +101,7 @@ export default function PasswordModal({ onClose, children }: Props) {
   const handleEmailSubmission = async () => {
     try {
       const response = await axios.post(
-        " https://every-board.shop/auth/password",
+        "https://every-board.shop/auth/password",
         { email },
       );
 
