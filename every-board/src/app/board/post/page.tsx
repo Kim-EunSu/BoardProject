@@ -1,17 +1,11 @@
 "use client";
 
 import styled from "styled-components";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Category from "@/components/Category";
 import TextArea from "@/components/post/TextArea";
 import axios from "axios";
-
-interface FormType {
-  category?: string;
-  title?: string;
-  content?: string;
-}
 
 const Wrapper = styled.div`
   width: 350px;
@@ -180,6 +174,12 @@ const InputBtn = styled.button<{ $isSelected?: Boolean }>`
   }
 `;
 
+interface FormType {
+  category?: string;
+  title?: string;
+  content?: string;
+}
+
 const page = () => {
   const router = useRouter();
   //전체의 input관리
@@ -233,44 +233,9 @@ const page = () => {
     });
   };
 
-  // const saveBoard = async () => {
-  //   const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
-  //   const REFRESH_TOKEN = sessionStorage.getItem("Refresh");
-  //   const USER_ID = sessionStorage.getItem("userId");
-
-  //   if (!form.category || !form.title || !form.content) {
-  //     alert("모든 필드를 작성해주세요.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("userId", USER_ID || "");
-  //     formData.append("category", form.category || "");
-  //     formData.append("title", form.title || "");
-  //     formData.append("content", form.content || "");
-  //     images.forEach(image => formData.append("ContentImgUrl", image));
-
-  //     await axios.post("https://every-board.shop/contents", formData, {
-  //       headers: {
-  //         Authorization: ACCESS_TOKEN,
-  //       },
-  //     });
-
-  //     alert("등록 성공!");
-  //     router.push("/board/gallery");
-
-  //     alert("오류 발생!");
-  //   } catch (err: any) {
-  //     console.error(err);
-  //   }
-  // };
-
   const saveBoard = async () => {
     const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
     const USER_ID = sessionStorage.getItem("userId");
-
-    console.log(ACCESS_TOKEN);
 
     if (!form.category || !form.title || !form.content) {
       alert("모든 필드를 작성해주세요.");
@@ -278,42 +243,40 @@ const page = () => {
     }
     const formData = new FormData();
 
-    let userIdNumber = 0;
-
-    //sessionStorage에 저장되어있는 USER_ID는 string이므로 숫자형으로 변환해야함!
-    if (USER_ID !== null) {
-      userIdNumber = parseInt(USER_ID);
-    }
-
-    // formData.append("userId", USER_ID || "");
-    // formData.append("category", form.category || "");
-    // formData.append("title", form.title || "");
-    // formData.append("content", form.content || "");
-
     const data = {
-      userId: userIdNumber || "",
+      userId: USER_ID,
       category: form.category || "",
       title: form.title || "",
       content: form.content || "",
     };
 
-    formData.append("data", JSON.stringify(data));
+    //formData.append("data", JSON.stringify(data));
+    //이렇게 처리해야 500error가 생기지 않음!!!!
+    formData.append(
+      "data",
+      new Blob([JSON.stringify(data)], {
+        type: "application/json",
+      }),
+    );
 
     images.forEach(image => formData.append("ContentImgUrl", image));
 
-    await axios
-      .post("https://every-board.shop/contents", formData, {
-        headers: {
-          // "Content-Type": "application/json;charset=UTF-8",
-          Authorization: ACCESS_TOKEN,
+    try {
+      const response = await axios.post(
+        "https://every-board.shop/contents",
+        formData,
+        {
+          headers: {
+            Authorization: ACCESS_TOKEN,
+          },
         },
-      })
-      .then(res => alert("등록성공"))
-      .catch(error => {
-        console.error("Error message:", error.message);
-        console.error("Error response:", error.response);
-        alert("오류 발생!");
-      });
+      );
+      if (response.status === 200) {
+        router.push("/board/gallery");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const backBoard = () => {
@@ -380,7 +343,6 @@ const page = () => {
                 placeholder="카테고리를 선택하세요."
                 readOnly
               />
-
               <Catagory $isActive onClick={toggleModal}>
                 카테고리
               </Catagory>
@@ -440,11 +402,6 @@ const page = () => {
               type="submit"
               $isSelected={inputBtn === "취소"}
               onClick={() => handleInputButton("취소")}
-
-              // onClick={() => {
-              //   handleInputButton("취소");
-              //   backBoard();
-              // }}
             >
               취소하기
             </InputBtn>
@@ -452,11 +409,6 @@ const page = () => {
               type="submit"
               $isSelected={inputBtn === "작성"}
               onClick={() => handleInputButton("작성")}
-
-              // onClick={() => {
-              //   handleInputButton("작성");
-              //   saveBoard();
-              // }}
             >
               작성하기
             </InputBtn>
