@@ -75,9 +75,12 @@ const ImageArea = styled.div`
 `;
 
 const AvatarArea = styled.span`
-  position: absolute;
+  display: flex;
   top: 20px;
   right: 20px;
+  position: absolute;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 const UserWrapper = styled.div`
@@ -89,6 +92,7 @@ const UserWrapper = styled.div`
   background: white;
   align-items: center;
   justify-content: space-around;
+  margin-bottom: 10px;
 `;
 
 const UserNickname = styled.span`
