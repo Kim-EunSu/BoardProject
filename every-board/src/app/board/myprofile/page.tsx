@@ -7,10 +7,11 @@ import { BsPeopleFill } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { MdTag } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalPortal from "@/components/ui/ModalPortal";
 import ProfileModal from "@/components/Modal/ProfileModal";
 import Avatar from "@/components/Avatar";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,8 +37,10 @@ const Left = styled.div`
   align-items: center;
 `;
 
-const Name = styled.p`
+const UserNickname = styled.span`
+  font-weight: 500;
   font-size: 1.5rem;
+  margin-left: 10px;
 `;
 
 const Right = styled.div`
@@ -203,6 +206,19 @@ const ModalTitle = styled.h3`
 export default function page() {
   //모달창
   const [openModal, setOpenModal] = useState(false);
+  const [Nickname, setNickname] = useState<string>("");
+
+  useEffect(() => {
+    const USER_ID = sessionStorage.getItem("userId");
+    axios
+      .get(`https://every-board.shop/user/${USER_ID}/nickname`)
+      .then(function (res) {
+        setNickname(res.data.nickname);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>
@@ -210,7 +226,7 @@ export default function page() {
         <Section1>
           <Left>
             <Avatar size="medium" />
-            <Name>사용자</Name>
+            <UserNickname>{Nickname && <span>{Nickname}</span>}님</UserNickname>
           </Left>
           <Right>
             <Edit onClick={() => setOpenModal(true)}>프로필 이미지 수정</Edit>
