@@ -243,8 +243,15 @@ const page = () => {
     }
     const formData = new FormData();
 
+    let userIdNumber = 0;
+
+    // sessionStorage에 저장되어있는 USER_ID는 string이므로 숫자형으로 변환해야함!
+    if (USER_ID !== null) {
+      userIdNumber = parseInt(USER_ID);
+    }
+
     const data = {
-      userId: USER_ID,
+      userId: userIdNumber || "",
       category: form.category || "",
       title: form.title || "",
       content: form.content || "",
