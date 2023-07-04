@@ -6,17 +6,18 @@ import { useAvatar } from "../../context/AvatarContext";
 import axios from "axios";
 
 const Wrapper = styled.div`
-  gap: 15px;
+  gap: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
-  height: 600px;
-  width: 500px;
+  height: 550px;
+  width: 450px;
   top: 50%;
   left: 50%;
   border-radius: 18px;
-  background: #5429ff;
+  background: white;
+  border: 5px solid #cacacb;
   transform: translate(-50%, -50%);
   z-index: 100;
 `;
@@ -36,7 +37,7 @@ const CloseIcon = styled.button`
   background-color: transparent;
 
   svg {
-    color: #5429ff;
+    color: #63637f;
     font-size: 2rem;
   }
 `;
@@ -48,9 +49,10 @@ const InputWrapper = styled.div`
 
 const UploadWrapper = styled.div`
   padding: 12px;
-  color: #5429ff;
+  color: #63637f;
   border-radius: 7px;
   background-color: white;
+  border: 2px solid #cacacb;
 `;
 
 const UploadImage = styled.label`
@@ -65,13 +67,13 @@ const Input = styled.input`
 `;
 
 const DeleteImage = styled.button`
-  border: none;
   padding: 12px;
   cursor: pointer;
   font-size: 16px;
-  color: #5429ff;
+  color: #63637f;
   border-radius: 7px;
   background-color: white;
+  border: 2px solid #cacacb;
 `;
 
 type Props = {
@@ -116,44 +118,6 @@ export default function ProfileModal({ onClose, children }: Props) {
 
   const userId = sessionStorage.getItem("userId");
   const Access_Token = sessionStorage.getItem("Authorization");
-
-  //원래 코드
-  // const uploadImage = async () => {
-  //   if (
-  //     inputFileRef.current &&
-  //     inputFileRef.current.files &&
-  //     inputFileRef.current.files[0]
-  //   ) {
-  //     const formData = new FormData();
-  //     formData.append("data", JSON.stringify({ userId: Number(userId) || 0 }));
-  //     formData.append(
-  //       "ProfileUrl",
-  //       inputFileRef.current.files[0],
-  //       inputFileRef.current.files[0].name,
-  //     );
-
-  //     try {
-  //       const response = await axios.post(
-  //         `https://every-board.shop/user/${userId}/profile`,
-  //         formData,
-  //         {
-  //           headers: {
-  //             Authorization: Access_Token,
-  //           },
-  //         },
-  //       );
-
-  //       if (response.status === 200) {
-  //         const data = response.data;
-  //         console.log(data);
-  //       } else {
-  //         console.error("Error:", response.statusText);
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
 
   const uploadImage = async () => {
     if (

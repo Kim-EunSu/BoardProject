@@ -11,7 +11,6 @@ import { useState } from "react";
 import ModalPortal from "@/components/ui/ModalPortal";
 import ProfileModal from "@/components/Modal/ProfileModal";
 import Avatar from "@/components/Avatar";
-import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
   display: flex;
@@ -194,9 +193,9 @@ const ModalTitle = styled.h3`
   height: 60px;
   font-size: 22px;
   font-weight: 500;
-  color: #5429ff;
+  color: #63637f;
   background: white;
-  border: 5px solid #5429ff;
+  border-bottom: 5px solid #cacacb;
   border-radius: 13px 13px 0 0;
 `;
 
@@ -205,12 +204,9 @@ export default function page() {
   //모달창
   const [openModal, setOpenModal] = useState(false);
 
-  const router = useRouter();
-
   return (
     <>
       <Wrapper>
-        <div onClick={() => router.push("/")}>뒤로</div>
         <Section1>
           <Left>
             <Avatar size="medium" />

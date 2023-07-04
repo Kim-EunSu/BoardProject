@@ -1,63 +1,3 @@
-// import Image from "next/image";
-// import Link from "next/link";
-// import styled from "styled-components";
-
-// type Props = {
-//   image?: string | null;
-// };
-
-// //size를 따로 명시하지 않으면 기본적으로 large사이즈
-// export default function Avatar({ image }: Props) {
-//   return (
-// <Link
-//   href="/board/myprofile"
-//   style={{ textDecoration: "none", color: "#000000", cursor: "pointer" }}
-// >
-//       <AvatarWrap>
-//         <Image
-//           src={"/frame.png"}
-//           alt="프로필 사진"
-//           width={40}
-//           height={40}
-//           style={{ borderRadius: "50px" }}
-//         />
-//         <NickName>지쳐있는멜모</NickName>
-//       </AvatarWrap>
-//     </Link>
-//   );
-// }
-
-// const AvatarWrap = styled.span`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   width: fit-content;
-//   height: fit-content;
-//   max-width: 240px;
-//   padding: 2px;
-//   border-radius: 50px;
-//   background-color: white;
-//   gap: 6px;
-//   box-shadow: 1px 2px 20px rgba(18, 61, 101, 0.05),
-//     inset -18.4px -13.8px 184px rgba(255, 255, 255, 0.18);
-//   @media (min-width: 1080px) {
-//     padding: 6px;
-//   }
-// `;
-
-// //닉네임 10글자 이상은 ...처리
-// const NickName = styled.span`
-//   display: none;
-//   @media (min-width: 1080px) {
-//     display: inline;
-//     padding: 0 5px;
-//     max-width: 173px;
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-//     white-space: nowrap;
-//   }
-// `;
-
 import Link from "next/link";
 import styled, { css } from "styled-components";
 import { useAvatar } from "@/context/AvatarContext";
@@ -68,6 +8,12 @@ type Props = {
   image?: string | null;
   size?: AvatarSize;
 };
+
+// StyledImage 스타일 컴포넌트를 사용하여 일반 img 태그를 사용하고 있기에
+// src를 통해 이미지를 전달할 때, string 타입만 허용
+// => 현재 이부분에서는  Next.js의 이미지 최적화 기능을 사용하지 않고 일반 img 태그를 사용하며,
+// => 이미지 경로를 string 으로 지정하여 코드의 일관성을 유지
+const defaultprofile = "/defaultprofile.png";
 
 const getImageSize = (size: AvatarSize) => {
   switch (size) {
@@ -101,7 +47,7 @@ const Container = styled.div<{ size: AvatarSize }>`
 `;
 
 const ImageWrapper = styled.div`
-  background-color: red;
+  background: #fc0374;
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -126,7 +72,7 @@ export default function Avatar({ image, size = "small" }: Props) {
       <Container size={size}>
         <ImageWrapper>
           <StyledImage
-            src={avatarImage ?? undefined}
+            src={avatarImage ? avatarImage : defaultprofile}
             alt="user profile"
             referrerPolicy="no-referrer"
           />
