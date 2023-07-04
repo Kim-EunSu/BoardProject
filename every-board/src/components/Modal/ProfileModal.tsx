@@ -163,10 +163,16 @@ export default function ProfileModal({ onClose, children }: Props) {
     ) {
       const formData = new FormData();
 
+      const USER_ID = sessionStorage.getItem("userId");
+
+      const data = {
+        userId: USER_ID,
+      };
+
       //type을 지정하지 않을 경우 500error발생
       formData.append(
         "data",
-        new Blob([JSON.stringify({ userId: Number(userId) })], {
+        new Blob([JSON.stringify(data)], {
           type: "application/json",
         }),
       );
