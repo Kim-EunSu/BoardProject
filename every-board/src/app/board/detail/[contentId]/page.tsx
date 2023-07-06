@@ -14,6 +14,12 @@ const Main = styled.main`
   height: fit-content;
 `;
 
+type UserProfileImage = {
+  userImageId: number;
+  userId: number;
+  userImgUrl: string;
+};
+
 type ContentImage = {
   contentId: number;
   contentImageId: number;
@@ -30,7 +36,7 @@ type IPost = {
   createdAt: string;
   modifiedAt: string;
   nickname: string;
-  profileUrl: { [key: string]: any }[];
+  profileUrl: UserProfileImage[];
   title: string;
   userId: number;
   viewCount: number;

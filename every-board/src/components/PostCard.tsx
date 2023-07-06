@@ -93,6 +93,12 @@ const Article = styled.article`
   }
 `;
 
+type UserProfileImage = {
+  userImageId: number;
+  userId: number;
+  userImgUrl: string;
+};
+
 //postData를 props로 받아오면 해당 type들도 가져와야함
 type ContentImage = {
   contentId: number;
@@ -110,7 +116,7 @@ type IPost = {
   createdAt: string;
   modifiedAt: string;
   nickname: string;
-  profileUrl: { [key: string]: any }[];
+  profileUrl: UserProfileImage[];
   title: string;
   userId: number;
   viewCount: number;

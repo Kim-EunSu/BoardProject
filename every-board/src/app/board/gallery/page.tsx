@@ -110,12 +110,3 @@ export default function page() {
     </Wrapper>
   );
 }
-
-//`/board?category=${el}`
-
-{
-  /* <img
-              src={content.contentImages[0].contentImgUrl}
-              alt={content.title}
-            /> */
-}

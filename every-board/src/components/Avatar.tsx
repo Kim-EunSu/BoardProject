@@ -2,7 +2,7 @@ import Link from "next/link";
 import styled, { css } from "styled-components";
 import { useAvatar } from "@/context/AvatarContext";
 
-type AvatarSize = "small" | "medium" | "large";
+type AvatarSize = "verysmall" | "small" | "medium" | "large";
 
 type Props = {
   image?: string | null;
@@ -17,6 +17,8 @@ const defaultprofile = "/defaultprofile.png";
 
 const getImageSize = (size: AvatarSize) => {
   switch (size) {
+    case "verysmall":
+      return { width: 35, height: 35 };
     case "small":
       return { width: 50, height: 50 };
     case "medium":

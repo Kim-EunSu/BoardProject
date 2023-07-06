@@ -1,8 +1,11 @@
+//
+
 import Image from "next/image";
 import ButtonLayout from "../ButtonLayout";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import styled from "styled-components";
 import { useState } from "react";
+import Avatar from "../Avatar";
 
 const UserInfoWrap = styled.div`
   width: 320px;
@@ -45,6 +48,12 @@ const TextArea = styled.span`
   }
 `;
 
+type UserProfileImage = {
+  userImageId: number;
+  userId: number;
+  userImgUrl: string;
+};
+
 type ContentImage = {
   contentId: number;
   contentImageId: number;
@@ -61,7 +70,7 @@ type IPost = {
   createdAt: string;
   modifiedAt: string;
   nickname: string;
-  profileUrl: { [key: string]: any }[];
+  profileUrl: UserProfileImage[];
   title: string;
   userId: number;
   viewCount: number;
@@ -90,13 +99,7 @@ const UserInfo = (props: Props) => {
   return (
     <UserInfoWrap>
       <User>
-        <Image
-          src={"/frame.png"}
-          width={40}
-          height={40}
-          alt="프로필 사진"
-          style={{ borderRadius: "50px" }}
-        />
+        <Avatar />
         <TextArea>
           <span className="nickname">{postData?.nickname}</span>
           <span>{formatDate(postData?.createdAt)}</span>
