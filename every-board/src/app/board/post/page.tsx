@@ -250,8 +250,15 @@ const page = () => {
     }
     const formData = new FormData();
 
+    let userIdNumber = 0;
+
+    // sessionStorage에 저장되어있는 USER_ID는 string이므로 숫자형으로 변환해야함!
+    if (USER_ID !== null) {
+      userIdNumber = parseInt(USER_ID);
+    }
+
     const data = {
-      userId: USER_ID,
+      userId: userIdNumber || "",
       category: form.category || "",
       title: form.title || "",
       content: form.content || "",
@@ -278,8 +285,12 @@ const page = () => {
           },
         },
       );
-      if (response.status === 200) {
-        router.push("/board/gallery");
+      if (response.status === 201) {
+        //contentId는 이와같이 가져와야함
+        const contentId = response.data.data.contentId;
+        console.log(contentId);
+        router.push(`/board/detail/${contentId}`);
+        //router.push("/board/detail/${contentId}");
       }
     } catch (err) {
       console.log(err);

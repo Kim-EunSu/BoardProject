@@ -17,9 +17,17 @@ const UserInfoWrap = styled.div`
   @media (min-width: 768px) {
     width: 600px;
   }
+<<<<<<< HEAD
   @media (min-width: 1080px) {
     width: 900px;
   }
+=======
+
+  @media (min-width: 1080px) {
+    width: 900px;
+  }
+
+>>>>>>> upstream/EunSu
   @media (min-width: 1440px) {
     width: 1100px;
   }
@@ -45,6 +53,7 @@ const TextArea = styled.span`
   }
 `;
 
+<<<<<<< HEAD
 interface Props {
   userId: number | undefined | null;
   createdAt: string | undefined;
@@ -55,6 +64,38 @@ const UserInfo = (props: Props) => {
   const [isscrap, setScrap] = useState<boolean>(false);
   const { data } = useGetUserInfo(userId);
   const formattedCreatedAt = useCreatedAtFormat(createdAt);
+=======
+type ContentImage = {
+  contentId: number;
+  contentImageId: number;
+  contentImgUrl: string;
+};
+
+type IPost = {
+  category: string;
+  comments: any[];
+  content: string;
+  contentHeartCount: number;
+  contentId: number;
+  contentImages: ContentImage[];
+  createdAt: string;
+  modifiedAt: string;
+  nickname: string;
+  profileUrl: { [key: string]: any }[];
+  title: string;
+  userId: number;
+  viewCount: number;
+};
+
+type Props = {
+  postData: IPost | null;
+};
+
+const UserInfo = (props: Props) => {
+  const [isscrap, setScrap] = useState<boolean>(false);
+
+  const { postData } = props;
+>>>>>>> upstream/EunSu
 
   return (
     <UserInfoWrap>
@@ -67,8 +108,13 @@ const UserInfo = (props: Props) => {
           style={{ borderRadius: "50px" }}
         />
         <TextArea>
+<<<<<<< HEAD
           <span className="nickname">{data?.nickname}</span>
           <span>{formattedCreatedAt}</span>
+=======
+          <span className="nickname">{postData?.nickname}</span>
+          <span>{postData?.createdAt}</span>
+>>>>>>> upstream/EunSu
         </TextArea>
       </User>
       <div onClick={() => setScrap(!isscrap)}>

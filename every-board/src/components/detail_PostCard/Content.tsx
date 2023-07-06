@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
+<<<<<<< HEAD
 import { ContentImage } from "@/utils/type";
 import Image from "next/image";
+=======
+>>>>>>> upstream/EunSu
 
 const ContentWrap = styled.div`
   width: 320px;
@@ -49,6 +52,7 @@ const ContentWrap = styled.div`
   }
 `;
 
+<<<<<<< HEAD
 interface Props {
   detail?: boolean;
   onClick?: () => void;
@@ -67,6 +71,21 @@ const Content = (props: Props) => {
     <ContentWrap>
       <ButtonLayout
         text={category}
+=======
+//Props 인터페이스에서 title과 content는 string 타입으로 정의되어 있기 때문에, undefined 값을 전달할 수 없기에 이와같이 해결
+interface Props {
+  title: string | undefined;
+  content: string | undefined;
+  detail?: boolean;
+  onClick?: () => void;
+}
+
+const Content = (props: Props) => {
+  return (
+    <ContentWrap>
+      <ButtonLayout
+        text="자유게시판"
+>>>>>>> upstream/EunSu
         width="fit-content"
         height="fit-content"
         padding="5px 10px"
@@ -76,6 +95,7 @@ const Content = (props: Props) => {
         radius="35px"
       />
       <div>
+<<<<<<< HEAD
         <h4>{title}</h4>
         <span className={props.detail ? "detail" : ""}>{content}</span>
         {contentImages &&
@@ -88,6 +108,10 @@ const Content = (props: Props) => {
               height={300} // 필요에 따라 조정하세요
             />
           ))}
+=======
+        <h4>{props.title} </h4>
+        <span className={props.detail ? "detail" : ""}>{props.content}</span>
+>>>>>>> upstream/EunSu
       </div>
     </ContentWrap>
   );
