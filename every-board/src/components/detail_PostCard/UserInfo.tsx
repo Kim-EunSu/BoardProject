@@ -97,6 +97,17 @@ const UserInfo = (props: Props) => {
   const { postData } = props;
 >>>>>>> upstream/EunSu
 
+  //날짜변환
+  const formatDate = (datestring: string | undefined) => {
+    if (!datestring) return "";
+    const date = new Date(datestring);
+    const Year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDay().toString().padStart(2, "0");
+
+    return `${Year}-${month}-${day}`;
+  };
+
   return (
     <UserInfoWrap>
       <User>
@@ -113,7 +124,11 @@ const UserInfo = (props: Props) => {
           <span>{formattedCreatedAt}</span>
 =======
           <span className="nickname">{postData?.nickname}</span>
+<<<<<<< HEAD
           <span>{postData?.createdAt}</span>
+>>>>>>> upstream/EunSu
+=======
+          <span>{formatDate(postData?.createdAt)}</span>
 >>>>>>> upstream/EunSu
         </TextArea>
       </User>

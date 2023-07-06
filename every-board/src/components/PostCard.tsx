@@ -166,7 +166,11 @@ const PostCard = (props: Props) => {
       />
 =======
         {/* postData에서 특정 정보만 props로 내려주고싶을때 */}
-        <Content title={postData?.title} content={postData?.content} />
+        <Content
+          category={postData?.category}
+          title={postData?.title}
+          content={postData?.content}
+        />
       </Link>
       <UserAction comment={false} />
 >>>>>>> upstream/EunSu
