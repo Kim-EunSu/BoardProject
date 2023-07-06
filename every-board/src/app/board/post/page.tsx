@@ -111,14 +111,21 @@ const Catagory = styled.button<{ $isActive: Boolean }>`
 `;
 
 const ImageWrapper = styled.div`
-  border: 0 !important;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ImageWrap = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  border: 0 !important;
-  justify-content: flex-start !important;
+  justify-content: space-between;
+`;
+
+const ImageLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ImageName = styled.p``;
@@ -359,7 +366,7 @@ const page = () => {
             </div>
           </FormWrap>
           <CategoryWrap className="category">
-            {showModal && <Category post="post" fn={bringToCategoryState} />}
+            {showModal && <Category route="post" fn={bringToCategoryState} />}
           </CategoryWrap>
           <FormWrap>
             <Label>제목</Label>
