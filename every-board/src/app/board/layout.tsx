@@ -31,6 +31,7 @@ export default function Layout({ children }: LayoutProps) {
       <Wrapper>
         <Header />
         {children}
+        <div id="portal" />
         <Footer />
       </Wrapper>
     </>

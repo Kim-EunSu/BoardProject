@@ -50,6 +50,10 @@ const FormWrap = styled.div`
     position: relative;
   }
 
+  &:nth-child(2) {
+    position: relative;
+  }
+
   &:nth-child(4) {
     position: relative;
   }
@@ -97,6 +101,9 @@ const EmailBtn = styled.button`
   font-size: 8px;
   border-radius: 7px;
   background: #5429ff;
+
+  &:last-child {
+  }
 `;
 
 const ErrorText = styled.span`
@@ -166,26 +173,6 @@ export default function SignUp() {
 
   const router = useRouter();
 
-  //이메일인증번호 전송
-  const [isSendEmail, setIsSendEmail] = useState<string | null>(null);
-
-  // const handleEmailSubmit = async (e: React.MouseEvent) => {
-  //   e.preventDefault();
-
-  //   //이메일 상태를 getValues에서 가져온 값으로 업데이트
-  //   setIsSendEmail(getValues("email"));
-
-  //   try {
-  //     await axios.post("https://every-board.shop/auth/email", {
-  //       email: getValues("email"),
-  //     });
-  //     alert("이메일을 전송했습니다.");
-  //   } catch (err: any) {
-  //     console.error(err.message);
-  //     alert("Error sending email");
-  //   }
-  // };
-
   //비밀번호
   const [ShowPassword, setShowPassword] = useState<boolean>(false);
 
@@ -204,6 +191,7 @@ export default function SignUp() {
 
   const password = getValues("password");
 
+  //회원가입 form전송
   const onSubmit = async (data: SigninValues) => {
     try {
       const response = await fetch("https://every-board.shop/user/join", {
@@ -214,21 +202,64 @@ export default function SignUp() {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log("Error Data", errorData);
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      // if (data.email !== isSendEmail) {
-      //   alert("이메일 인증을 완료해주세요");
-      //   return;
-      // }
-
-      // 회원 가입 성공 시 로그인 페이지로 이동
       router.push("/signin");
     } catch (err) {
       console.error("회원 가입 과정에서 문제가 발생했습니다:", err);
+    }
+  };
+
+  //이메일 인증에러
+  const [emailError, setEmailError] = useState<string>("");
+
+  //이메일 인증번호 에러
+  const [emailConfirmError, setEmailConfirmError] = useState<string>("");
+
+  const [isemailSend, setIsEmailSend] = useState<boolean>(false);
+
+  //이메일 인증번호 받는 함수
+  const handleEmailSubmit = async () => {
+    const email = getValues("email");
+
+    try {
+      const response = await axios.post("https://every-board.shop/auth/email", {
+        email,
+      });
+
+      if (response.status === 200) {
+        setIsEmailSend(true);
+        setEmailError(""); //메세지 초기화
+      }
+    } catch (err) {
+      console.log(err);
+      setEmailError(
+        "이메일주소가 이미 사용되었거나 이메일 형식이 잘못되었습니다.",
+      );
+    }
+  };
+
+  //이메일 인증번호 확인 함수
+  const verifyEmailCode = async () => {
+    const email = getValues("email");
+    const authCode = getValues("emailconfirm");
+
+    try {
+      const response = await axios.post(
+        "https://every-board.shop/auth/email/confirm",
+        {
+          email,
+          authCode,
+        },
+      );
+
+      if (response.status === 200) {
+        setEmailConfirmError("이메일 인증에 성공했습니다.");
+      }
+    } catch (err: any) {
+      if (err.response && err.response.status === 400) {
+        setEmailConfirmError("이메일 인증 번호가 올바르지 않습니다.");
+      } else {
+        setEmailConfirmError("인증 과정에서 문제가 발생했습니다.");
+      }
     }
   };
 
@@ -260,15 +291,35 @@ export default function SignUp() {
                   },
                 })}
               />
-              {/* <EmailBtn type="submit" onClick={handleEmailSubmit}>
-                이메일 확인
-              </EmailBtn> */}
-              <ErrorText>{errors.email && errors.email.message}</ErrorText>
+              <EmailBtn type="button" onClick={handleEmailSubmit}>
+                이메일 인증
+              </EmailBtn>
+              {isemailSend && (
+                <ErrorText>
+                  해당 이메일로 확인 부탁드립니다.
+                  {errors.email && errors.email.message}
+                </ErrorText>
+              )}
+              <ErrorText>
+                {errors.email && errors.email.message}
+                {emailError}
+              </ErrorText>
             </FormWrap>
             <FormWrap>
               <Label>Email 인증번호 확인</Label>
-              <Input placeholder="ex) 6AAR32f" />
-              <ErrorText></ErrorText>
+              <Input
+                placeholder="ex) 6AAR32f"
+                {...register("emailconfirm", {
+                  required: "이메일인증 부탁드립니다.",
+                })}
+              />
+              <EmailBtn type="button" onClick={verifyEmailCode}>
+                확인
+              </EmailBtn>
+              <ErrorText>
+                {errors.emailconfirm && errors.emailconfirm.message}
+                {emailConfirmError}
+              </ErrorText>
             </FormWrap>
             <FormWrap>
               <Label>Nick Name</Label>

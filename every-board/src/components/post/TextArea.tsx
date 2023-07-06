@@ -72,6 +72,12 @@ const TextArea = (props: Props) => {
   const { fn } = props;
   const [value, setValue] = useState("");
 
+  //문자열에 Tag출력을 방지
+  //=> 사용하면 글자가 거꾸로쓰여지는 문제 발생...
+  const removePTags = (html: string) => {
+    return html.replace(/<p>/g, "").replace(/<\/p>/g, "");
+  };
+
   useEffect(() => {
     fn(value);
   }, [value]);
