@@ -1,55 +1,6 @@
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 
-interface Props {
-  detail?: boolean;
-  onClick?: () => void;
-}
-const Content = (props: Props) => {
-  return (
-    <ContentWrap>
-      <ButtonLayout
-        text="자유게시판"
-        width="fit-content"
-        height="fit-content"
-        padding="5px 10px"
-        color="#ffffff"
-        background="var(--primary)"
-        border="none"
-        radius="35px"
-      />
-      <div>
-        <h4>Lorem ipsum dolor sit amet </h4>
-        <span className={props.detail ? "detail" : ""}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, Lorem ipsum dolor sit amet,
-          consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim veniam, Lorem ipsum
-          dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, Lorem ipsum dolor sit amet,
-          consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim veniam, Lorem ipsum
-          dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, Lorem ipsum dolor sit amet, consectetur adipisicing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam,
-        </span>
-      </div>
-    </ContentWrap>
-  );
-};
-
 const ContentWrap = styled.div`
   width: 320px;
   min-height: 100%;
@@ -95,5 +46,34 @@ const ContentWrap = styled.div`
     width: 1100px;
   }
 `;
+
+//Props 인터페이스에서 title과 content는 string 타입으로 정의되어 있기 때문에, undefined 값을 전달할 수 없기에 이와같이 해결
+interface Props {
+  title: string | undefined;
+  content: string | undefined;
+  detail?: boolean;
+  onClick?: () => void;
+}
+
+const Content = (props: Props) => {
+  return (
+    <ContentWrap>
+      <ButtonLayout
+        text="자유게시판"
+        width="fit-content"
+        height="fit-content"
+        padding="5px 10px"
+        color="#ffffff"
+        background="var(--primary)"
+        border="none"
+        radius="35px"
+      />
+      <div>
+        <h4>{props.title} </h4>
+        <span className={props.detail ? "detail" : ""}>{props.content}</span>
+      </div>
+    </ContentWrap>
+  );
+};
 
 export default Content;

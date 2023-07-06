@@ -1,74 +1,121 @@
 "use client";
 
+import axios from "axios";
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
-`;
+import { useRouter } from "next/navigation";
 
-const PhotoWrap = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  border-radius: 10px;
-  width: 330px;
-  height: 250px;
-  overflow: hidden;
-
-  img {
-    border-radius: 10px;
-    background-color: #eee;
-    width: 330px;
-    height: 250px;
-  }
+const Wrapper = styled.div`
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(2, minmax(200px, auto));
+  grid-auto-rows: minmax(300px, auto);
 
   @media (min-width: 768px) {
-    width: 715px;
-    height: 150px;
-    gap: 10px;
-    img {
-      width: 171.25px;
-      height: 150px;
-    }
+    grid-template-columns: repeat(3, minmax(200px, auto));
   }
 
   @media (min-width: 1080px) {
-    width: 1000px;
-    /* height: 180px; */
-    height: auto;
-    img {
-      width: 242.5px;
-      height: 180px;
-    }
-  }
-
-  @media (min-width: 1440px) {
-    width: 1330px;
-    height: 220px;
-    gap: 20px;
-    img {
-      width: 317.5px;
-      height: 220px;
-    }
+    grid-template-columns: repeat(4, minmax(200px, auto));
   }
 `;
 
-const Gallery = () => {
-  const photo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  return (
-    <Section>
-      <PhotoWrap>
-        {photo.map((el, index) => {
-          return (
-            <div key={index}>
-              <img></img>
-            </div>
-          );
-        })}
-      </PhotoWrap>
-    </Section>
-  );
+const Wrap = styled.div`
+  border: 2px solid red;
+`;
+
+const IImg = styled.div`
+  height: 160px;
+  background: #dbdbdb;
+`;
+
+const BottomWrap = styled.div``;
+
+const Title = styled.span``;
+
+const Category = styled.span``;
+
+const Time = styled.span`
+  display: flex;
+  padding: 0.7rem;
+  justify-content: flex-end;
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+type IContent = {
+  category: string;
+  content: string;
+  contentHeartCount: number;
+  contentId: number;
+  //contentImages: any[]; // contentImages의 구조에 따라서 타입을 세부적으로 정의해주세요.
+  contentImages: Array<{
+    contentId: number;
+    contentImageId: number;
+    contentImgUrl: string;
+  }>;
+  createdAt: string;
+  modifiedAt: string;
+  title: string;
+  userId: number;
+  viewCount: number;
 };
 
-export default Gallery;
+export default function page() {
+  const [contents, setContents] = useState<IContent[]>([]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    axios
+      .get("https://every-board.shop/contents?size=100", {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      })
+      .then(function (res) {
+        setContents(res.data.contentResponseDto);
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
+
+  return (
+    <Wrapper>
+      {contents &&
+        contents.map((content, index) => (
+          <Wrap key={index}>
+            <img
+              src={`https://every-board.shop/?size=100/${content.contentImages[0].contentImgUrl}`}
+              alt={content.title}
+            />
+            <BottomWrap>
+              <Time>{content.createdAt.toString().slice(0, 10)}</Time>
+              <Bottom>
+                <Title>{content.title}</Title>
+                <Category>{content.category}</Category>
+              </Bottom>
+            </BottomWrap>
+          </Wrap>
+        ))}
+    </Wrapper>
+  );
+}
+
+//`/board?category=${el}`
+
+{
+  /* <img
+              src={content.contentImages[0].contentImgUrl}
+              alt={content.title}
+            /> */
+}

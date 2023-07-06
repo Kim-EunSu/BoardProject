@@ -4,51 +4,6 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import styled from "styled-components";
 import { useState } from "react";
 
-const UserInfo = () => {
-  const [isscrap, setScrap] = useState<boolean>(false);
-
-  return (
-    <UserInfoWrap>
-      <User>
-        <Image
-          src={"/frame.png"}
-          width={40}
-          height={40}
-          alt="프로필 사진"
-          style={{ borderRadius: "50px" }}
-        />
-        <TextArea>
-          <span className="nickname">강지넌</span>
-          <span>2023년 5월 4일, 10:58</span>
-        </TextArea>
-      </User>
-      <div onClick={() => setScrap(!isscrap)}>
-        {isscrap ? (
-          <ButtonLayout
-            text={[<AiOutlineStar key="stars" className="star" />, "스크랩"]}
-            width="65px"
-            height="30px"
-            color="var(--primary)"
-            background="#ffffff"
-            border="solid 2px var(--primary)"
-            radius="4px"
-          />
-        ) : (
-          <ButtonLayout
-            text={[<AiFillStar key="fill-stars" className="star" />, "스크랩"]}
-            width="65px"
-            height="30px"
-            color="#ffffff"
-            background="var(--primary)"
-            border="solid 2px var(--primary)"
-            radius="4px"
-          />
-        )}
-      </div>
-    </UserInfoWrap>
-  );
-};
-
 const UserInfoWrap = styled.div`
   width: 320px;
   display: flex;
@@ -89,5 +44,78 @@ const TextArea = styled.span`
     font-weight: 600;
   }
 `;
+
+type ContentImage = {
+  contentId: number;
+  contentImageId: number;
+  contentImgUrl: string;
+};
+
+type IPost = {
+  category: string;
+  comments: any[];
+  content: string;
+  contentHeartCount: number;
+  contentId: number;
+  contentImages: ContentImage[];
+  createdAt: string;
+  modifiedAt: string;
+  nickname: string;
+  profileUrl: { [key: string]: any }[];
+  title: string;
+  userId: number;
+  viewCount: number;
+};
+
+type Props = {
+  postData: IPost | null;
+};
+
+const UserInfo = (props: Props) => {
+  const [isscrap, setScrap] = useState<boolean>(false);
+
+  const { postData } = props;
+
+  return (
+    <UserInfoWrap>
+      <User>
+        <Image
+          src={"/frame.png"}
+          width={40}
+          height={40}
+          alt="프로필 사진"
+          style={{ borderRadius: "50px" }}
+        />
+        <TextArea>
+          <span className="nickname">{postData?.nickname}</span>
+          <span>{postData?.createdAt}</span>
+        </TextArea>
+      </User>
+      <div onClick={() => setScrap(!isscrap)}>
+        {isscrap ? (
+          <ButtonLayout
+            text={[<AiOutlineStar key="stars" className="star" />, "스크랩"]}
+            width="65px"
+            height="30px"
+            color="var(--primary)"
+            background="#ffffff"
+            border="solid 2px var(--primary)"
+            radius="4px"
+          />
+        ) : (
+          <ButtonLayout
+            text={[<AiFillStar key="fill-stars" className="star" />, "스크랩"]}
+            width="65px"
+            height="30px"
+            color="#ffffff"
+            background="var(--primary)"
+            border="solid 2px var(--primary)"
+            radius="4px"
+          />
+        )}
+      </div>
+    </UserInfoWrap>
+  );
+};
 
 export default UserInfo;
