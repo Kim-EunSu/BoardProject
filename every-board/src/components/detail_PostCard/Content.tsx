@@ -49,6 +49,7 @@ const ContentWrap = styled.div`
 
 //Props 인터페이스에서 title과 content는 string 타입으로 정의되어 있기 때문에, undefined 값을 전달할 수 없기에 이와같이 해결
 interface Props {
+  category: string | undefined;
   title: string | undefined;
   content: string | undefined;
   detail?: boolean;
@@ -59,7 +60,7 @@ const Content = (props: Props) => {
   return (
     <ContentWrap>
       <ButtonLayout
-        text="자유게시판"
+        text={props.category}
         width="fit-content"
         height="fit-content"
         padding="5px 10px"

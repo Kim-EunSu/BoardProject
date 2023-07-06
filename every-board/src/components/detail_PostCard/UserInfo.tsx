@@ -76,6 +76,17 @@ const UserInfo = (props: Props) => {
 
   const { postData } = props;
 
+  //날짜변환
+  const formatDate = (datestring: string | undefined) => {
+    if (!datestring) return "";
+    const date = new Date(datestring);
+    const Year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDay().toString().padStart(2, "0");
+
+    return `${Year}-${month}-${day}`;
+  };
+
   return (
     <UserInfoWrap>
       <User>
@@ -88,7 +99,7 @@ const UserInfo = (props: Props) => {
         />
         <TextArea>
           <span className="nickname">{postData?.nickname}</span>
-          <span>{postData?.createdAt}</span>
+          <span>{formatDate(postData?.createdAt)}</span>
         </TextArea>
       </User>
       <div onClick={() => setScrap(!isscrap)}>
