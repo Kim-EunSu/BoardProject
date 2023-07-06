@@ -283,7 +283,6 @@ const page = () => {
         const contentId = response.data.data.contentId;
         console.log(contentId);
         router.push(`/board/detail/${contentId}`);
-        //router.push("/board/detail/${contentId}");
       }
     } catch (err) {
       console.log(err);
