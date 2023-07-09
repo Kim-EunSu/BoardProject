@@ -1,8 +1,10 @@
+import Image from "next/image";
 import ButtonLayout from "../ButtonLayout";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import styled from "styled-components";
 import { useState } from "react";
-import Avatar from "../Avatar";
+import { useGetUserInfo } from "@/utils/api";
+import { useCreatedAtFormat } from "@/utils/customHooks";
 
 const UserInfoWrap = styled.div`
   width: 320px;
@@ -45,61 +47,30 @@ const TextArea = styled.span`
   }
 `;
 
-type UserProfileImage = {
-  userImageId: number;
-  userId: number;
-  userImgUrl: string;
-};
-
-type ContentImage = {
-  contentId: number;
-  contentImageId: number;
-  contentImgUrl: string;
-};
-
-type IPost = {
-  category: string;
-  comments: any[];
-  content: string;
-  contentHeartCount: number;
-  contentId: number;
-  contentImages: ContentImage[];
-  createdAt: string;
-  modifiedAt: string;
-  nickname: string;
-  profileUrl: UserProfileImage[];
-  title: string;
-  userId: number;
-  viewCount: number;
-};
-
-type Props = {
-  postData: IPost | null;
-};
+interface Props {
+  userId: number | undefined | null;
+  createdAt: string | undefined;
+}
 
 const UserInfo = (props: Props) => {
+  const { userId, createdAt } = props;
   const [isscrap, setScrap] = useState<boolean>(false);
-
-  const { postData } = props;
-
-  //날짜변환
-  const formatDate = (datestring: string | undefined) => {
-    if (!datestring) return "";
-    const date = new Date(datestring);
-    const Year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDay().toString().padStart(2, "0");
-
-    return `${Year}-${month}-${day}`;
-  };
+  const { data } = useGetUserInfo(userId);
+  const formattedCreatedAt = useCreatedAtFormat(createdAt);
 
   return (
     <UserInfoWrap>
       <User>
-        <Avatar />
+        <Image
+          src={"/frame.png"}
+          width={40}
+          height={40}
+          alt="프로필 사진"
+          style={{ borderRadius: "50px" }}
+        />
         <TextArea>
-          <span className="nickname">{postData?.nickname}</span>
-          <span>{formatDate(postData?.createdAt)}</span>
+          <span className="nickname">{data?.nickname}</span>
+          <span>{formattedCreatedAt}</span>
         </TextArea>
       </User>
       <div onClick={() => setScrap(!isscrap)}>

@@ -1,41 +1,37 @@
-// import styled from "styled-components";
-// import PostCard from "@/components/PostCard";
-// import LoadingPage from "@/components/LoadingPage";
-// import ErrorPage from "@/components/ErrorPage";
-// import { useSearchParams } from "next/navigation";
-// import { useGetDetailContent } from "@/utils/api";
+"use client";
 
-// const Dashboard = () => {
-//   // 상단 URL 쿼리로부터 contentId 가져오기
-//   const params = useSearchParams();
-//   const contentId: string | null | undefined = params?.get("contentId");
-//   const { data, isLoading, isError } = useGetDetailContent(contentId);
-//   if (isLoading) {
-//     return <LoadingPage />;
-//   }
-//   if (isError) {
-//     return <ErrorPage />;
-//   }
+import styled from "styled-components";
+import PostCard from "@/components/PostCard";
+import LoadingPage from "@/components/LoadingPage";
+import ErrorPage from "@/components/ErrorPage";
+import { useSearchParams } from "next/navigation";
+import { useGetDetailContent } from "@/utils/api";
 
-//   return (
-//     <Main>
-//       <PostCard detail={true} data={data} />
-//     </Main>
-//   );
-// };
+const Dashboard = () => {
+  // 상단 URL 쿼리로부터 contentId 가져오기
+  const params = useSearchParams();
+  const contentId: string | null | undefined = params?.get("contentId");
+  const { data, isLoading, isError } = useGetDetailContent(contentId);
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+  if (isError) {
+    return <ErrorPage />;
+  }
 
-// const Main = styled.main`
-//   display: flex;
-//   flex-direction: column;
-//   margin-bottom: 20px;
-//   min-height: 100vh;
-//   height: fit-content;
-// `;
+  return (
+    <Main>
+      <PostCard detail={true} data={data} />
+    </Main>
+  );
+};
 
-// export default Dashboard;
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  min-height: 100vh;
+  height: fit-content;
+`;
 
-import React from "react";
-
-export default function page() {
-  return <div>page</div>;
-}
+export default Dashboard;
