@@ -48,6 +48,7 @@ const PostCard = (props: Props) => {
         href="board/detail"
         style={{ textDecoration: "none", color: "#000000" }}
       >
+        {/* postData에서 특정 정보만 props로 내려주고싶을때 */}
         <Content
           detail={props.detail}
           content={data?.content}

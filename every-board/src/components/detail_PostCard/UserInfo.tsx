@@ -17,9 +17,11 @@ const UserInfoWrap = styled.div`
   @media (min-width: 768px) {
     width: 600px;
   }
+
   @media (min-width: 1080px) {
     width: 900px;
   }
+
   @media (min-width: 1440px) {
     width: 1100px;
   }
