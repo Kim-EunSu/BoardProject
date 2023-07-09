@@ -93,7 +93,7 @@ const TextWrap = styled.div`
 const PhotoLine = () => {
   const router = useRouter();
   const [contentId, setContentId] = useState<number>();
-  // const { data, isLoading, isError } = useGetImg();
+  const { data, isLoading, isError } = useGetImg();
   const { data: detail } = useGetDetailContent(contentId);
 
   return (
@@ -112,7 +112,7 @@ const PhotoLine = () => {
         ></ButtonLayout>
       </TitleWrap>
       <PhotoWrap>
-        {/* {data?.map(el => {
+        {data?.map(el => {
           return (
             <ContentWrap
               onClick={() => {
@@ -138,7 +138,7 @@ const PhotoLine = () => {
               </TextWrap>
             </ContentWrap>
           );
-        })} */}
+        })}
       </PhotoWrap>
     </Section>
   );
