@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  route?: string;
+  post?: string;
+  home?: string;
   fn?: Function;
 }
 
@@ -38,41 +39,42 @@ const Nav = styled.nav`
 `;
 
 const Category = (props: Props) => {
-  const { route, fn } = props;
-  const [isPost, setPost] = useState<string | undefined>(route);
+  const { post, home, fn } = props;
+  const [isPost, setPost] = useState<string | undefined>(home);
   const router = useRouter();
   useEffect(() => {
-    if (route === "post") return setPost(route);
+    if (post) return setPost(post);
   }, []);
   const categories = [
     "자유게시판",
-    "게임",
-    "연애",
-    "여행",
-    "맛집",
-    "패션",
-    "연예인",
-    "인테리어",
-    "주식",
-    "코인",
-    "취미",
-    "자동차",
-    "운동",
-    "취업/직장",
-    "사건/사고",
-    "건강",
-    "IT",
-    "팝업",
-    "SNS",
-    "반려동물",
-    "다이어트",
-    "K-POP",
-    "가전제품",
-    "중고물품",
-    "해외",
-    "부동산",
-    "제태크",
     "뷰티",
+    "직장",
+    "팝업",
+    "반려동물",
+    "취미",
+    "다이어트",
+    "맛집",
+    "SNS",
+    "인테리어",
+    "여행",
+    "연예인",
+    "건강",
+    "코인",
+    "운동",
+    "케이팝",
+    "IT",
+    "제태크",
+    "가전제품",
+    "부동산",
+    "게임",
+    "중고물품",
+    "사건사고",
+    "자동차",
+    "해외",
+    "주식",
+    "자유게시판",
+    "연애",
+    "패션",
   ];
 
   return (
@@ -81,7 +83,7 @@ const Category = (props: Props) => {
         {categories.map((el, index) => {
           return (
             <li key={index}>
-              {route === "home" || route === "board" ? (
+              {home ? (
                 <ButtonLayout
                   text={`${el}`}
                   width="75px"
@@ -91,9 +93,7 @@ const Category = (props: Props) => {
                   background="#EFE9FF50"
                   fontSize="0.75rem"
                   border="none"
-                  onClick={() => {
-                    router.push(`/board?category=${el}`);
-                  }}
+                  onClick={() => router.push(`/board?category=${el}`)}
                 />
               ) : (
                 <ButtonLayout

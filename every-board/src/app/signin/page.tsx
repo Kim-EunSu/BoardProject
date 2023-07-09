@@ -8,7 +8,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { AiOutlineEye } from "react-icons/ai";
-import axios from "axios";
+import ModalPortal from "@/components/ui/ModalPortal";
+import PasswordModal from "@/components/Modal/PasswordModal";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -93,6 +94,21 @@ const Rem2 = styled.p`
   color: #fc0374;
 `;
 
+const ModalTitle = styled.h3`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #63637f;
+  background: white;
+  border-bottom: 5px solid #cacacb;
+  border-radius: 13px 13px 0 0;
+`;
+
 const Button = styled.button`
   display: flex;
   align-items: center;
@@ -149,6 +165,8 @@ export default function Login() {
 
   const router = useRouter();
 
+  const [openModal, setOpenModal] = useState(false);
+
   //로그인하면 넘어가는 data
   const onSubmit = async (data: FormValues) => {
     console.log(data);
@@ -160,16 +178,22 @@ export default function Login() {
       },
       body: JSON.stringify(data),
     })
-      .then(res => {
+      .then(async res => {
         if (res.ok) {
           router.push("/");
-
           const ACCESS_TOKEN: string | null = res.headers.get("Authorization");
           const REFRESH_TOKEN: string | null = res.headers.get("Refresh");
+
+          const clonedRes = res.clone();
+          const responseData = await clonedRes.json();
+          const USER_ID = responseData.userId;
 
           if (ACCESS_TOKEN)
             sessionStorage.setItem("Authorization", ACCESS_TOKEN);
           if (REFRESH_TOKEN) sessionStorage.setItem("Refresh", REFRESH_TOKEN);
+          if (USER_ID) sessionStorage.setItem("userId", USER_ID);
+
+          console.log("User ID:", responseData.userId);
 
           console.log("Authorization:", res.headers.get("Authorization"));
           console.log("Refresh:", res.headers.get("Refresh"));
@@ -251,7 +275,14 @@ export default function Login() {
                   <Checkbox checked={ischecked} onChange={onChange} />
                   Remember me
                 </Rem1>
-                <Rem2>비밀번호 찾기</Rem2>
+                <Rem2 onClick={() => setOpenModal(true)}>비밀번호 찾기</Rem2>
+                {openModal && (
+                  <ModalPortal>
+                    <PasswordModal onClose={() => setOpenModal(false)}>
+                      <ModalTitle>비밀번호 찾기</ModalTitle>
+                    </PasswordModal>
+                  </ModalPortal>
+                )}
               </Remember>
             </FormWrap>
             <Button

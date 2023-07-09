@@ -1,16 +1,11 @@
 import styled from "styled-components";
 import Image from "next/image";
+import Avatar from "../Avatar";
 
 const Reply = () => {
   return (
     <CommentInputWrap>
-      <Image
-        src={"/frame.png"}
-        width={35}
-        height={35}
-        alt="프로필 사진"
-        style={{ borderRadius: "50px" }}
-      />
+      <Avatar size="verysmall" />
       <Input>
         <input placeholder="댓글을 입력해주세요." />
       </Input>
