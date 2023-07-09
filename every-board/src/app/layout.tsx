@@ -1,8 +1,6 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
 import { AvatarProvider } from "@/context/AvatarContext";
-
-const inter = Inter({ subsets: ["latin"] });
+import Providers from "@/utils/provider";
 
 export const metadata = {
   title: "Create Next App",
@@ -17,10 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AvatarProvider>
-        <body className={inter.className}>
-          {children}
-          <div id="portal" />
-        </body>
+        <Providers>{children}</Providers>
+        <div id="portal" />
       </AvatarProvider>
     </html>
   );
