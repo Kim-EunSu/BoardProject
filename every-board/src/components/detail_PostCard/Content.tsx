@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
+import { ContentImage } from "@/utils/type";
 
 const ContentWrap = styled.div`
   width: 320px;
@@ -53,6 +54,7 @@ interface Props {
   title: string | undefined;
   content: string | undefined;
   detail?: boolean;
+  contentImages?: ContentImage[] | undefined;
   onClick?: () => void;
 }
 
