@@ -366,7 +366,7 @@ const page = () => {
             </div>
           </FormWrap>
           <CategoryWrap className="category">
-            {showModal && <Category fn={bringToCategoryState} />}
+            {showModal && <Category route="post" fn={bringToCategoryState} />}
           </CategoryWrap>
           <FormWrap>
             <Label>제목</Label>

@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  post?: string;
-  home?: string;
+  route?: string;
   fn?: Function;
 }
 
@@ -39,11 +38,11 @@ const Nav = styled.nav`
 `;
 
 const Category = (props: Props) => {
-  const { post, home, fn } = props;
-  const [isPost, setPost] = useState<string | undefined>(home);
+  const { route, fn } = props;
+  const [isPost, setPost] = useState<string | undefined>(route);
   const router = useRouter();
   useEffect(() => {
-    if (post) return setPost(post);
+    if (route) return setPost(route);
   }, []);
   const categories = [
     "자유게시판",
@@ -83,7 +82,7 @@ const Category = (props: Props) => {
         {categories.map((el, index) => {
           return (
             <li key={index}>
-              {home ? (
+              {route === "home" || route === "board" ? (
                 <ButtonLayout
                   text={`${el}`}
                   width="75px"
