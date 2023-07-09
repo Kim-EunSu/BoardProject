@@ -7,6 +7,11 @@ import { BsPeopleFill } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { MdTag } from "react-icons/md";
+import { useEffect, useState } from "react";
+import ModalPortal from "@/components/ui/ModalPortal";
+import ProfileModal from "@/components/Modal/ProfileModal";
+import Avatar from "@/components/Avatar";
+import axios from "axios";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,24 +37,18 @@ const Left = styled.div`
   align-items: center;
 `;
 
-const Avatar = styled.div`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  margin-right: 1.5rem;
-  background-color: #5429ff;
-`;
-
-const Name = styled.p`
+const UserNickname = styled.span`
+  font-weight: 500;
   font-size: 1.5rem;
+  margin-left: 10px;
 `;
 
 const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 30px;
+  width: 130px;
+  height: 50px;
   border-radius: 25px;
   border: 2px solid #5429ff;
 `;
@@ -188,18 +187,56 @@ const Section3 = styled.div`
 
 const Alarm = styled.p``;
 
+const ModalTitle = styled.h3`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #63637f;
+  background: white;
+  border-bottom: 5px solid #cacacb;
+  border-radius: 13px 13px 0 0;
+`;
+
 //color를 지정하지 않으면 기본적으로 pink설정
 export default function page() {
+  //모달창
+  const [openModal, setOpenModal] = useState(false);
+  const [Nickname, setNickname] = useState<string>("");
+
+  useEffect(() => {
+    const USER_ID = sessionStorage.getItem("userId");
+    axios
+      .get(`https://every-board.shop/user/${USER_ID}/nickname`)
+      .then(function (res) {
+        setNickname(res.data.nickname);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <>
       <Wrapper>
         <Section1>
           <Left>
-            <Avatar></Avatar>
-            <Name>사용자</Name>
+            <Avatar size="medium" />
+            <UserNickname>{Nickname && <span>{Nickname}</span>}님</UserNickname>
           </Left>
           <Right>
-            <Edit>회원정보 수정</Edit>
+            <Edit onClick={() => setOpenModal(true)}>프로필 이미지 수정</Edit>
+            {openModal && (
+              <ModalPortal>
+                <ProfileModal onClose={() => setOpenModal(false)}>
+                  <ModalTitle>프로필 수정</ModalTitle>
+                </ProfileModal>
+              </ModalPortal>
+            )}
           </Right>
         </Section1>
         <Section2>

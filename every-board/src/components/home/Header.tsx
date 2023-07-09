@@ -1,11 +1,12 @@
 "use client";
+
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 import Avatar from "../Avatar";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Head from "next/head";
+import axios from "axios";
 
 const HeaderLayout = styled.header`
   width: 100%;
@@ -75,23 +76,54 @@ const ImageArea = styled.div`
 `;
 
 const AvatarArea = styled.span`
-  position: absolute;
+  display: flex;
   top: 20px;
   right: 20px;
+  position: absolute;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+const UserWrapper = styled.div`
+  display: flex;
+  width: 150px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 25px;
+  background: white;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 10px;
+`;
+
+const UserNickname = styled.span`
+  color: black;
+  font-weight: 500;
 `;
 
 const Header = (): JSX.Element => {
   const router = useRouter();
   const [isLogin, setLogin] = useState<boolean>(false);
+  const [Nickname, setNickname] = useState<string>("");
 
   //이부분이 있어야 로그인했을때 저장된 token을 가져와짐!
   useEffect(() => {
     const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+    const USER_ID = sessionStorage.getItem("userId");
 
-    if (ACCESS_TOKEN) {
+    if (ACCESS_TOKEN && USER_ID) {
       setLogin(true);
+      axios
+        .get(`https://every-board.shop/user/${USER_ID}/nickname`)
+        .then(function (res) {
+          setNickname(res.data.nickname);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     } else {
       setLogin(false);
+      setNickname("");
     }
   }, []);
 
@@ -154,7 +186,12 @@ const Header = (): JSX.Element => {
       <AvatarArea>
         {isLogin ? (
           <>
-            <Avatar />
+            <UserWrapper>
+              <Avatar />
+              <UserNickname>
+                {Nickname && <span>{Nickname}</span>}님
+              </UserNickname>
+            </UserWrapper>
             <ButtonLayout
               text="로그아웃"
               width="100px"
