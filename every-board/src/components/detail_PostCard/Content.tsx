@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
-import { ContentImage } from "@/utils/type";
-import Image from "next/image";
 
 const ContentWrap = styled.div`
   width: 320px;
@@ -49,24 +47,20 @@ const ContentWrap = styled.div`
   }
 `;
 
+//Props 인터페이스에서 title과 content는 string 타입으로 정의되어 있기 때문에, undefined 값을 전달할 수 없기에 이와같이 해결
 interface Props {
-  detail?: boolean;
-  onClick?: () => void;
-  //undefined 넣어도 되는지 공부하기
-  //undefined 안넣으면 Type 오류 발생, 상위 컴포넌트에서 전달 받는 prop이 undefined 일 수 있기 때문,
-  //해결방법 찾아보기
   category: string | undefined;
   title: string | undefined;
   content: string | undefined;
-  contentImages: ContentImage[] | undefined;
+  detail?: boolean;
+  onClick?: () => void;
 }
 
 const Content = (props: Props) => {
-  const { category, title, content, contentImages } = props;
   return (
     <ContentWrap>
       <ButtonLayout
-        text={category}
+        text={props.category}
         width="fit-content"
         height="fit-content"
         padding="5px 10px"
@@ -76,18 +70,8 @@ const Content = (props: Props) => {
         radius="35px"
       />
       <div>
-        <h4>{title}</h4>
-        <span className={props.detail ? "detail" : ""}>{content}</span>
-        {contentImages &&
-          contentImages.map(image => (
-            <Image
-              key={image.contentImageId}
-              src={`https://backendcontentimage.s3.ap-northeast-2.amazonaws.com/${image.contentImgUrl}`}
-              alt="Content Image"
-              width={500} // 필요에 따라 조정하세요
-              height={300} // 필요에 따라 조정하세요
-            />
-          ))}
+        <h4>{props.title} </h4>
+        <span className={props.detail ? "detail" : ""}>{props.content}</span>
       </div>
     </ContentWrap>
   );

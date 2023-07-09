@@ -1,10 +1,8 @@
-import Image from "next/image";
 import ButtonLayout from "../ButtonLayout";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import styled from "styled-components";
 import { useState } from "react";
-import { useGetUserInfo } from "@/utils/api";
-import { useCreatedAtFormat } from "@/utils/customHooks";
+import Avatar from "../Avatar";
 
 const UserInfoWrap = styled.div`
   width: 320px;
@@ -17,9 +15,11 @@ const UserInfoWrap = styled.div`
   @media (min-width: 768px) {
     width: 600px;
   }
+
   @media (min-width: 1080px) {
     width: 900px;
   }
+
   @media (min-width: 1440px) {
     width: 1100px;
   }
@@ -45,30 +45,61 @@ const TextArea = styled.span`
   }
 `;
 
-interface Props {
-  userId: number | undefined | null;
-  createdAt: string | undefined;
-}
+type UserProfileImage = {
+  userImageId: number;
+  userId: number;
+  userImgUrl: string;
+};
+
+type ContentImage = {
+  contentId: number;
+  contentImageId: number;
+  contentImgUrl: string;
+};
+
+type IPost = {
+  category: string;
+  comments: any[];
+  content: string;
+  contentHeartCount: number;
+  contentId: number;
+  contentImages: ContentImage[];
+  createdAt: string;
+  modifiedAt: string;
+  nickname: string;
+  profileUrl: UserProfileImage[];
+  title: string;
+  userId: number;
+  viewCount: number;
+};
+
+type Props = {
+  postData: IPost | null;
+};
 
 const UserInfo = (props: Props) => {
-  const { userId, createdAt } = props;
   const [isscrap, setScrap] = useState<boolean>(false);
-  const { data } = useGetUserInfo(userId);
-  const formattedCreatedAt = useCreatedAtFormat(createdAt);
+
+  const { postData } = props;
+
+  //날짜변환
+  const formatDate = (datestring: string | undefined) => {
+    if (!datestring) return "";
+    const date = new Date(datestring);
+    const Year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDay().toString().padStart(2, "0");
+
+    return `${Year}-${month}-${day}`;
+  };
 
   return (
     <UserInfoWrap>
       <User>
-        <Image
-          src={"/frame.png"}
-          width={40}
-          height={40}
-          alt="프로필 사진"
-          style={{ borderRadius: "50px" }}
-        />
+        <Avatar />
         <TextArea>
-          <span className="nickname">{data?.nickname}</span>
-          <span>{formattedCreatedAt}</span>
+          <span className="nickname">{postData?.nickname}</span>
+          <span>{formatDate(postData?.createdAt)}</span>
         </TextArea>
       </User>
       <div onClick={() => setScrap(!isscrap)}>
