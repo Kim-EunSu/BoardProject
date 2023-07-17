@@ -75,7 +75,7 @@ export default function page() {
     axios
       .get("https://every-board.shop/contents?size=100", {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
+          "Content-Type": "application/javascript",
         },
       })
       .then(function (res) {
