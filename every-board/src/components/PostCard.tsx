@@ -1,65 +1,4 @@
-// "use client";
-
-// import styled from "styled-components";
-// import UserInfo from "./detail_PostCard/UserInfo";
-// import Content from "./detail_PostCard/Content";
-// import UserAction from "./detail_PostCard/UserAction";
-// import CommentInput from "./detail_PostCard/CommentInput";
-// import Link from "next/link";
-// import { useEffect } from "react";
-// import axios from "axios";
-// import { useRouter, useSearchParams } from "next/navigation";
-
-// interface Props {
-//   detail?: boolean;
-//   onClick?: () => void;
-// }
-
-// const PostCard = (props: Props) => {
-//   return (
-//     <Article>
-//       <UserInfo />
-//       <Link
-//         href="board/detail"
-//         style={{ textDecoration: "none", color: "#000000" }}
-//       >
-//         <Content detail={props.detail} />
-//       </Link>
-//       <UserAction comment={false} />
-//       <CommentInput />
-//     </Article>
-//   );
-// };
-
-// const Article = styled.article`
-//   width: 350px;
-//   height: fit-content;
-//   display: flex;
-//   flex-direction: column;
-//   margin: 0 auto;
-//   gap: 20px;
-//   background: linear-gradient(128.67deg, #ffffff 23.76%, #f7faff 133.63%);
-//   box-shadow: 1px 2px 20px rgba(18, 61, 101, 0.05),
-//     inset -18.4px -13.8px 184px rgba(255, 255, 255, 0.18);
-//   border-radius: 18px;
-
-//   @media (min-width: 768px) {
-//     width: 680px;
-//     gap: 30px;
-//   }
-
-//   @media (min-width: 1080px) {
-//     width: 980px;
-//   }
-
-//   @media (min-width: 1440px) {
-//     width: 1200px;
-//   }
-// `;
-// export default PostCard;
-
 "use client";
-
 import styled from "styled-components";
 import UserInfo from "./detail_PostCard/UserInfo";
 import Content from "./detail_PostCard/Content";
@@ -67,8 +6,12 @@ import UserAction from "./detail_PostCard/UserAction";
 import CommentInput from "./detail_PostCard/CommentInput";
 import Link from "next/link";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { ContentDetail, SearchKeyword } from "@/utils/type";
 =======
+>>>>>>> upstream/EunSu
+=======
+import type { ContentDetail, SearchKeyword } from "@/utils/type";
 >>>>>>> upstream/EunSu
 
 const Article = styled.article`
@@ -98,6 +41,9 @@ const Article = styled.article`
 `;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> upstream/EunSu
 interface Props {
   detail?: boolean;
   data: ContentDetail | SearchKeyword | undefined | void;
@@ -109,6 +55,7 @@ const PostCard = (props: Props) => {
   return (
     <Article>
       <UserInfo userId={data?.userId} createdAt={data?.createdAt} />
+<<<<<<< HEAD
 =======
 //postData를 props로 받아오면 해당 type들도 가져와야함
 type ContentImage = {
@@ -145,11 +92,17 @@ const PostCard = (props: Props) => {
       {/* postData를 아예 통째로 내려주고싶을때 */}
       <UserInfo postData={postData} />
 >>>>>>> upstream/EunSu
+=======
+>>>>>>> upstream/EunSu
       <Link
         href="board/detail"
         style={{ textDecoration: "none", color: "#000000" }}
       >
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        {/* postData에서 특정 정보만 props로 내려주고싶을때 */}
+>>>>>>> upstream/EunSu
         <Content
           detail={props.detail}
           content={data?.content}
@@ -164,6 +117,7 @@ const PostCard = (props: Props) => {
         userId={data?.userId}
         contentId={data?.contentId}
       />
+<<<<<<< HEAD
 =======
         {/* postData에서 특정 정보만 props로 내려주고싶을때 */}
         <Content
@@ -173,6 +127,8 @@ const PostCard = (props: Props) => {
         />
       </Link>
       <UserAction comment={false} />
+>>>>>>> upstream/EunSu
+=======
 >>>>>>> upstream/EunSu
       <CommentInput />
     </Article>

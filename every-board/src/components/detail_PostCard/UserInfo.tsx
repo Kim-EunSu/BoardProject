@@ -18,15 +18,21 @@ const UserInfoWrap = styled.div`
     width: 600px;
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
   @media (min-width: 1080px) {
     width: 900px;
   }
 =======
+=======
+>>>>>>> upstream/EunSu
 
   @media (min-width: 1080px) {
     width: 900px;
   }
 
+<<<<<<< HEAD
+>>>>>>> upstream/EunSu
+=======
 >>>>>>> upstream/EunSu
   @media (min-width: 1440px) {
     width: 1100px;
@@ -54,6 +60,9 @@ const TextArea = styled.span`
 `;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> upstream/EunSu
 interface Props {
   userId: number | undefined | null;
   createdAt: string | undefined;
@@ -64,6 +73,7 @@ const UserInfo = (props: Props) => {
   const [isscrap, setScrap] = useState<boolean>(false);
   const { data } = useGetUserInfo(userId);
   const formattedCreatedAt = useCreatedAtFormat(createdAt);
+<<<<<<< HEAD
 =======
 type ContentImage = {
   contentId: number;
@@ -107,6 +117,8 @@ const UserInfo = (props: Props) => {
 
     return `${Year}-${month}-${day}`;
   };
+=======
+>>>>>>> upstream/EunSu
 
   return (
     <UserInfoWrap>
@@ -120,6 +132,7 @@ const UserInfo = (props: Props) => {
         />
         <TextArea>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <span className="nickname">{data?.nickname}</span>
           <span>{formattedCreatedAt}</span>
 =======
@@ -129,6 +142,10 @@ const UserInfo = (props: Props) => {
 >>>>>>> upstream/EunSu
 =======
           <span>{formatDate(postData?.createdAt)}</span>
+>>>>>>> upstream/EunSu
+=======
+          <span className="nickname">{data?.nickname}</span>
+          <span>{formattedCreatedAt}</span>
 >>>>>>> upstream/EunSu
         </TextArea>
       </User>

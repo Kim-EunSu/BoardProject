@@ -289,8 +289,7 @@ const page = () => {
         //contentId는 이와같이 가져와야함
         const contentId = response.data.data.contentId;
         console.log(contentId);
-        router.push(`/board/detail/${contentId}`);
-        //router.push("/board/detail/${contentId}");
+        router.push(`/board/detail?contentId=${contentId}`);
       }
     } catch (err) {
       console.log(err);

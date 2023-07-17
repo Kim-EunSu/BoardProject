@@ -2,10 +2,9 @@
 
 import axios from "axios";
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { useGetImg, useGetDetailContent } from "@/utils/api";
 import Image from "next/image";
@@ -113,6 +112,8 @@ const Gallery = () => {
     </Section>
   );
 =======
+=======
+>>>>>>> upstream/EunSu
 import { useRouter } from "next/navigation";
 
 const Wrapper = styled.div`
@@ -173,6 +174,9 @@ type IContent = {
   title: string;
   userId: number;
   viewCount: number;
+<<<<<<< HEAD
+>>>>>>> upstream/EunSu
+=======
 >>>>>>> upstream/EunSu
 };
 
@@ -185,7 +189,7 @@ export default function page() {
     axios
       .get("https://every-board.shop/contents?size=100", {
         headers: {
-          "Content-Type": "application/json;charset=UTF-8",
+          "Content-Type": "application/javascript",
         },
       })
       .then(function (res) {
@@ -217,13 +221,4 @@ export default function page() {
         ))}
     </Wrapper>
   );
-}
-
-//`/board?category=${el}`
-
-{
-  /* <img
-              src={content.contentImages[0].contentImgUrl}
-              alt={content.title}
-            /> */
 }

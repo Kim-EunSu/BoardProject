@@ -1,4 +1,5 @@
 "use client";
+
 import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 import Avatar from "../Avatar";
@@ -6,7 +7,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Head from "next/head";
+=======
+import axios from "axios";
+>>>>>>> upstream/EunSu
 =======
 import axios from "axios";
 >>>>>>> upstream/EunSu
