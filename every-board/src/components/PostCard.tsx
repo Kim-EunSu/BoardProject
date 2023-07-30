@@ -143,7 +143,7 @@ const PostCard = (props: Props) => {
         userId={data?.userId}
         contentId={data?.contentId}
       />
-      <CommentInput comments={data?.comments} />
+      <CommentInput />
     </Article>
   );
 };

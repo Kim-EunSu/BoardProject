@@ -153,7 +153,7 @@ type IFetch = {
   userId: number;
 };
 
-export default function Reply() {
+export default function CommentInput() {
   const [newComment, setNewComment] = useState("");
 
   //댓글 toggle
