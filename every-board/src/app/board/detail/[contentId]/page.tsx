@@ -14,6 +14,17 @@ const Main = styled.main`
   height: fit-content;
 `;
 
+type IComment = {
+  comment: string;
+  commentId: number;
+  contentId: number;
+  createdAt: string;
+  modifiedAt: string;
+  nickName: string;
+  title: string;
+  userId: number;
+};
+
 type UserProfileImage = {
   userImageId: number;
   userId: number;
@@ -28,7 +39,8 @@ type ContentImage = {
 
 type IPost = {
   category: string;
-  comments: any[];
+  //commenets수정하였습니다!
+  comments: IComment[];
   content: string;
   contentHeartCount: number;
   contentId: number;
