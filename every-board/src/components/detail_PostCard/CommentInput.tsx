@@ -1,78 +1,3 @@
-// import styled from "styled-components";
-// import Image from "next/image";
-// import Avatar from "../Avatar";
-
-// const Reply = () => {
-//   return (
-//     <CommentInputWrap>
-//       <Avatar size="verysmall" />
-//       <Input>
-//         <input placeholder="댓글을 입력해주세요." />
-//       </Input>
-//       <Submit>
-//         <Image src={"/send.svg"} width={15} height={15} alt="보내기" />
-//       </Submit>
-//     </CommentInputWrap>
-//   );
-// };
-
-// const CommentInputWrap = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   width: 320px;
-//   height: 40px;
-//   margin: 0 auto;
-//   margin-bottom: 20px;
-
-//   @media (min-width: 768px) {
-//     width: 600px;
-//   }
-//   @media (min-width: 1080px) {
-//     width: 900px;
-//   }
-//   @media (min-width: 1440px) {
-//     width: 1100px;
-//   }
-// `;
-
-// const Input = styled.span`
-//   width: 245px;
-//   height: 38px;
-//   @media (min-width: 768px) {
-//     width: 520px;
-//   }
-//   @media (min-width: 1080px) {
-//     width: 820px;
-//   }
-//   @media (min-width: 1440px) {
-//     width: 1020px;
-//   }
-//   input {
-//     width: inherit;
-//     height: inherit;
-//     background: #ffffff;
-//     border: 2px solid #e9eff4;
-//     border-radius: 5.77775px;
-//     padding: 0 10px;
-//   }
-//   input:focus {
-//     outline: none;
-//   }
-// `;
-
-// const Submit = styled.span`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 30px;
-//   height: 30px;
-//   background-color: var(--primary);
-//   border-radius: 50px;
-// `;
-
-// export default Reply;
-
 import styled from "styled-components";
 import Image from "next/image";
 import Avatar from "../Avatar";
@@ -217,6 +142,17 @@ type IComment = {
   userId: number;
 };
 
+type IFetch = {
+  comment: string;
+  commentId: number;
+  contentId: number;
+  createdAt: string;
+  modifiedAt: string;
+  nickName: string;
+  title: string;
+  userId: number;
+};
+
 export default function Reply() {
   const [newComment, setNewComment] = useState("");
 
@@ -229,6 +165,9 @@ export default function Reply() {
 
   //댓글 출력
   const [showComment, setShowComment] = useState<IComment[]>([]);
+
+  //댓글 서버에서 가져오기
+  const [fetch, setFetch] = useState<IFetch>();
 
   //댓글 등록해서 보이기
   const fetchComment = async () => {
@@ -257,7 +196,7 @@ export default function Reply() {
       );
 
       const commentId = response.data.commentId;
-      //getComments(commentId);
+      getComments(commentId);
       setShowComment([...showComment, response.data]);
       console.log(response);
     } catch (err: any) {
@@ -265,25 +204,31 @@ export default function Reply() {
     }
   };
 
-  //댓글 서버에서 조회
-  // const getComments = async (commentId: number) => {
-  //   try {
-  //     const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
+  // //댓글 서버에서 조회
+  const getComments = async (commentId: number | null = null) => {
+    try {
+      console.log(commentId);
+      const ACCESS_TOKEN = sessionStorage.getItem("Authorization");
 
-  //     const response = await axios.get(
-  //       `https://every-board.shop/comments/${commentId}`,
-  //       {
-  //         headers: {
-  //           Authorization: ACCESS_TOKEN,
-  //         },
-  //       },
-  //     );
-  //     console.log("Server response data:", response.data); // 추가된 코드
-  //     setShowComment([...showComment, response.data]);
-  //   } catch (err) {
-  //     console.log(err);
+      const response = await axios.get(
+        `https://every-board.shop/comments/${commentId}`,
+        {
+          headers: {
+            Authorization: ACCESS_TOKEN,
+          },
+        },
+      );
+      setFetch(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (showComment.length === 0) {
+  //     getComments();
   //   }
-  // };
+  // }, [showComment.length]);
 
   const handleClick = async () => {
     await fetchComment();
@@ -292,6 +237,7 @@ export default function Reply() {
 
   return (
     <>
+      {fetch?.comment}
       <CommentWrapper onClick={handleClickToggle}>
         <CommentIcon>
           <BiCommentDetail />
@@ -299,8 +245,7 @@ export default function Reply() {
 
         <CommentTitle>댓글</CommentTitle>
       </CommentWrapper>
-
-      {toggle && (
+      {/* {toggle && (
         <GetCommentsWrap>
           {showComment.map((item, index) => (
             <GetComment key={index}>
@@ -312,8 +257,7 @@ export default function Reply() {
             </GetComment>
           ))}
         </GetCommentsWrap>
-      )}
-
+      )} */}
       <CommentInputWrap>
         <Avatar size="verysmall" />
         <Input>
