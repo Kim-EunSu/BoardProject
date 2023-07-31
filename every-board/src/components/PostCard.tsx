@@ -34,9 +34,50 @@ const Article = styled.article`
   }
 `;
 
+type IComment = {
+  comment: string;
+  commentId: number;
+  contentId: number;
+  createdAt: string;
+  modifiedAt: string;
+  nickName: string;
+  title: string;
+  userId: number;
+};
+
+type UserProfileImage = {
+  userImageId: number;
+  userId: number;
+  userImgUrl: string;
+};
+
+type ContentImage = {
+  contentId: number;
+  contentImageId: number;
+  contentImgUrl: string;
+};
+
+type IPost = {
+  category: string;
+  //commenets수정하였습니다!
+  comments: IComment[];
+  content: string;
+  contentHeartCount: number;
+  contentId: number;
+  contentImages: ContentImage[];
+  createdAt: string;
+  modifiedAt: string;
+  nickname: string;
+  profileUrl: UserProfileImage[];
+  title: string;
+  userId: number;
+  viewCount: number;
+};
+
 interface Props {
   detail?: boolean;
-  data: ContentDetail | SearchKeyword | undefined | void;
+  //data에 IPost | null추가
+  data: IPost | null | ContentDetail | SearchKeyword | undefined | void;
   onClick?: () => void;
 }
 
@@ -62,7 +103,6 @@ const PostCard = (props: Props) => {
         />
       </Link>
       <UserAction
-        //comment={false}
         comment={data?.comments}
         like={data?.contentHeartCount}
         userId={data?.userId}

@@ -16,11 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <AvatarProvider>
         <Providers>{children}</Providers>
-<<<<<<< Updated upstream
         <div id="portal" />
-=======
-        {/* <div id="portal" /> */}
->>>>>>> Stashed changes
       </AvatarProvider>
     </html>
   );
