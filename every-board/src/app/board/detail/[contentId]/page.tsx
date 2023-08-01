@@ -78,7 +78,7 @@ export default function page() {
 
   return (
     <Main>
-      <PostCard postData={post} />
+      <PostCard data={post} />
     </Main>
   );
 }

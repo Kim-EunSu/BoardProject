@@ -2,11 +2,15 @@ import styled from "styled-components";
 import ButtonLayout from "../ButtonLayout";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { ContentImage } from "@/utils/type";
 import Image from "next/image";
 =======
 >>>>>>> upstream/EunSu
 =======
+>>>>>>> upstream/EunSu
+=======
+import { ContentImage } from "@/utils/type";
 >>>>>>> upstream/EunSu
 
 const ContentWrap = styled.div`
@@ -84,6 +88,7 @@ interface Props {
   title: string | undefined;
   content: string | undefined;
   detail?: boolean;
+  contentImages?: ContentImage[] | undefined;
   onClick?: () => void;
 }
 
