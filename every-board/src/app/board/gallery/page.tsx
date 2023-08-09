@@ -4,6 +4,7 @@ import styled from "styled-components";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> upstream/EunSu
 import { useGetImg, useGetDetailContent } from "@/utils/api";
@@ -11,8 +12,12 @@ import Image from "next/image";
 import LoadingPage from "@/components/LoadingPage";
 import ErrorPage from "@/components/ErrorPage";
 <<<<<<< HEAD
+=======
+import Image from "next/image";
+>>>>>>> upstream/EunSu
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Section = styled.section`
   display: flex;
@@ -20,9 +25,11 @@ const Section = styled.section`
   align-items: center;
   min-height: 100vh;
   gap: 40px;
+  padding-bottom: 2.5rem;
 `;
 
 const PhotoWrap = styled.div`
+<<<<<<< HEAD
   display: flex;
   flex-wrap: wrap;
   border-radius: 10px;
@@ -31,6 +38,14 @@ const PhotoWrap = styled.div`
   gap: 20px;
   margin: 0 auto;
 
+=======
+  display: grid;
+  grid-gap: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+  gap: 20px;
+>>>>>>> upstream/EunSu
   img {
     border-radius: 10px;
     background-color: #eee;
@@ -38,6 +53,7 @@ const PhotoWrap = styled.div`
     height: 250px;
   }
 
+<<<<<<< HEAD
   @media (min-width: 768px) {
     width: 680px;
     gap: 10px;
@@ -62,6 +78,22 @@ const PhotoWrap = styled.div`
       width: 285px;
       height: 220px;
     }
+=======
+  @media (max-width: 500px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 501px) and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 769px) and (max-width: 1080px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1081px) and (max-width: 1440px) {
+    grid-template-columns: repeat(4, 1fr);
+>>>>>>> upstream/EunSu
   }
 `;
 
@@ -70,45 +102,68 @@ const ContentWrap = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
+
+type ImgData = {
+  contentImageId: number;
+  contentId: number;
+  contentImgUrl: string;
+};
+
+type photoData = {
+  contentId: number;
+  userId: number;
+  viewCount: number;
+  contentHeartCount: number;
+  title: string;
+  content: string;
+  contentImages: ImgData[];
+  category: string;
+  createdAt: string;
+  modifiedAt: string;
+};
+
 const Gallery = () => {
   const router = useRouter();
-  const { data, isLoading, isError } = useGetImg();
-  const [contentId, setContentId] = useState<number>();
-  const detail = useGetDetailContent(contentId);
+  const [photodata, setPhotoData] = useState<photoData[]>([]);
 
-  if (isLoading) return <LoadingPage />;
-  if (isError) return <ErrorPage />;
+  const sortedPhotoData = photodata
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
 
-  // useEffect(() => {
-  //   data?.forEach(el => {
-  //     setContentId(el.contentId);
-  //   });
-  // }, [data]);
+  useEffect(() => {
+    axios
+      .get("https://every-board.shop/contents?size=100")
+      .then(function (res) {
+        setPhotoData(res.data.contentResponseDto);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Section>
       <PhotoWrap>
-        {data?.map(el => {
-          return (
-            <ContentWrap
-              onClick={() => {
-                router.push(`board/detail?contentId=${el.contentId}`);
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              <Image
-                key={el.contentImages[0]?.contentImageId}
-                src={`https://backendcontentimage.s3.ap-northeast-2.amazonaws.com/${el.contentImages[0]?.contentImgUrl}`}
-                width={500}
-                height={500}
-                alt="이미지"
-              />
-              <div>
-                <span>{detail.data?.title}</span>
-              </div>
-            </ContentWrap>
-          );
-        })}
+        {sortedPhotoData.map((el, index) => (
+          <div
+            key={index}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              router.push(`board/detail?contentId=${el.contentId}`);
+            }}
+          >
+            <Image
+              key={el.contentImages[0]?.contentImageId}
+              src={`https://backendcontentimage.s3.ap-northeast-2.amazonaws.com/${el.contentImages[0]?.contentImgUrl}`}
+              width={300}
+              height={300}
+              alt="이미지"
+            />
+          </div>
+        ))}
       </PhotoWrap>
     </Section>
   );
